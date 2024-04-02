@@ -1,2 +1,2 @@
-# Optmized_Wave_Function
+# CoEfficients Matrix Wavefunction
 Wave Function Calculation Optimization Study Repository
