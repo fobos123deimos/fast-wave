@@ -31,11 +31,8 @@ def hermite_sympy(n: np.uint64) -> Poly:
 
     Examples
     --------
-    ```python
-    # Input
-    hermite_sympy(2)
-
-    # Output
+    ```
+    >>> hermite_sympy(2)
     4*x**2 - 2
     ```
 
@@ -63,15 +60,12 @@ def create_hermite_coefficients_table(n_max: np.uint64) -> np.ndarray:
 
     Examples
     --------
-    ```python
-    # Input
-    create_hermite_coefficients_table(3)
-
-    # Output
-    array([[ 0.,  0.,  0.,  1.],
-           [ 0.,  0., -2.,  0.],
-           [ 0.,  4.,  0., -2.],
-           [ 8.,  0., -12., 0.]])
+    ```
+    >>> create_hermite_coefficients_table(3)
+    array([[  0.,   0.,   0.,   1.],
+          [  0.,   0.,   2.,   0.],
+          [  0.,   4.,   0.,  -2.],
+          [  8.,   0., -12.,   0.]])
     ```
 
     References
