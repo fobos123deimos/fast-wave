@@ -1,6 +1,9 @@
 
-# CoEfficients-Matrix-Wavefunction🔢🌊 
+# CoEfficients-Matrix-Wavefunction🔢🌊
+
 ![Version](https://img.shields.io/badge/version-1.0.0-blue.svg?cacheSeconds=2592000) ![Build](https://img.shields.io/badge/build-passing-brightgreen.svg) ![License](https://img.shields.io/badge/License-MIT-yellow.svg)
+
+<br>
 
 > Harnessing the power wavefunctions to navigate the quantum realm. 🚀🌌
 
