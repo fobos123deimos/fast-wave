@@ -141,7 +141,7 @@ def wavefunction_c_matrix_1D(n: np.uint64, x: Union[np.float64, np.ndarray[np.fl
 
     Examples
     --------
-    ```
+    ```python
     >>> wavefunction_c_matrix_1D(0, 1.0)
     array([0.45558067])
     >>> wavefunction_c_matrix_1D(0, 1.0 + 2.0j)
@@ -196,7 +196,7 @@ def wavefunction_nx(n, x):
 
     Examples
     --------
-    ```
+    ```python
     >>> wavefunction_nx(0, 1.0)
     0.45558067201133257
     >>> wavefunction_nx(0, 1.0+1.0j)
