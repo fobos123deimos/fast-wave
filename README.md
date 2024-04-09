@@ -51,7 +51,7 @@ $$
 H_n(x) = (-1)^n e^{x^2} \frac{d^n}{dx^n}(e^{-x^2})
 $$
 
-### Examples
+### Progression
 
 Here are the first four Hermite Polynomials:
 
@@ -120,6 +120,7 @@ pip install -r requirements.txt
 
 ```python
 >>> from coefficient_matrix_wavefunction.wavefunction import *
+Functionality Test Passed: True
 >>> hermite_sympy(2)
 4*x**2 - 2
 >>> create_hermite_coefficients_table(3)
