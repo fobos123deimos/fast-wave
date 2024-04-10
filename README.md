@@ -112,7 +112,7 @@ Wavefunctions and the Schrödinger equation are central to understanding phenome
 - **Basic functionality test**: Demonstrates the core capabilities of our project with a simple yet effective test case.
 
 ## 🛠 Setup
-To use this module, simply run a **git clone**, enter the repository folder through the terminal, and install the **requirements.txt**. After doing this, you can easily execute the module's functions using Python's IDE (**Python 3.11.5**) through the terminal in the repository folder or by placing scripts that import the module's libraries inside the repository folder (⚠️ the repository folder, not the module one):
+To use this module, simply run a **git clone**, enter the repository folder through the terminal, and install the **requirements.txt**. After doing this, you can easily execute the module's functions using Python's IDE (**Python 3.11.5**) through the terminal in the repository folder or by placing scripts/notebooks that import the module's libraries inside the repository folder (⚠️ the repository folder, not the module one):
 ```bash
 git clone https://github.com/matheus123deimos/CoEfficients-Matrix-Wavefunction.git
 cd CoEfficients-Matrix-Wavefunction
@@ -179,7 +179,7 @@ This project is available under the MIT License. See the LICENSE file for more d
 
 ## 📬 Contact
 
-If you have any questions or want to reach out to the team, please send us an email at matheusgomescord@gmail.com.
+If you have any questions or want to reach out to the team, please send me an email at matheusgomescord@gmail.com.
 
 ---
 
