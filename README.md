@@ -1,5 +1,5 @@
 
-<div style="margin-left: -20px;"><img src="https://github.com/matheus123deimos/CoEfficients-Matrix-Wavefunction/assets/20157453/10d35b23-bafe-4423-be8a-60f838771b3d" alt="" width="900" height="500"></div>
+<div style="margin-left: -20px;"><img src="https://github.com/matheus123deimos/CoEfficients-Matrix-Wavefunction/assets/20157453/10d35b23-bafe-4423-be8a-60f838771b3d" alt="" width="900" height="400"></div>
 
 
 # CoEfficients-Matrix-Wavefunction🔢🌊
