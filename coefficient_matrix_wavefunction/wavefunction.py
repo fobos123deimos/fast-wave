@@ -216,7 +216,7 @@ def wavefunction_nx(n, x):
     if(n<=60 and not(is_Array)):
         return wavefunction_c_matrix_1D(n,x)[0]
 
-    elif(n<=60 and x.shape[0]<=50):
+    elif(n<=60 and (x.size/max(x))<=0.4):
       x_values = np.zeros((1,x.shape[0]),dtype=np.complex128)[0]  if(isinstance(x[0],np.complex128)) else np.zeros((1,x.shape[0]))[0] 
       return wavefunction_c_matrix_1D(n,x,x_values)
 
