@@ -87,7 +87,7 @@ def create_hermite_coefficients_table(n_max: np.uint64) -> np.ndarray:
 
 
 @nb.jit(forceobj=True, looplift=True, boundscheck=False)
-def wavefunction_scipy_1d(n: np.uint64, x: Union[np.float64, np.ndarray]) -> Union[np.float64, np.ndarray]:
+def wavefunction_scipy_value(n: np.uint64, x: Union[np.float64, np.ndarray[np.float64]]) -> Union[np.float64, np.ndarray[np.float64]]:
     """
     Compute the wavefunction for a given quantum state and position(s) using scipy.
 
@@ -119,9 +119,8 @@ def wavefunction_scipy_1d(n: np.uint64, x: Union[np.float64, np.ndarray]) -> Uni
 
     return ((2 ** (-0.5 * n)) * (factorial(n) ** (-0.5)) * (np.pi ** (-0.25))) * np.exp(-(x ** 2) / 2) * eval_hermite(n, x)
 
-@nb.jit(nopython=True, looplift=True, nogil=True, boundscheck=False, cache=True)
-def wavefunction_c_matrix_1D(n: np.uint64, x: Union[np.float64, np.ndarray[np.float64],np.complex128,np.ndarray[np.complex128]],
-    x_values: Union[np.ndarray[np.float64],np.ndarray[np.complex128],None] = None) -> np.ndarray[np.float64]:
+@nb.jit(nopython=True, nogil=True, boundscheck=False, cache=True)
+def wavefunction_c_matrix_value(n: np.uint64, x: Union[np.float64,np.complex128]) -> Union[np.float64,np.complex128]:
     """
     Compute the wavefunction using a precomputed matrix of Hermite polynomial coefficients.
 
@@ -129,27 +128,21 @@ def wavefunction_c_matrix_1D(n: np.uint64, x: Union[np.float64, np.ndarray[np.fl
     ----------
     n : np.uint64
         Quantum state number.
-    x : Union[np.float64, np.ndarray]
+    x : Union[np.float64,np.complex128]
         Position(s) at which to evaluate the wavefunction.
-    x_values : Union[np.ndarray, None], optional
-        Optional, preallocated array for results.
 
     Returns
     -------
-    np.ndarray
+    Union[np.float64,np.complex128]
         The evaluated wavefunction.
 
     Examples
     --------
     ```python
-    >>> wavefunction_c_matrix_1D(0, 1.0)
-    array([0.45558067])
-    >>> wavefunction_c_matrix_1D(0, 1.0 + 2.0j)
-    array([-1.40087973-3.06097806j])
-    >>> wavefunction_c_matrix_1D(0, np.array([0.0, 1.0, 2.0]),np.array([0.0,0.0,0.0]))
-    array([0.75112554, 0.45558067, 0.10165379])
-    >>> wavefunction_c_matrix_1D(0, np.array([0.0 + 0.0j, 1.0 + 1.0j]),np.array([0.0 + 0.0j,0.0 + 0.0j]))
-    array([0.75112554+0.j        , 0.40583486-0.63205035j])
+    >>> wavefunction_c_matrix_real_value(0, 1.0)
+    0.45558067201133257
+    >>> wavefunction_c_matrix_complex_value(0, 1.0 + 2.0j)
+    (-1.4008797330262455-3.0609780602975003j)
     ```
 
     References
@@ -160,13 +153,45 @@ def wavefunction_c_matrix_1D(n: np.uint64, x: Union[np.float64, np.ndarray[np.fl
 
     c_size = c_matrix.shape[0]
     coeffs = c_matrix[n]
+    x_power = np.power(x,np.array([[c_size - i - 1 for i in range(c_size)]], dtype=np.float64).T)
+    return (np.sum(x_power * coeffs[np.newaxis, :].T, axis=0) * np.exp(
+        -(x**2) / 2) * math.pow(2, -0.5 * n) * math.pow(np.pi, -0.25) * math.pow(
+            math.gamma(n + 1), -0.5))[0]
 
-    if(x_values is None):
-        x_power = np.power(x,np.array([[c_size - i - 1 for i in range(c_size)]], dtype=np.float64).T)
-        return np.sum(x_power * coeffs[np.newaxis, :].T, axis=0) * np.exp(
-            -(x**2) / 2) * math.pow(2, -0.5 * n) * math.pow(np.pi, -0.25) * math.pow(
-                math.gamma(n + 1), -0.5)
+@nb.jit(nopython=True, looplift=True, nogil=True, boundscheck=False, cache=True)
+def wavefunction_c_matrix_vector(n: np.uint64, x: Union[np.ndarray[np.float64],np.ndarray[np.complex128]],
+x_values: Union[np.ndarray[np.float64],np.ndarray[np.complex128]]) -> Union[np.ndarray[np.float64],np.ndarray[np.complex128]]:
+    """
+    Compute the wavefunction using a precomputed matrix of Hermite polynomial coefficients.
 
+    Parameters
+    ----------
+    n : np.uint64
+        Quantum state number.
+    x : Union[np.ndarray[np.float64],np.ndarray[np.complex128]]
+        Position(s) at which to evaluate the wavefunction.
+    x_values : Union[np.ndarray[np.float64],np.ndarray[np.complex128]]
+        Preallocated array for results.
+
+    Returns
+    -------
+    Union[np.ndarray[np.float64],np.ndarray[np.complex128]]
+        The evaluated wavefunction.
+
+    Examples
+    --------
+    ```python
+    >>> wavefunction_c_matrix_real_vector(0, 1.0 + 2.0j)
+    (-1.4008797330262455-3.0609780602975003j)
+    ```
+
+    References
+    ----------
+    - Griffiths, D. J. (2005). Introduction to Quantum Mechanics (2nd Ed.). Pearson Education.
+    """
+
+    c_size = c_matrix.shape[0]
+    coeffs = c_matrix[n]
     x_size = x.shape[0]
 
     for i in range(x_size):
@@ -178,67 +203,127 @@ def wavefunction_c_matrix_1D(n: np.uint64, x: Union[np.float64, np.ndarray[np.fl
 
     return x_values * math.pow(2, -0.5 * n) * math.pow(math.gamma(n + 1),-0.5) * math.pow(np.pi, -0.25)
 
-
-def wavefunction_nx(n, x):
+def wavefunction_real_value(n: np.uint64, x: np.float64) -> np.float64:
     """
-    Wrapper function to compute the wavefunction, choosing the appropriate method based on the parameters.
+    Wrapper function to compute the wavefunction to real values, choosing the appropriate method based on n.
 
     Parameters
     ----------
-    n : int
+    n : np.uint64
         Quantum state number.
-    x : Union[np.float64, np.ndarray]
+    x : np.float64
         Position(s) at which to evaluate the wavefunction.
 
     Returns
     -------
-    The evaluated wavefunction, using either scipy or the coefficient matrix method.
+    np.float64
+        The evaluated wavefunction real values, using either scipy or the coefficient matrix method.
 
     Examples
     --------
     ```python
-    >>> wavefunction_nx(0, 1.0)
+    >>> wavefunction_real_value(0, 1.0)
     0.45558067201133257
-    >>> wavefunction_nx(0, 1.0+1.0j)
-    (0.4058348636708703-0.6320503516152827j)
-    >>> wavefunction_nx(0, np.array([1.0,2.0]))
+    >>> wavefunction_real_value(61, 1.0)
+    -0.23930491991711444
+    ```
+    """
+
+    return  wavefunction_c_matrix_value(n,x) if(n<=60) else wavefunction_scipy_value(n,x)
+
+def wavefunction_real_vector(n: np.uint64, x: np.ndarray[np.float64]) -> np.ndarray[np.float64]:
+    """
+    Wrapper function to compute the wavefunction to real vectors, choosing the appropriate method based on n.
+
+    Parameters
+    ----------
+    n : np.uint64
+        Quantum state number.
+    x : np.ndarray[np.float64]
+        Position(s) at which to evaluate the wavefunction.
+
+    Returns
+    -------
+    np.ndarray[np.float64]
+        The evaluated wavefunction real vectors, using either scipy or the coefficient matrix method.
+
+    Examples
+    --------
+    ```python
+    >>> wavefunction_real_vector(0, np.array([1.0,2.0]))
     array([0.45558067, 0.10165379])
-    >>> wavefunction_nx(0, np.array([1.0+1.0j,2.0+3.0j]))
-    array([0.40583486-0.63205035j, 8.78611733+2.55681454j])
-    >>> wavefunction_nx(61, 2.0)
-    -0.01677378220489314
-    >>> wavefunction_nx(61, np.array([1.0,2.0]))
+    >>> wavefunction_real_vector(61, np.array([1.0,2.0]))
     array([-0.23930492, -0.01677378])
     ```
     """
-    is_Array = isinstance(x,np.ndarray)
+    return  wavefunction_c_matrix_vector(n,x,np.zeros((1,x.shape[0]))[0]) if(n<=60) else wavefunction_scipy_value(n,x)
 
-    if(n<=60 and not(is_Array)):
-        return wavefunction_c_matrix_1D(n,x)[0]
+def wavefunction_complex_value(n: np.uint64, x: np.complex128) -> np.complex128:
+    """
+    Wrapper function to compute the wavefunction to complex values, choosing the appropriate method based on n.
 
-    elif(n<=60 and (x.size/max(x))<=0.4):
-      x_values = np.zeros((1,x.shape[0]),dtype=np.complex128)[0]  if(isinstance(x[0],np.complex128)) else np.zeros((1,x.shape[0]))[0] 
-      return wavefunction_c_matrix_1D(n,x,x_values)
+    Parameters
+    ----------
+    n : np.uint64
+        Quantum state number.
+    x : np.complex128
+        Position(s) at which to evaluate the wavefunction.
 
+    Returns
+    -------
+    np.complex128
+        The evaluated wavefunction complex values, using either scipy or the coefficient matrix method.
+
+    Examples
+    --------
+    ```python
+    >>> wavefunction_complex_value(0, 1.0+1.0j)
+    (0.4058348636708703-0.6320503516152827j)
+    ```
+    """
+    if(n<=60):
+        return  wavefunction_c_matrix_value(n,x)
     else:
-        if(not(is_Array) and isinstance(x,complex)):
-          raise ValueError("This function is not enabled for complex x values ​​where n > 60.")
+        raise ValueError("This function is not enabled for complex x values ​​where n > 60.")
+    
+def wavefunction_complex_vector(n: np.uint64, x: np.complex128) -> np.complex128:
+    """
+    Wrapper function to compute the wavefunction to complex vectors, choosing the appropriate method based on n.
 
-        elif(is_Array and isinstance(x[0],np.complex128)):
-          raise ValueError("This function is not enabled for complex x values ​​where n > 60.")
+    Parameters
+    ----------
+    n : np.uint64
+        Quantum state number.
+    x : np.complex128
+        Position(s) at which to evaluate the wavefunction.
 
-        else:
-          return wavefunction_scipy_1d(n,x)
+    Returns
+    -------
+    np.complex128
+        The evaluated wavefunction complex vectors, using either scipy or the coefficient matrix method.
+
+    Examples
+    --------
+    ```python
+    >>> wavefunction_complex_vector(0, np.array([1.0+1.0j,2.0+3.0j]))
+    array([0.40583486-0.63205035j, 8.78611733+2.55681454j])
+    ```
+    """
+    if(n<=60):
+        return  wavefunction_c_matrix_vector(n,x,np.zeros((1,x.shape[0]),dtype=np.complex128)[0])
+    else:
+        raise ValueError("This function is not enabled for complex x values ​​where n > 60.")
+
         
-
 """
 Main execution block to initialize the coefficient matrix and test the wavefunction computation.
 This block checks for the existence of the precomputed Hermite polynomial coefficients matrix. If it doesn't exist,
 it computes the matrix and saves it for future use. Then, it performs a basic test to verify that the wavefunction
 computation works as expected.
+
 References
 ----------
-- Python Documentation: https://docs.python.org/3/tutorial/modules.html
+- Python Documentation: https://docs.python.org/3/tutorial/modules.html 
     Python's official documentation offers insights into best practices for structuring and executing Python scripts.
 """
 matrix_path = "./coefficient_matrix_wavefunction/C_matrix.pickle"
@@ -254,8 +339,12 @@ else:
 try:
 
     # Basic functionality test
-    test_output_0 = wavefunction_nx(0, 0.0)
-    test_output_61 = wavefunction_nx(61, 0.0)
+    test_output_scipy_value = wavefunction_scipy_value(0,1.0)
+    test_output_scipy_vector = wavefunction_scipy_value(0,np.array([0.0, 1.0, 2.0]))
+    test_output_real_value_cm = wavefunction_c_matrix_value(0,1.0)
+    test_output_complex_value_cm = wavefunction_c_matrix_value(0,1.0 + 2.0j)
+    test_output_real_vector = wavefunction_c_matrix_vector(0, np.array([0.0, 1.0, 2.0]),np.array([0.0,0.0,0.0]))
+    test_output_complex_vector = wavefunction_c_matrix_vector(0, np.array([0.0 + 0.0j, 1.0 + 1.0j]),np.array([0.0 + 0.0j,0.0 + 0.0j]))
     compilation_test = True
     print(f"Functionality Test Passed: {compilation_test}")
 except Exception as e:
