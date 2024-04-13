@@ -106,9 +106,9 @@ def wavefunction_scipy_value(n: np.uint64, x: Union[np.float64, np.ndarray[np.fl
     Examples
     --------
     ```python
-    >>> wavefunction_scipy_1d(1, 2.0)
+    >>> wavefunction_scipy_value(1, 2.0)
     0.28752033217907963
-    >>> wavefunction_scipy_1d(1, np.array([0.0, 1.0, 2.0]))
+    >>> wavefunction_scipy_value(1, np.array([0.0, 1.0, 2.0]))
     array([0.        , 0.64428837, 0.28752033])
     ```
 
@@ -139,9 +139,9 @@ def wavefunction_c_matrix_value(n: np.uint64, x: Union[np.float64,np.complex128]
     Examples
     --------
     ```python
-    >>> wavefunction_c_matrix_real_value(0, 1.0)
+    >>> wavefunction_c_matrix_value(0, 1.0)
     0.45558067201133257
-    >>> wavefunction_c_matrix_complex_value(0, 1.0 + 2.0j)
+    >>> wavefunction_c_matrix_value(0, 1.0 + 2.0j)
     (-1.4008797330262455-3.0609780602975003j)
     ```
 
@@ -181,8 +181,10 @@ x_values: Union[np.ndarray[np.float64],np.ndarray[np.complex128]]) -> Union[np.n
     Examples
     --------
     ```python
-    >>> wavefunction_c_matrix_real_vector(0, 1.0 + 2.0j)
-    (-1.4008797330262455-3.0609780602975003j)
+    >>> wavefunction_c_matrix_vector(0, np.array([1.0,2.0]),np.zeros((1,x.shape[0]))[0])
+    array([0.45558067, 0.10165379])
+    >>> wavefunction_c_matrix_vector(0, np.array([1.0+1.0j,2.0+3.0j]),np.zeros((1,x.shape[0]),dtype=np.complex128)[0])
+    array([0.40583486-0.63205035j, 8.78611733+2.55681454j])
     ```
 
     References

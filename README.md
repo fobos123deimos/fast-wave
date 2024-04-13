@@ -131,30 +131,30 @@ array([[  0.,   0.,   0.,   1.],
        [  0.,   0.,   2.,   0.],
        [  0.,   4.,   0.,  -2.],
        [  8.,   0., -12.,   0.]])
->>> wavefunction_scipy_1d(1, 2.0)
+>>> wavefunction_scipy_value(1, 2.0)
 0.28752033217907963
->>> wavefunction_scipy_1d(1, np.array([0.0, 1.0, 2.0]))
+>>> wavefunction_scipy_value(1, np.array([0.0, 1.0, 2.0]))
 array([0.        , 0.64428837, 0.28752033])
->>> wavefunction_c_matrix_1D(0, 1.0)
-array([0.45558067])
->>> wavefunction_c_matrix_1D(0, 1.0 + 2.0j)
-array([-1.40087973-3.06097806j])
->>> wavefunction_c_matrix_1D(0, np.array([0.0, 1.0, 2.0]),np.array([0.0,0.0,0.0]))
-array([0.75112554, 0.45558067, 0.10165379])
->>> wavefunction_c_matrix_1D(0, np.array([0.0 + 0.0j, 1.0 + 1.0j]),np.array([0.0 + 0.0j,0.0 + 0.0j]))
-array([0.75112554+0.j        , 0.40583486-0.63205035j])
->>> wavefunction_nx(0, 1.0)
+>>> wavefunction_c_matrix_value(0, 1.0)
 0.45558067201133257
->>> wavefunction_nx(0, 1.0+1.0j)
-(0.4058348636708703-0.6320503516152827j)
->>> wavefunction_nx(0, np.array([1.0,2.0]))
+>>> wavefunction_c_matrix_value(0, 1.0 + 2.0j)
+(-1.4008797330262455-3.0609780602975003j)
+>>> wavefunction_c_matrix_vector(0, np.array([1.0,2.0]),np.zeros((1,x.shape[0]))[0])
 array([0.45558067, 0.10165379])
->>> wavefunction_nx(0, np.array([1.0+1.0j,2.0+3.0j]))
+>>> wavefunction_c_matrix_vector(0, np.array([1.0+1.0j,2.0+3.0j]),np.zeros((1,x.shape[0]),dtype=np.complex128)[0])
 array([0.40583486-0.63205035j, 8.78611733+2.55681454j])
->>> wavefunction_nx(61, 2.0)
--0.01677378220489314
->>> wavefunction_nx(61, np.array([1.0,2.0]))
+>>> wavefunction_real_value(0, 1.0)
+0.45558067201133257
+>>> wavefunction_real_value(61, 1.0)
+-0.23930491991711444
+>>> wavefunction_real_vector(0, np.array([1.0,2.0]))
+array([0.45558067, 0.10165379])
+>>> wavefunction_real_vector(61, np.array([1.0,2.0]))
 array([-0.23930492, -0.01677378])
+>>> wavefunction_complex_value(0, 1.0+1.0j)
+(0.4058348636708703-0.6320503516152827j)
+>>> wavefunction_complex_vector(0, np.array([1.0+1.0j,2.0+3.0j]))
+array([0.40583486-0.63205035j, 8.78611733+2.55681454j])
 ```
 
 
