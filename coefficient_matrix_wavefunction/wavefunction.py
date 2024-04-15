@@ -341,8 +341,8 @@ else:
 try:
 
     # Basic functionality test
-    test_output_scipy_value = wavefunction_scipy_value(0,1.0)
-    test_output_scipy_vector = wavefunction_scipy_value(0,np.array([0.0, 1.0, 2.0]))
+    test_output_scipy_value = wavefunction_scipy(0,1.0)
+    test_output_scipy_vector = wavefunction_scipy(0,np.array([0.0, 1.0, 2.0]))
     test_output_real_value_cm = wavefunction_c_matrix_value(0,1.0)
     test_output_complex_value_cm = wavefunction_c_matrix_value(0,1.0 + 2.0j)
     test_output_real_vector = wavefunction_c_matrix_vector(0, np.array([0.0, 1.0, 2.0]),np.array([0.0,0.0,0.0]))
