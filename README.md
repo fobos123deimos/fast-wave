@@ -131,9 +131,9 @@ array([[  0.,   0.,   0.,   1.],
        [  0.,   0.,   2.,   0.],
        [  0.,   4.,   0.,  -2.],
        [  8.,   0., -12.,   0.]])
->>> wavefunction_scipy_value(1, 2.0)
+>>> wavefunction_scipy(1, 2.0)
 0.28752033217907963
->>> wavefunction_scipy_value(1, np.array([0.0, 1.0, 2.0]))
+>>> wavefunction_scipy(1, np.array([0.0, 1.0, 2.0]))
 array([0.        , 0.64428837, 0.28752033])
 >>> wavefunction_c_matrix_value(0, 1.0)
 0.45558067201133257

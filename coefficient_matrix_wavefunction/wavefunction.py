@@ -87,7 +87,7 @@ def create_hermite_coefficients_table(n_max: np.uint64) -> np.ndarray:
 
 
 @nb.jit(forceobj=True, looplift=True, boundscheck=False)
-def wavefunction_scipy_value(n: np.uint64, x: Union[np.float64, np.ndarray[np.float64]]) -> Union[np.float64, np.ndarray[np.float64]]:
+def wavefunction_scipy(n: np.uint64, x: Union[np.float64, np.ndarray[np.float64]]) -> Union[np.float64, np.ndarray[np.float64]]:
     """
     Compute the wavefunction for a given quantum state and position(s) using scipy.
 
@@ -106,9 +106,9 @@ def wavefunction_scipy_value(n: np.uint64, x: Union[np.float64, np.ndarray[np.fl
     Examples
     --------
     ```python
-    >>> wavefunction_scipy_value(1, 2.0)
+    >>> wavefunction_scipy(1, 2.0)
     0.28752033217907963
-    >>> wavefunction_scipy_value(1, np.array([0.0, 1.0, 2.0]))
+    >>> wavefunction_scipy(1, np.array([0.0, 1.0, 2.0]))
     array([0.        , 0.64428837, 0.28752033])
     ```
 
@@ -231,7 +231,7 @@ def wavefunction_real_value(n: np.uint64, x: np.float64) -> np.float64:
     ```
     """
 
-    return  wavefunction_c_matrix_value(n,x) if(n<=60) else wavefunction_scipy_value(n,x)
+    return  wavefunction_c_matrix_value(n,x) if(n<=60) else wavefunction_scipy(n,x)
 
 def wavefunction_real_vector(n: np.uint64, x: np.ndarray[np.float64]) -> np.ndarray[np.float64]:
     """
@@ -258,7 +258,7 @@ def wavefunction_real_vector(n: np.uint64, x: np.ndarray[np.float64]) -> np.ndar
     array([-0.23930492, -0.01677378])
     ```
     """
-    return  wavefunction_c_matrix_vector(n,x,np.zeros((1,x.shape[0]))[0]) if(n<=60) else wavefunction_scipy_value(n,x)
+    return  wavefunction_c_matrix_vector(n,x,np.zeros((1,x.shape[0]))[0]) if(n<=60) else wavefunction_scipy(n,x)
 
 def wavefunction_complex_value(n: np.uint64, x: np.complex128) -> np.complex128:
     """
