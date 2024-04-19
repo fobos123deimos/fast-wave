@@ -8,6 +8,10 @@
 
 <br>
 
+<p align="center"><em>" Work supervised by Italo Bezerra, Hilma Vasconcelos, and Scott Glancy. "</em></p>
+
+<br>
+
 > Harnessing the power wavefunctions to navigate the quantum realm. 🚀🌌
 
 This repository is the home to an innovative project that dives into the intricacies of quantum mechanics, utilizing wavefunctions to model and solve complex problems. Our mission is to make quantum calculations accessible, efficient, and fun! 🎉
