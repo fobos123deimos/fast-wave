@@ -8,7 +8,6 @@
 
 <br>
 
-<p align="center"><em>" Work supervised by Italo Bezerra, Hilma Vasconcelos, and Scott Glancy. "</em></p>
 
 <br>
 
@@ -183,7 +182,7 @@ This project is available under the MIT License. See the LICENSE file for more d
 
 ## 📬 Contact
 
-If you have any questions or want to reach out to the team, please send me an email at matheusgomescord@gmail.com.
+If you have any questions or want to reach out to the team, please send me an email at .
 
 ---
 
