@@ -4,7 +4,7 @@
 
 # Efficient Wavefunction⚡🌊
 
-![Version](https://img.shields.io/badge/version-1.0.0-blue.svg?cacheSeconds=2592000) ![Build](https://img.shields.io/badge/build-passing-brightgreen.svg) ![License](https://img.shields.io/badge/License-MIT-yellow.svg)
+![Version](https://img.shields.io/badge/version-1.0.0-blue.svg?cacheSeconds=2592000) ![License](https://img.shields.io/badge/License-BSD%203--Clause-blue.svg)
 
 <br>
 
