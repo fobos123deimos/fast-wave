@@ -118,7 +118,7 @@ def create_hermite_coefficients_table(n_max: np.uint64) -> np.ndarray:
 
 @lru_cache(maxsize=128)
 @nb.jit(nopython=True, looplift=True, nogil=True, boundscheck=False, cache=True)
-def wavefunction_smud(n: np.uint64, x:np.float64)->np.float64:
+def wavefunction_smod(n: np.uint64, x:np.float64)->np.float64:
 
     """
     Compute the wavefunction to an real scalar x using a pre-computed matrix of Hermite polynomial coefficients until n=60 and 
@@ -174,7 +174,7 @@ def wavefunction_smud(n: np.uint64, x:np.float64)->np.float64:
     
 @lru_cache(maxsize=128)
 @nb.jit(nopython=True, looplift=True, nogil=True, boundscheck=False, cache=True)
-def c_wavefunction_smud(n: np.uint64, x: np.complex128) -> np.complex128:
+def c_wavefunction_smod(n: np.uint64, x: np.complex128) -> np.complex128:
 
     """
     Compute the wavefunction to a complex scalar x using a pre-computed matrix of Hermite polynomial coefficients until n=60 and 
@@ -357,7 +357,7 @@ def c_wavefunction_smmd(n: np.uint64, x: tuple[np.complex128,...])-> np.ndarray[
 
 @lru_cache(maxsize=128)
 @nb.jit(nopython=True, looplift=True,nogil=True, boundscheck=False, cache=True)
-def wavefunction_mmud(n: np.uint64, x:np.float64)-> np.ndarray[np.float64]:
+def wavefunction_mmod(n: np.uint64, x:np.float64)-> np.ndarray[np.float64]:
 
     """
     Compute the wavefunction to a real scalar x to all modes until the mode n using the recursion relation for multidimensional M-mode wavefunction.
@@ -398,7 +398,7 @@ def wavefunction_mmud(n: np.uint64, x:np.float64)-> np.ndarray[np.float64]:
 
 @lru_cache(maxsize=128)
 @nb.jit(nopython=True, looplift=True,nogil=True, boundscheck=False, cache=True)
-def c_wavefunction_mmud(n: np.uint64, x: np.complex128)-> np.ndarray[np.complex128]: 
+def c_wavefunction_mmod(n: np.uint64, x: np.complex128)-> np.ndarray[np.complex128]: 
 
     """
     Compute the wavefunction to a complex scalar x to all modes until the mode n using the recursion relation for multidimensional M-mode wavefunction.
@@ -552,12 +552,12 @@ else:
 try:
 
     # Basic functionality test
-    test_output_udsm = wavefunction_smud(2, 10.0)
-    test_output_udmm = wavefunction_mmud(2, 10.0)
+    test_output_udsm = wavefunction_smod(2, 10.0)
+    test_output_udmm = wavefunction_mmod(2, 10.0)
     test_output_mdsm = wavefunction_smmd(2, (10.0,4.5))
     test_output_mdsm = wavefunction_mmmd(2, (10.0,4.5))
-    test_output_c_udsm = c_wavefunction_smud(2, 10.0 + 0.0j)
-    test_output_c_udmm = c_wavefunction_mmud(2, 10.0 + 0.0j)
+    test_output_c_udsm = c_wavefunction_smod(2, 10.0 + 0.0j)
+    test_output_c_udmm = c_wavefunction_mmod(2, 10.0 + 0.0j)
     test_output_c_mdsm = c_wavefunction_smmd(2, (10.0 + 0.0j,4.5 + 0.0j))
     test_output_c_mdsm = c_wavefunction_mmmd(2, (10.0 + 0.0j,4.5 + 0.0j))
     compilation_test = True
