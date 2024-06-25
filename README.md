@@ -181,11 +181,12 @@ Contributions, whether filing an issue, proposing improvements, or submitting a 
 
 ## 📜 License
 
-This project is available under the MIT License. See the LICENSE file for more details.
+This project is available under the BSD 3-Clause License. See the LICENSE file for more details.
 
 ## 📬 Contact
 
-If you have any questions or want to reach out to the team, please send me an email at .
+If you have any questions or want to reach out to the team, please send me an email at [matheusgomescord@gmail.com](matheusgomescord@gmail.com)
+.
 
 ---
 
