@@ -67,9 +67,23 @@ Here are the first four Hermite Polynomials:
 - $H_2(x) = 4x^2 - 2$
 - $H_3(x) = 8x^3 - 12x$
 
-### Applications
+### Applications of the Hermite Polynomial
 
 Hermite Polynomials play a crucial role in various areas of physics and mathematics, including quantum mechanics, where they are used in the wave functions of the quantum harmonic oscillator.
+
+### $\star$ *Iside the Package*
+
+The idea of ​​this package is to use a matrix with Hermite coefficients for sigle_mode problems up to $\mathbf{n\le 60}$ through two functions: 
+
+- `wavefunction_smod(n,x)` $\mathbf{→}$ *[Single-Mode & Onedimensional]* 
+- `wavefunction_smmd(n,xv)` $\mathbf{→}$ *[Single-Mode & Multidimensional]*
+
+The use of this matrix of coefficients is only used up to a value of **60** (a value obtained empirically) because from this level onwards the function may present precision errors in its calculations with incoherent results. Here is an equation that represents this calculation:
+
+- $C_{n}[i]•x^{p}_{i}$ $→$ *[Single-Mode & Onedimensional]*
+- $C_{n}[i]•x^{p}_{ij}$ for each $x_j \in xv$ $→$ *[Single-Mode & Multidimensional]*
+
+Where $\mathbf{x^{p}}$ is a vector of powers up to **n** and with zeros where there are no coefficients, for example $\mathbf{x^{p}}$ for the polynomial $\mathbf{H_{3}(x)}$ is equal to $\mathbf{x^{p} = [x^{3},0.0,x^{1},0.0]}$. On the other hand, $\mathbf{C_{n}[i]}$ is the row of coefficients for a degree $i$ of the Hermite polynomial for a matrix of Hermite coefficients going up to degree $n$. For this algorithm to perform as efficiently as possible, [Numba's Just-in-Time compilation](https://numba.pydata.org/) is used in conjunction with [lru_cache (Least Recently Used - Cache Management)](https://docs.python.org/3/library/functools.html).
 
 ### Wavefunction
 
@@ -105,7 +119,7 @@ $$
 
 where $n$ is a non-negative integer, $m$ is the mass of the particle, $\omega$ is the angular frequency of the oscillator, and $H_n$ are the Hermite polynomials.
 
-### Applications
+### Applications of the Wavefuntion
 
 Wavefunctions and the Schrödinger equation are central to understanding phenomena such as superposition, entanglement, and quantum tunneling, providing deep insights into the behavior of atoms, molecules, and subatomic particles.
 
