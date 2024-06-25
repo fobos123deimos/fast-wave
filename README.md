@@ -71,7 +71,7 @@ Here are the first four Hermite Polynomials:
 
 Hermite Polynomials play a crucial role in various areas of physics and mathematics, including quantum mechanics, where they are used in the wave functions of the quantum harmonic oscillator.
 
-### $\star$ *Iside the Package*
+### $\star$ *Inside the Package*
 
 The idea of ​​this package is to use a matrix with Hermite coefficients for sigle_mode problems up to $\mathbf{n\le 60}$ through two functions: 
 
@@ -83,7 +83,15 @@ The use of this matrix of coefficients is only used up to a value of **60** (a v
 - $C_{n}[i]•x^{p}_{i}$ $→$ *[Single-Mode & Onedimensional]*
 - $C_{n}[i]•x^{p}_{ij}$ for each $x_j \in xv$ $→$ *[Single-Mode & Multidimensional]*
 
-Where $\mathbf{x^{p}}$ is a vector of powers up to **n** and with zeros where there are no coefficients, for example $\mathbf{x^{p}}$ for the polynomial $\mathbf{H_{3}(x)}$ is equal to $\mathbf{x^{p} = [x^{3},0.0,x^{1},0.0]}$. On the other hand, $\mathbf{C_{n}[i]}$ is the row of coefficients for a degree $i$ of the Hermite polynomial for a matrix of Hermite coefficients going up to degree $n$. For this algorithm to perform as efficiently as possible, [Numba's Just-in-Time compilation](https://numba.pydata.org/) is used in conjunction with [lru_cache (Least Recently Used - Cache Management)](https://docs.python.org/3/library/functools.html).
+Where $\mathbf{x^{p}}$ is a vector of powers up to **n** and with zeros where there are no coefficients, for example $\mathbf{x^{p}}$ for the polynomial $\mathbf{H_{3}(x)}$ is equal to $\mathbf{x^{p} = [x^{3},0.0,x^{1},0.0]}$. On the other hand, $\mathbf{C_{n}[i]}$ is the row of coefficients for a degree $i$ of the Hermite polynomial for a matrix of Hermite coefficients going up to degree $n$. For this algorithm to perform as efficiently as possible, [Numba's Just-in-Time compilation](https://numba.pydata.org/) is used in conjunction with [lru_cache (Least Recently Used - Cache Management)](https://docs.python.org/3/library/functools.html). The arguments used in the **@jit** decorator were these:
+
+- **nopython=True:** This argument forces the Numba compiler to operate in "nopython" mode, which means that all the code within the function must be compilable to pure machine code without falling back to the Python interpreter. This results in significant performance improvements by eliminating the overhead of the Python interpreter.
+- **looplift=True:** This argument allows Numba to "lift" loops out of "nopython" mode. That is, if there are loops in the code that cannot be compiled in "nopython" mode, Numba will try to move them outside of the compiled part and execute them as normal Python code.
+- **nogil=True:** This argument releases the Python Global Interpreter Lock (GIL) while the function is executing. It is useful for allowing the Numba-compiled code to run in parallel with other Python threads, increasing performance in multi-threaded programs.
+- **boundscheck=False:** Disables array bounds checking. Normally, Numba checks if array indices are within valid bounds. Disabling this check can increase performance but may result in undefined behavior if there are out-of-bounds accesses.
+- **cache=True:** Enables caching of the compiled function. The first time the function is compiled, Numba stores the compiled version in a cache. On subsequent executions, Numba can reuse the compiled version from the cache instead of recompiling the function, reducing the function's startup time.
+
+The **@lru_cache(maxsize=128)** decorator in Python is used to apply the **Least Recently Used (LRU)** caching to a function. This caching mechanism can significantly improve the performance of functions that are called repeatedly with the same arguments by storing (caching) the results of expensive or frequently called functions and reusing the cached result when the same inputs occur again. The **maxsize** parameter helps manage memory usage by limiting the number of items stored in the cache. Once the cache reaches this limit, the least recently used items are discarded, keeping the cache size under control.
 
 ### Wavefunction
 
