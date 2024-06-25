@@ -2,10 +2,9 @@
 <div style="margin-left: -20px;"><img src="https://github.com/matheus123deimos/CoEfficients-Matrix-Wavefunction/assets/20157453/10d35b23-bafe-4423-be8a-60f838771b3d" alt="" width="900" height="400"></div>
 
 
-# CoEfficients-Matrix-Wavefunction🔢🌊
+# Efficient Wavefunction⚡🌊
 
-![Version](https://img.shields.io/badge/version-1.0.0-blue.svg?cacheSeconds=2592000) [![License](https://img.shields.io/badge/license-BSD%203--Clause-blue.svg)](https://github.com/pikachu123deimos/CoEfficients-Matrix-Wavefunction/blob/main/LICENSE)
- 
+![Version](https://img.shields.io/badge/version-1.0.0-blue.svg?cacheSeconds=2592000) [![License](https://img.shields.io/badge/license-BSD%203--Clause-blue.svg)](https://github.com/pikachu123deimos/CoEfficients-Matrix-Wavefunction/blob/efficient_wavefunction/LICENSE)
 
 
 <br>
@@ -127,7 +126,7 @@ pip install -r requirements.txt
 ## 🎨 Examples
 
 ```python
->>> from coefficient_matrix_wavefunction.wavefunction import *
+>>> from efficient_wavefunction.wavefunction import *
 Functionality Test Passed: True
 >>> hermite_sympy(2)
 4*x**2 - 2
@@ -136,30 +135,32 @@ array([[  0.,   0.,   0.,   1.],
        [  0.,   0.,   2.,   0.],
        [  0.,   4.,   0.,  -2.],
        [  8.,   0., -12.,   0.]])
->>> wavefunction_scipy(1, 2.0)
-0.28752033217907963
->>> wavefunction_scipy(1, np.array([0.0, 1.0, 2.0]))
-array([0.        , 0.64428837, 0.28752033])
->>> wavefunction_c_matrix_value(0, 1.0)
+ >>> wavefunction_smud(0, 1.0)
 0.45558067201133257
->>> wavefunction_c_matrix_value(0, 1.0 + 2.0j)
+>>> wavefunction_smod(61, 1.0)
+-0.2393049199171131
+>>> c_wavefunction_smod(0,1.0+2.0j)
 (-1.4008797330262455-3.0609780602975003j)
->>> wavefunction_c_matrix_vector(0, np.array([1.0,2.0]),np.zeros((1,x.shape[0]))[0])
+>>> c_wavefunction_smod(61,1.0+2.0j)
+(-511062135.47555304+131445997.75753704j)
+>>> wavefunction_smmd(0,(1.0,2.0))
 array([0.45558067, 0.10165379])
->>> wavefunction_c_matrix_vector(0, np.array([1.0+1.0j,2.0+3.0j]),np.zeros((1,x.shape[0]),dtype=np.complex128)[0])
-array([0.40583486-0.63205035j, 8.78611733+2.55681454j])
->>> wavefunction_real_value(0, 1.0)
-0.45558067201133257
->>> wavefunction_real_value(61, 1.0)
--0.23930491991711444
->>> wavefunction_real_vector(0, np.array([1.0,2.0]))
-array([0.45558067, 0.10165379])
->>> wavefunction_real_vector(61, np.array([1.0,2.0]))
+>>> wavefunction_smmd(61,(1.0,2.0))
 array([-0.23930492, -0.01677378])
->>> wavefunction_complex_value(0, 1.0+1.0j)
-(0.4058348636708703-0.6320503516152827j)
->>> wavefunction_complex_vector(0, np.array([1.0+1.0j,2.0+3.0j]))
-array([0.40583486-0.63205035j, 8.78611733+2.55681454j])
+>>> c_wavefunction_smmd(0,(1.0 + 1.0j, 2.0 + 2.0j))
+array([ 0.40583486-0.63205035j, -0.49096842+0.56845369j])
+>>> c_wavefunction_smmd(61,(1.0 + 1.0j, 2.0 + 2.0j))
+array([-7.56548941e+03+9.21498621e+02j, -1.64189542e+08-3.70892077e+08j])
+>>> wavefunction_mmod(1,1.0)
+array([0.45558067, 0.64428837])
+>>> c_wavefunction_mmod(1,1.0 +2.0j)
+array([-1.40087973-3.06097806j,  6.67661026-8.29116292j])
+>>> wavefunction_mmmd(1,(1.0 ,2.0))
+array([[0.45558067, 0.10165379],
+       [0.64428837, 0.28752033]])
+>>> c_wavefunction_mmmd(1,(1.0 + 1.0j,2.0 + 2.0j))
+array([[ 0.40583486-0.63205035j, -0.49096842+0.56845369j],
+       [ 1.46779135-0.31991701j, -2.99649822+0.21916143j]])
 ```
 
 
@@ -172,7 +173,7 @@ Our journey through the quantum realm is inspired by the following seminal works
 - NIST Digital Library of Mathematical Functions. https://dlmf.nist.gov/, Release 1.0.28 of 2020-09-15.
 - Sympy Documentation: https://docs.sympy.org/latest/modules/polys/index.html
 - Scipy Documentation on `eval_hermite`: https://docs.scipy.org/doc/scipy/reference/generated/scipy.special.eval_hermite.html
-- Griffiths, D. J. (2005). Introduction to Quantum Mechanics (2nd Ed.). Pearson Education.
+- Pérez-Jordá, J. M. (2017). On the recursive solution of the quantum harmonic oscillator. *European Journal of Physics*, 39(1), 015402. doi:10.1088/1361-6404/aa9584
 
 ## 🤝 Contributing
 
