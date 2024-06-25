@@ -181,7 +181,7 @@ Contributions, whether filing an issue, proposing improvements, or submitting a 
 
 ## 📜 License
 
-This project is available under the BSD 3-Clause License. See the LICENSE file for more details.
+This project is available under the *BSD 3-Clause License*. See the LICENSE file for more details.
 
 ## 📬 Contact
 
