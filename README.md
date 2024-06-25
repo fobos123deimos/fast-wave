@@ -2,7 +2,7 @@
 <div style="margin-left: -20px;"><img src="https://github.com/matheus123deimos/CoEfficients-Matrix-Wavefunction/assets/20157453/10d35b23-bafe-4423-be8a-60f838771b3d" alt="" width="900" height="400"></div>
 
 
-# Efficient Wavefunction⚡🌊
+# Fast Wavefunction⚡🌊
 
 ![Version](https://img.shields.io/badge/version-1.0.0-blue.svg?cacheSeconds=2592000) [![License](https://img.shields.io/badge/license-BSD%203--Clause-blue.svg)](https://github.com/pikachu123deimos/CoEfficients-Matrix-Wavefunction/blob/efficient_wavefunction/LICENSE)
 
@@ -126,7 +126,7 @@ pip install -r requirements.txt
 ## 🎨 Examples
 
 ```python
->>> from efficient_wavefunction.wavefunction import *
+>>> from fast_wavefunction.wavefunction import *
 Functionality Test Passed: True
 >>> hermite_sympy(2)
 4*x**2 - 2
@@ -135,7 +135,7 @@ array([[  0.,   0.,   0.,   1.],
        [  0.,   0.,   2.,   0.],
        [  0.,   4.,   0.,  -2.],
        [  8.,   0., -12.,   0.]])
- >>> wavefunction_smud(0, 1.0)
+ >>> wavefunction_smod(0, 1.0)
 0.45558067201133257
 >>> wavefunction_smod(61, 1.0)
 -0.2393049199171131
