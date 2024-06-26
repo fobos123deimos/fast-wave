@@ -127,9 +127,25 @@ $$
 
 where $n$ is a non-negative integer, $m$ is the mass of the particle, $\omega$ is the angular frequency of the oscillator, and $H_n$ are the Hermite polynomials.
 
-### Applications of the Wavefuntion
+### Applications of the Wavefunction
 
 Wavefunctions and the Schrödinger equation are central to understanding phenomena such as superposition, entanglement, and quantum tunneling, providing deep insights into the behavior of atoms, molecules, and subatomic particles.
+
+### $\star$ *Inside the Package*
+
+The idea of ​​this package is to use a recurrence to Wavefunction for sigle_mode problems where $\mathbf{n> 60}$, and for multi_mode problems to all values of $\mathbf{n}$ through these functions:
+
+- `wavefunction_smod(n,x)` $\mathbf{→}$ *[Single-Mode & Onedimensional]* 
+- `wavefunction_smmd(n,xv)` $\mathbf{→}$ *[Single-Mode & Multidimensional]*
+- `wavefunction_mmod(n,x)` $\mathbf{→}$ *[Multi-Mode & Onedimensional]*
+- `wavefunction_mmmd(n,xv)` $\mathbf{→}$ *[Multi-Mode & Multidimensional]*
+
+Here's a way to get to recurrence:
+
+![wavefunction_recurrence](https://github.com/pikachu123deimos/CoEfficients-Matrix-Wavefunction/assets/20157453/79140387-14e3-4250-ba46-918708bfc15b)
+
+
+Multi-Mode functions also use the Numba decorator with the same arguments, in addition to using the lru_cache decorator with **max_size = 128**.
 
 ## ✨ Advantages
 
