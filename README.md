@@ -142,7 +142,7 @@ The idea of ​​this package is to use a recurrence to Wavefunction for sigle_
 
 Here's a way to get to recurrence:
 
-![wavefunction_recurrence](https://github.com/pikachu123deimos/CoEfficients-Matrix-Wavefunction/assets/20157453/79140387-14e3-4250-ba46-918708bfc15b)
+<img src="https://github.com/pikachu123deimos/CoEfficients-Matrix-Wavefunction/assets/20157453/79140387-14e3-4250-ba46-918708bfc15b" alt="wavefunction_recurrence" width="1200">
 
 
 Multi-Mode functions also use the Numba decorator with the same arguments, in addition to using the lru_cache decorator with **max_size = 128**.
