@@ -539,7 +539,7 @@ References
   https://docs.python.org/3/tutorial/modules.html 
   .
 """
-matrix_path = "./efficient_wavefunction/C_matrix.pickle"
+matrix_path = "./fast_wavefunction/C_matrix.pickle"
 if os.path.isfile(matrix_path):
     with open(matrix_path, 'rb') as file:
         c_matrix = pickle.load(file)
