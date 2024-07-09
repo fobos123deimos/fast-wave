@@ -1,12 +1,9 @@
 
-<div style="margin-left: -100px;"><img src="https://github.com/pikachu123deimos/CoEfficients-Matrix-Wavefunction/assets/20157453/dda42f25-24cc-46b8-ae3d-cae511cbf3bc" alt="" width="900" height="400"></div>
 
+![Fast_Wave_logo](https://github.com/pikachu123deimos/CoEfficients-Matrix-Wavefunction/assets/20157453/7907ad0f-4a2f-4ddf-b661-ac5db080e42b)
 
 
 ![Version](https://img.shields.io/badge/version-1.0.0-blue.svg?cacheSeconds=2592000) [![License](https://img.shields.io/badge/license-BSD%203--Clause-blue.svg)](https://github.com/pikachu123deimos/CoEfficients-Matrix-Wavefunction/blob/main/LICENSE)
-
-
-<br>
 
 
 <br>
