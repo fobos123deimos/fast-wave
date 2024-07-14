@@ -9,9 +9,9 @@
 
 <br>
 
-> Harnessing the power wavefunctions to navigate the quantum realm. 🚀🌌
+> Harnessing the Power of the wavefunctions to navigate the quantum realm.🚀🌌
 
-This repository is the home to an innovative project that dives into the intricacies of quantum mechanics, utilizing wavefunctions to model and solve complex problems. Our mission is to make quantum calculations accessible, efficient, and fun! 🎉
+This package is an innovative project that delves into the complexities of quantum mechanics with its own wavefunction implementation making calculations more accessible efficient and accurate! 🎉
 
 ## 📑 Table of Contents
 
@@ -29,7 +29,7 @@ This repository is the home to an innovative project that dives into the intrica
 - **Basic functionality test**: Demonstrates the core capabilities of our project with a simple yet effective test case.
 
 ## 🛠 Setup
-To use this module, simply run a **git clone**, enter the repository folder through the terminal, and install the **requirements.txt**. After doing this, you can easily execute the module's functions using Python's IDE (**Python 3.11.5**) through the terminal in the repository folder or by placing scripts/notebooks that import the module's libraries inside the repository folder (⚠️ the repository folder, not the module one):
+To use this package, simply run a **git clone**, enter the repository folder through the terminal, and install the **requirements.txt**. After doing this, you can easily execute the module's functions using Python's IDE (**Python 3.11.5**) through the terminal in the repository folder or by placing scripts/notebooks that import the module's libraries inside the repository folder (⚠️ the repository folder, not the module one):
 ```bash
 git clone https://github.com/matheus123deimos/CoEfficients-Matrix-Wavefunction.git
 cd CoEfficients-Matrix-Wavefunction
