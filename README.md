@@ -203,8 +203,9 @@ Multi-Mode functions also use the Numba decorator with the same arguments, in ad
 
 ### The Essence of the Package: *"solve four problems."*
 
+<br>
 
-
+<img src="https://github.com/user-attachments/assets/f05d0c30-6aa6-4381-9274-ec2579708312" alt="Screenshot 2024-07-14 at 18-51-19 Captioned algorithm algpseudocode example - Online LaTeX Editor Overleaf" width="600">
 
 ## 📖 References
 
