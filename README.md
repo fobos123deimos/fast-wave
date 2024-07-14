@@ -16,7 +16,7 @@ This package is an innovative project that delves into the complexities of quant
 ## 📑 Table of Contents
 
 - [Advantages](#advantages)
-- [Setup](#setup)
+- [Setup](###Setup)
 - [Examples](#exemples)
 - [Theory](#theory)
 - [References](#theory)
@@ -200,6 +200,10 @@ Here's a way to get to recurrence:
 
 
 Multi-Mode functions also use the Numba decorator with the same arguments, in addition to using the lru_cache decorator with **max_size = 128**.
+
+### The Essence of the Package: *"solve four problems."*
+
+
 
 
 ## 📖 References
