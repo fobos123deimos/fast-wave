@@ -16,7 +16,7 @@ This package is an innovative project that delves into the complexities of quant
 ## 📑 Table of Contents
 
 - [Advantages](#advantages)
-- [Setup](###Setup)
+- [Setup](#setup)
 - [Examples](#exemples)
 - [Theory](#theory)
 - [References](#theory)
