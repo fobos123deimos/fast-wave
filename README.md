@@ -15,12 +15,12 @@ This package is an innovative project that delves into the complexities of quant
 
 ## 📑 Table of Contents
 
-- [Advantages](#advantages)
-- [Setup](#setup)
-- [Examples](#exemples)
-- [Theory](#theory)
-- [References](#theory)
-- [Contact](#contact)
+- [Advantages](#-advantages)
+- [Setup](#-setup)
+- [Examples](#-exemples)
+- [Theory](#-theory)
+- [References](#-theory)
+- [Contact](#-contact)
 
 ## ✨ Advantages
 
