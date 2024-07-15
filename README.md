@@ -201,16 +201,16 @@ Here's a way to get to recurrence:
 
 Multi-Mode functions also use the Numba decorator with the same arguments, in addition to using the lru_cache decorator with **max_size = 128**.
 
-### The Essence of the Package: *"solve four problems."*
+### The Essence of the Package: *"Sigle-mode Problem."*
 
 <br>
 
-<img src="https://github.com/user-attachments/assets/f05d0c30-6aa6-4381-9274-ec2579708312" alt="Screenshot 2024-07-14 at 18-51-19 Captioned algorithm algpseudocode example - Online LaTeX Editor Overleaf" width="600">
+<img src="https://github.com/user-attachments/assets/56edb956-742b-4e17-af0e-7169207a455c" alt="Screenshot 2024-07-14 at 18-51-19 Captioned algorithm algpseudocode example - Online LaTeX Editor Overleaf" width="600">
 
 <br>
 <br>
 
-This algorithm is a representation of the use of the all functions of the package to solve the four problems in question:
+This algorithm is a representation of the use of all functions of the package to solve single-mode problems. To solve multi-mode problems we use only two functions that are based on the strategies to $n>60$. We can estimate the time complexity for $n\leq60$ with $O(1)$ for the onedimensional case and $O(\mathbf{x}.size)$ for the multidimensional case, just as we can estimate the space complexity with $O(1)$ for the onedimensional case and $O(\mathbf{x}.size)$ for the multidimensional case (result vector allocation). For the case of $n>60$, we have a time complexity value equal to $O(n)$ for the onedimensional case and $O(n*\mathbf{x}.size)$ for the multidimensional case, as well as we have a space complexity of $O(n)$ for the onedimensional case and $O(n*\mathbf{x}.size)$ for the multidimensional case (allocating the result matrix).
 
 ## 📖 References
 
