@@ -238,4 +238,4 @@ If you have any questions or want to reach out to the team, please send me an em
 
 ---
 
-Enjoy exploring the quantum world with us! 🌈✨
+Enjoy exploring the quantum world! 🌈✨
