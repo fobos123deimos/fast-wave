@@ -73,9 +73,9 @@ def hermite_sympy(n: np.uint64) -> Poly:
     return 1 if n == 0 else ((-1) ** n) * exp(x ** 2) * diff(exp(-x ** 2), x, n)
 
 
-def create_hermite_coefficients_table(n_max: np.uint64) -> np.ndarray:
+def create_hermite_coefficients_matrix(n_max: np.uint64) -> np.ndarray:
     """
-    Create a table of coefficients for Hermite polynomials up to order `n_max`.
+    Create a matrix of coefficients for Hermite polynomials up to order `n_max`.
 
     Parameters
     ----------
@@ -90,7 +90,7 @@ def create_hermite_coefficients_table(n_max: np.uint64) -> np.ndarray:
     Examples
     --------
     ```
-    >>> create_hermite_coefficients_table(3)
+    >>> create_hermite_coefficients_matrix(3)
     array([[  0.,   0.,   0.,   1.],
           [  0.,   0.,   2.,   0.],
           [  0.,   4.,   0.,  -2.],
@@ -539,12 +539,12 @@ References
   https://docs.python.org/3/tutorial/modules.html 
   .
 """
-matrix_path = "./fast_wavefunction/C_matrix.pickle"
+matrix_path = "./fast_wave/C_matrix.pickle"
 if os.path.isfile(matrix_path):
     with open(matrix_path, 'rb') as file:
         c_matrix = pickle.load(file)
 else:
-    c_matrix = create_hermite_coefficients_table(60)
+    c_matrix = create_hermite_coefficients_matrix(60)
     with open(matrix_path, 'wb') as file:
         pickle.dump(c_matrix, file)
 

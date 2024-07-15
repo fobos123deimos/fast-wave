@@ -41,11 +41,11 @@ pip install -r requirements.txt
 ## 🎨 Examples
 
 ```python
->>> from fast_wavefunction.wavefunction import *
+>>> from fast_wave.wavefunction import *
 Functionality Test Passed: True
 >>> hermite_sympy(2)
 4*x**2 - 2
->>> create_hermite_coefficients_table(3)
+>>> create_hermite_coefficients_matrix(3)
 array([[  0.,   0.,   0.,   1.],
        [  0.,   0.,   2.,   0.],
        [  0.,   4.,   0.,  -2.],
