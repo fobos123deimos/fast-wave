@@ -31,11 +31,9 @@ This package is an innovative project that delves into the complexities of quant
 
 
 ## 🛠 Setup
-To use this package, simply run a **git clone**, enter the repository folder through the terminal, and install the **requirements.txt**. After doing this, you can easily execute the module's functions using Python's IDE (**Python 3.11.5**) through the terminal in the repository folder or by placing scripts/notebooks that import the module's libraries inside the repository folder (⚠️ the repository folder, not the module one):
+To use this package, simply run the following command in the command line: 
 ```bash
-git clone https://github.com/matheus123deimos/CoEfficients-Matrix-Wavefunction.git
-cd CoEfficients-Matrix-Wavefunction
-pip install -r requirements.txt
+pip install fast-wave
 ``` 
 
 ## 🎨 Examples
