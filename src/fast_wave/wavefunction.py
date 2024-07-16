@@ -539,7 +539,10 @@ References
   https://docs.python.org/3/tutorial/modules.html 
   .
 """
-matrix_path = "./fast_wave/C_matrix.pickle"
+package_dir = os.path.dirname(__file__)  
+matrix_filename = 'C_matrix.pickle'
+matrix_path = os.path.join(package_dir, matrix_filename)
+
 if os.path.isfile(matrix_path):
     with open(matrix_path, 'rb') as file:
         c_matrix = pickle.load(file)
