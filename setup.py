@@ -23,8 +23,8 @@ test_requires = [
 packages = find_packages(where='src')
 
 classifiers = [
-    'Programming Language :: Python :: 3.11.5',  
-    'Topic :: Scientific/Computational Mathematics',  
+    'Programming Language :: Python :: 3.11',  
+    'Topic :: Scientific/Engineering :: Mathematics',  
     'License :: OSI Approved :: BSD License',  
     'Development Status :: 5 - Production/Stable', 
 ]
