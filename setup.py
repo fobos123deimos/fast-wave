@@ -2,7 +2,7 @@ import setuptools
 from setuptools import find_packages
 
 name = "fast_wave"
-version = "1.0.0"
+version = "1.0.1"
 description = "Package for the calculation of the time-independent wavefunction."  
 author_email = "matheusgomescord@gmail.com"
 url = "https://github.com/pikachu123deimos/fast-wave" 

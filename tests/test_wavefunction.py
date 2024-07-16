@@ -1,7 +1,7 @@
 import pytest
 import numpy as np
 from sympy import symbols
-from fast_wave.wavefunction import *
+from src.fast_wave.wavefunction import *
 
 @pytest.fixture(scope="module", autouse=True)
 def initialize_c_matrix():
