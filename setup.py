@@ -26,7 +26,7 @@ classifiers = [
     'Programming Language :: Python :: 3.11.5',  
     'Topic :: Scientific/Computational Mathematics',  
     'License :: OSI Approved :: BSD License',  
-    'Development Status :: 5 - Stable', 
+    'Development Status :: 5 - Production/Stable', 
 ]
 
 setuptools.setup(
