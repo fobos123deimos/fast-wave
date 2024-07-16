@@ -4,14 +4,14 @@
 ![Fast_Wave_logo](https://github.com/pikachu123deimos/CoEfficients-Matrix-Wavefunction/assets/20157453/e1de91d2-3792-4b21-9553-7c13ce372a76)
 
 
-![Version](https://img.shields.io/badge/version-1.0.3-blue.svg?cacheSeconds=2592000) [![License](https://img.shields.io/badge/license-BSD%203--Clause-blue.svg)](https://github.com/pikachu123deimos/CoEfficients-Matrix-Wavefunction/blob/main/LICENSE)
+![Version](https://img.shields.io/badge/version-1.0.4-blue.svg?cacheSeconds=2592000) [![License](https://img.shields.io/badge/license-BSD%203--Clause-blue.svg)](https://github.com/pikachu123deimos/CoEfficients-Matrix-Wavefunction/blob/main/LICENSE)
 
 
 <br>
 
 > Harnessing the Power of the wavefunctions to navigate the quantum realm.🚀🌌
 
-This package is an innovative project that delves into the complexities of quantum mechanics with its own wavefunction implementation making calculations more accessible efficient and accurate! 🎉
+This package is an innovative project that delves into the complexities of quantum mechanics with its implementation for the time-independent wavefunction of the Quantum Harmonic Oscillator, a model widely used in Photonic Quantum Computing, making its calculations more efficient, and accurate! 🎉
 
 ## 📑 Table of Contents
 
