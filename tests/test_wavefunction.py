@@ -43,29 +43,39 @@ def test_wavefunction_computation():
     """
     Tests the basic functionality of all wavefunction functions.
     """
+
+    wave_smod = wavefunction(s_mode = True, o_dimensional = True, complex_bool = False, cache = False, cache_size = 128)
+    wave_smmd = wavefunction(s_mode = True, o_dimensional = False, complex_bool = False, cache = False, cache_size = 128)
+    wave_mmod = wavefunction(s_mode = False, o_dimensional = True, complex_bool = False, cache = False, cache_size = 128)
+    wave_mmmd = wavefunction(s_mode = False, o_dimensional = False, complex_bool = False, cache = False, cache_size = 128)
+    c_wave_smod = wavefunction(s_mode = True, o_dimensional = True, complex_bool = True, cache = False, cache_size = 128)
+    c_wave_smmd = wavefunction(s_mode = True, o_dimensional = False, complex_bool = True, cache = False, cache_size = 128)
+    c_wave_mmod = wavefunction(s_mode = False, o_dimensional = True, complex_bool = True, cache = False, cache_size = 128)
+    c_wave_mmmd = wavefunction(s_mode = False, o_dimensional = False, complex_bool = True, cache = False, cache_size = 128)
+
     # Testing basic functionality
-    test_output_udsm = wavefunction_smod(2, 10.0)
-    assert isinstance(test_output_udsm, float)
+    test_output_odsm = wave_smod(2, 10.0)
+    assert isinstance(test_output_odsm, float)
     
-    test_output_udmm = wavefunction_mmod(2, 10.0)
-    assert isinstance(test_output_udmm, np.ndarray)
+    test_output_odmm = wave_mmod(2, 10.0)
+    assert isinstance(test_output_odmm, np.ndarray)
     
-    test_output_mdsm = wavefunction_smmd(2, (10.0, 4.5))
+    test_output_mdsm = wave_smmd(2, np.array([10.0, 4.5]))
     assert isinstance(test_output_mdsm, np.ndarray)
     
-    test_output_mdmm = wavefunction_mmmd(2, (10.0, 4.5))
+    test_output_mdmm = wave_mmmd(2, np.array([10.0, 4.5]))
     assert isinstance(test_output_mdmm, np.ndarray)
     
-    test_output_c_udsm = c_wavefunction_smod(2, 10.0 + 0.0j)
-    assert isinstance(test_output_c_udsm, complex)
+    test_output_c_odsm = c_wave_smod(2, 10.0 + 0.0j)
+    assert isinstance(test_output_c_odsm, complex)
     
-    test_output_c_udmm = c_wavefunction_mmod(2, 10.0 + 0.0j)
-    assert isinstance(test_output_c_udmm, np.ndarray)
+    test_output_c_odmm = c_wave_mmod(2, 10.0 + 0.0j)
+    assert isinstance(test_output_c_odmm, np.ndarray)
     
-    test_output_c_mdsm = c_wavefunction_smmd(2, (10.0 + 0.0j, 4.5 + 0.0j))
+    test_output_c_mdsm = c_wave_smmd(2, np.array([10.0 + 0.0j, 4.5 + 0.0j]))
     assert isinstance(test_output_c_mdsm, np.ndarray)
     
-    test_output_c_mdmm = c_wavefunction_mmmd(2, (10.0 + 0.0j, 4.5 + 0.0j))
+    test_output_c_mdmm = c_wave_mmmd(2, np.array([10.0 + 0.0j, 4.5 + 0.0j]))
     assert isinstance(test_output_c_mdmm, np.ndarray)
     
     print("All functionality tests passed.")

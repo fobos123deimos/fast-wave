@@ -522,7 +522,7 @@ def c_wavefunction_mmmd(n: np.uint64, x: np.ndarray[np.complex128]) -> np.ndarra
         
     return result
 
-def wavefunction(s_mode: bool = True, o_dimensional: bool = True, complex_boll: bool = False, cache: bool = False, cache_size: np.uint64 = 128) -> nb.core.registry.CPUDispatcher:
+def wavefunction(s_mode: bool = True, o_dimensional: bool = True, complex_bool: bool = False, cache: bool = False, cache_size: np.uint64 = 128) -> nb.core.registry.CPUDispatcher:
 
     """
     Computes the wavefunction of a quantum harmonic oscillator .This function dispatches to different implementations of the wavefunction depending on the specified parameters.
@@ -548,7 +548,7 @@ def wavefunction(s_mode: bool = True, o_dimensional: bool = True, complex_boll: 
     
     if(s_mode):
         if(o_dimensional):
-            if(not(complex_boll)):
+            if(not(complex_bool)):
                 if(not(cache)):
                     return wavefunction_smod
                 else:
@@ -559,7 +559,7 @@ def wavefunction(s_mode: bool = True, o_dimensional: bool = True, complex_boll: 
                 else:
                     return lru_cache(maxsize=cache_size)(c_wavefunction_smod)
         else:
-            if(not(complex_boll)):
+            if(not(complex_bool)):
                 if(not(cache)):
                     return wavefunction_smmd
                 else:
@@ -571,7 +571,7 @@ def wavefunction(s_mode: bool = True, o_dimensional: bool = True, complex_boll: 
                     return lru_cache(maxsize=cache_size)(c_wavefunction_smmd)
     else:
         if(o_dimensional):
-            if(not(complex_boll)):
+            if(not(complex_bool)):
                 if(not(cache)):
                     return wavefunction_mmod
                 else:
@@ -582,7 +582,7 @@ def wavefunction(s_mode: bool = True, o_dimensional: bool = True, complex_boll: 
                 else:
                     return lru_cache(maxsize=cache_size)(c_wavefunction_mmod)
         else:
-            if(not(complex_boll)):
+            if(not(complex_bool)):
                 if(not(cache)):
                     return wavefunction_mmmd
                 else:
