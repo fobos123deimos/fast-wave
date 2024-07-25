@@ -116,7 +116,7 @@ def create_hermite_coefficients_matrix(n_max: np.uint64) -> np.ndarray:
 
 
 
-@lru_cache(maxsize=128)
+
 @nb.jit(nopython=True, looplift=True, nogil=True, boundscheck=False, cache=True)
 def wavefunction_smod(n: np.uint64, x:np.float64)->np.float64:
 
@@ -172,7 +172,7 @@ def wavefunction_smod(n: np.uint64, x:np.float64)->np.float64:
             
         return result[-1]
     
-@lru_cache(maxsize=128)
+
 @nb.jit(nopython=True, looplift=True, nogil=True, boundscheck=False, cache=True)
 def c_wavefunction_smod(n: np.uint64, x: np.complex128) -> np.complex128:
 
@@ -228,9 +228,9 @@ def c_wavefunction_smod(n: np.uint64, x: np.complex128) -> np.complex128:
             
         return result[-1]
 
-@lru_cache(maxsize=128)
+
 @nb.jit(nopython=True, looplift=True,nogil=True, boundscheck=False, cache=True)
-def wavefunction_smmd(n: np.uint64, x: tuple[np.float64,...]) -> np.ndarray[np.float64]:
+def wavefunction_smmd(n: np.uint64, x: np.ndarray[np.float64]) -> np.ndarray[np.float64]:
 
     """
     Compute the wavefunction to a real vector x using a pre-computed matrix of Hermite polynomial coefficients until n=60 and 
@@ -240,7 +240,7 @@ def wavefunction_smmd(n: np.uint64, x: tuple[np.float64,...]) -> np.ndarray[np.f
     ----------
     n : np.uint64
         Quantum state number.
-    x : tuple[np.float64]
+    x : np.ndarray[np.float64]
         Position(s) at which to evaluate the wavefunction.
    
 
@@ -264,7 +264,6 @@ def wavefunction_smmd(n: np.uint64, x: tuple[np.float64,...]) -> np.ndarray[np.f
       015402. doi:10.1088/1361-6404/aa9584
     """
 
-    x = np.array(x)
     x_size = x.shape[0]
 
     if(n<=60):
@@ -292,9 +291,9 @@ def wavefunction_smmd(n: np.uint64, x: tuple[np.float64,...]) -> np.ndarray[np.f
         return result[-1]
     
 
-@lru_cache(maxsize=128)
+
 @nb.jit(nopython=True, looplift=True,nogil=True, boundscheck=False, cache=True)
-def c_wavefunction_smmd(n: np.uint64, x: tuple[np.complex128,...])-> np.ndarray[np.complex128]:
+def c_wavefunction_smmd(n: np.uint64, x: np.ndarray[np.complex128])-> np.ndarray[np.complex128]:
 
     """
     Compute the wavefunction to a complex vector x using a pre-computed matrix of Hermite polynomial coefficients until n=60 and 
@@ -304,7 +303,7 @@ def c_wavefunction_smmd(n: np.uint64, x: tuple[np.complex128,...])-> np.ndarray[
     ----------
     n : np.uint64
         Quantum state number.
-    x : tuple[np.complex128]
+    x : np.ndarray[np.complex128]
         Position(s) at which to evaluate the wavefunction.
    
 
@@ -328,7 +327,6 @@ def c_wavefunction_smmd(n: np.uint64, x: tuple[np.complex128,...])-> np.ndarray[
       015402. doi:10.1088/1361-6404/aa9584
     """
 
-    x = np.array(x)
     x_size = x.shape[0]
 
     if(n<=60):
@@ -355,7 +353,7 @@ def c_wavefunction_smmd(n: np.uint64, x: tuple[np.complex128,...])-> np.ndarray[
             
         return result[-1]
 
-@lru_cache(maxsize=128)
+
 @nb.jit(nopython=True, looplift=True,nogil=True, boundscheck=False, cache=True)
 def wavefunction_mmod(n: np.uint64, x:np.float64)-> np.ndarray[np.float64]:
 
@@ -396,7 +394,7 @@ def wavefunction_mmod(n: np.uint64, x:np.float64)-> np.ndarray[np.float64]:
         
     return result
 
-@lru_cache(maxsize=128)
+
 @nb.jit(nopython=True, looplift=True,nogil=True, boundscheck=False, cache=True)
 def c_wavefunction_mmod(n: np.uint64, x: np.complex128)-> np.ndarray[np.complex128]: 
 
@@ -438,9 +436,9 @@ def c_wavefunction_mmod(n: np.uint64, x: np.complex128)-> np.ndarray[np.complex1
     return result
 
 
-@lru_cache(maxsize=128)
+
 @nb.jit(nopython=True, looplift=True,nogil=True, boundscheck=False, cache=True)
-def wavefunction_mmmd(n: np.uint64, x: tuple[np.float64,...]) -> np.ndarray[np.ndarray[np.float64]]:
+def wavefunction_mmmd(n: np.uint64, x: np.ndarray[np.float64]) -> np.ndarray[np.ndarray[np.float64]]:
 
     """
     Compute the wavefunction to a real vector x to all modes until the mode n using the recursion relation for multidimensional M-mode wavefunction.
@@ -449,7 +447,7 @@ def wavefunction_mmmd(n: np.uint64, x: tuple[np.float64,...]) -> np.ndarray[np.n
     ----------
     n : np.uint64
         Quantum state number.
-    x : tuple[np.float64]
+    x : np.ndarray[np.float64]
         Position(s) at which to evaluate the wavefunction.
    
 
@@ -472,7 +470,6 @@ def wavefunction_mmmd(n: np.uint64, x: tuple[np.float64,...]) -> np.ndarray[np.n
       015402. doi:10.1088/1361-6404/aa9584
     """
     
-    x = np.array(x)
     x_size = x.shape[0]
     result = np.array([[0.0]*(x_size)]*(n+1))
     result[0] = (np.pi ** (-0.25))*np.exp(-(x ** 2) / 2) 
@@ -482,9 +479,9 @@ def wavefunction_mmmd(n: np.uint64, x: tuple[np.float64,...]) -> np.ndarray[np.n
         
     return result
 
-@lru_cache(maxsize=128)
+
 @nb.jit(nopython=True, looplift=True,nogil=True, boundscheck=False, cache=True)
-def c_wavefunction_mmmd(n: np.uint64, x: tuple[np.complex128,...]) -> np.ndarray[np.ndarray[np.float64]]:
+def c_wavefunction_mmmd(n: np.uint64, x: np.ndarray[np.complex128]) -> np.ndarray[np.ndarray[np.float64]]:
 
     """
     Compute the wavefunction to a complex vector x to all modes until the mode n using the recursion relation for multidimensional M-mode wavefunction.
@@ -493,7 +490,7 @@ def c_wavefunction_mmmd(n: np.uint64, x: tuple[np.complex128,...]) -> np.ndarray
     ----------
     n : np.uint64
         Quantum state number.
-    x : tuple[np.complex128]
+    x : np.ndarray[np.complex128]
         Position(s) at which to evaluate the wavefunction.
    
 
@@ -516,7 +513,6 @@ def c_wavefunction_mmmd(n: np.uint64, x: tuple[np.complex128,...]) -> np.ndarray
       015402. doi:10.1088/1361-6404/aa9584
     """
     
-    x = np.array(x)
     x_size = x.shape[0]
     result = np.array([[0.0 + 0.0j]*(x_size)]*(n+1))
     result[0] = (np.pi ** (-0.25))*np.exp(-(x ** 2) / 2) 
@@ -526,6 +522,76 @@ def c_wavefunction_mmmd(n: np.uint64, x: tuple[np.complex128,...]) -> np.ndarray
         
     return result
 
+def wavefunction(s_mode: bool = True, o_dimensional: bool = True, complex_boll: bool = False, cache: bool = False, cache_size: np.uint64 = 128) -> nb.core.registry.CPUDispatcher:
+
+    """
+    Computes the wavefunction of a quantum harmonic oscillator .This function dispatches to different implementations of the wavefunction depending on the specified parameters.
+
+    Parameters:
+    ----------
+    s_mode : bool 
+             Whether to use the single-mode recursion (True) or the multi-mode recursion (False). Defaults to True.
+    o_dimensional : bool 
+                    Whether to evaluate the wavefunction for a single coordinate (True) or multiple coordinates (False). Defaults to True.
+    complex_boll : bool 
+                   Whether to return the complex wavefunction (True) or the real wavefunction (False). Defaults to False.
+    cache : bool  
+            Whether to cache the results of the wavefunction computation using least-recently-used caching. Defaults to False.
+    cache_size : np.uint64 
+                 The maximum size of the cache to use. Defaults to 128.
+
+    Returns:
+    -------
+        nb.core.registry.CPUDispatcher: 
+        A dispatcher object that resolves to the appropriate wavefunction implementation based on the input parameters.
+   """
+    
+    if(s_mode):
+        if(o_dimensional):
+            if(not(complex_boll)):
+                if(not(cache)):
+                    return wavefunction_smod
+                else:
+                    return lru_cache(maxsize=cache_size)(wavefunction_smod)
+            else:
+                if(not(cache)):
+                    return c_wavefunction_smod
+                else:
+                    return lru_cache(maxsize=cache_size)(c_wavefunction_smod)
+        else:
+            if(not(complex_boll)):
+                if(not(cache)):
+                    return wavefunction_smmd
+                else:
+                    return lru_cache(maxsize=cache_size)(wavefunction_smmd)
+            else:
+                if(not(cache)):
+                    return c_wavefunction_smmd
+                else:
+                    return lru_cache(maxsize=cache_size)(c_wavefunction_smmd)
+    else:
+        if(o_dimensional):
+            if(not(complex_boll)):
+                if(not(cache)):
+                    return wavefunction_mmod
+                else:
+                    return lru_cache(maxsize=cache_size)(wavefunction_mmod)
+            else:
+                if(not(cache)):
+                    return c_wavefunction_mmod
+                else:
+                    return lru_cache(maxsize=cache_size)(c_wavefunction_mmod)
+        else:
+            if(not(complex_boll)):
+                if(not(cache)):
+                    return wavefunction_mmmd
+                else:
+                    return lru_cache(maxsize=cache_size)(wavefunction_mmmd)
+            else:
+                if(not(cache)):
+                    return c_wavefunction_mmmd
+                else:
+                    return lru_cache(maxsize=cache_size)(c_wavefunction_mmmd)
         
 """
 Main execution block to initialize the coefficient matrix and test the wavefunction computation.
@@ -557,12 +623,12 @@ try:
     # Basic functionality test
     test_output_udsm = wavefunction_smod(2, 10.0)
     test_output_udmm = wavefunction_mmod(2, 10.0)
-    test_output_mdsm = wavefunction_smmd(2, (10.0,4.5))
-    test_output_mdsm = wavefunction_mmmd(2, (10.0,4.5))
+    test_output_mdsm = wavefunction_smmd(2, np.array([10.0,4.5]))
+    test_output_mdsm = wavefunction_mmmd(2, np.array([10.0,4.5]))
     test_output_c_udsm = c_wavefunction_smod(2, 10.0 + 0.0j)
     test_output_c_udmm = c_wavefunction_mmod(2, 10.0 + 0.0j)
-    test_output_c_mdsm = c_wavefunction_smmd(2, (10.0 + 0.0j,4.5 + 0.0j))
-    test_output_c_mdsm = c_wavefunction_mmmd(2, (10.0 + 0.0j,4.5 + 0.0j))
+    test_output_c_mdsm = c_wavefunction_smmd(2, np.array([10.0 + 0.0j,4.5 + 0.0j]))
+    test_output_c_mdsm = c_wavefunction_mmmd(2, np.array([10.0 + 0.0j,4.5 + 0.0j]))
     compilation_test = True
     print(f"Functionality Test Passed: {compilation_test}")
 except Exception as e:
