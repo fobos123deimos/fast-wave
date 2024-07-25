@@ -27,7 +27,7 @@ This package is an innovative project that delves into the complexities of quant
 
 - **Highly Efficient**: The package uses numba's Just-in-Time (JIT) compilation in all its functions, increasing execution speed.
 - **Highly Accurate**: The functions in this package have high precision similar to tools like Wolfram Mathematica.
-- **Past response cache**: The functions in this package use decorators of the Least Recently Used (LRU) type called lru_cache from the python functools library in order to store previous results avoiding recalculation.
+- **Past response cache**: The functions in this package can use decorators of the Least Recently Used (LRU) type called lru_cache from the Python functools library to store previous results avoiding recalculation.
 
 
 ## 🛠 Setup
