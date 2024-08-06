@@ -138,7 +138,7 @@ The idea of ​​this package is to use a matrix with Hermite coefficients for 
 - `wavefunction_smod(n,x)` $\mathbf{→}$ *[Single-Mode & Onedimensional]* 
 - `wavefunction_smmd(n,xv)` $\mathbf{→}$ *[Single-Mode & Multidimensional]*
 
-The use of this matrix of coefficients is only used up to a value of **60** (a value obtained empirically) because from this level onwards the function may present precision errors in its calculations with incoherent results. Here is an equation that represents this calculation:
+The use of this coefficient matrix is ​​only used up to the value **60** (value obtained empirically) because from this level onwards the function may present precision errors in its calculations with incoherent results. Even so, there is a small imprecision around the **60th** degree for the coefficient matrix, which is why the functions that work with it have an argument named *more_fast* set to **True**, that is, it is faster but inaccurate around the **60th** degree. When **False**, the algorithm is a little slower but with high precision. Here is an equation that represents this calculation:
 
 - $C_{n}[i]•x^{p}_{i}$ $→$ *[Single-Mode & Onedimensional]*
 - $C_{n}[i]•x^{p}_{ij}$ for each $x_j \in xv$ $→$ *[Single-Mode & Multidimensional]*

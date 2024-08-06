@@ -118,7 +118,7 @@ def create_hermite_coefficients_matrix(n_max: np.uint64) -> np.ndarray:
 
 
 @nb.jit(nopython=True, looplift=True, nogil=True, boundscheck=False, cache=True)
-def wavefunction_smod(n: np.uint64, x:np.float64)->np.float64:
+def wavefunction_smod(n: np.uint64, x:np.float64, more_fast:bool = True)->np.float64:
 
     """
     Compute the wavefunction to an real scalar x using a pre-computed matrix of Hermite polynomial coefficients until n=60 and 
@@ -130,6 +130,10 @@ def wavefunction_smod(n: np.uint64, x:np.float64)->np.float64:
         Quantum state number.
     x : np.float64
         Position(s) at which to evaluate the wavefunction.
+    more_fast : bool, optional
+        If True, use the optimized method for n <= 60, which relies on a pre-computed matrix of coefficients for faster computation. 
+        For n > 60 or if False, use the general recursion method. Defaults to True.
+
 
     Returns
     -------
@@ -151,7 +155,7 @@ def wavefunction_smod(n: np.uint64, x:np.float64)->np.float64:
       015402. doi:10.1088/1361-6404/aa9584
     """
     
-    if(n<=60):
+    if(n<=60 and more_fast):
         c_size = c_matrix.shape[0]
         coeffs = c_matrix[n]
         result = 0.0
@@ -174,7 +178,7 @@ def wavefunction_smod(n: np.uint64, x:np.float64)->np.float64:
     
 
 @nb.jit(nopython=True, looplift=True, nogil=True, boundscheck=False, cache=True)
-def c_wavefunction_smod(n: np.uint64, x: np.complex128) -> np.complex128:
+def c_wavefunction_smod(n: np.uint64, x: np.complex128, more_fast:bool = True) -> np.complex128:
 
     """
     Compute the wavefunction to a complex scalar x using a pre-computed matrix of Hermite polynomial coefficients until n=60 and 
@@ -186,6 +190,10 @@ def c_wavefunction_smod(n: np.uint64, x: np.complex128) -> np.complex128:
         Quantum state number.
     x : np.complex128
         Position(s) at which to evaluate the wavefunction.
+    more_fast : bool, optional
+        If True, use the optimized method for n <= 60, which relies on a pre-computed matrix of coefficients for faster computation. 
+        For n > 60 or if False, use the general recursion method. Defaults to True.
+
 
     Returns
     -------
@@ -207,7 +215,7 @@ def c_wavefunction_smod(n: np.uint64, x: np.complex128) -> np.complex128:
       015402. doi:10.1088/1361-6404/aa9584
     """
 
-    if(n<=60):
+    if(n<=60 and more_fast):
         c_size = c_matrix.shape[0]
         coeffs = c_matrix[n]
         result = 0.0 + 0.0j
@@ -230,7 +238,7 @@ def c_wavefunction_smod(n: np.uint64, x: np.complex128) -> np.complex128:
 
 
 @nb.jit(nopython=True, looplift=True,nogil=True, boundscheck=False, cache=True)
-def wavefunction_smmd(n: np.uint64, x: np.ndarray[np.float64]) -> np.ndarray[np.float64]:
+def wavefunction_smmd(n: np.uint64, x: np.ndarray[np.float64], more_fast: bool = True) -> np.ndarray[np.float64]:
 
     """
     Compute the wavefunction to a real vector x using a pre-computed matrix of Hermite polynomial coefficients until n=60 and 
@@ -242,6 +250,10 @@ def wavefunction_smmd(n: np.uint64, x: np.ndarray[np.float64]) -> np.ndarray[np.
         Quantum state number.
     x : np.ndarray[np.float64]
         Position(s) at which to evaluate the wavefunction.
+    more_fast : bool, optional
+        If True, use the optimized method for n <= 60, which relies on a pre-computed matrix of coefficients for faster computation. 
+        For n > 60 or if False, use the general recursion method. Defaults to True.
+
    
 
     Returns
@@ -266,7 +278,7 @@ def wavefunction_smmd(n: np.uint64, x: np.ndarray[np.float64]) -> np.ndarray[np.
 
     x_size = x.shape[0]
 
-    if(n<=60):
+    if(n<=60 and more_fast):
         
         c_size = c_matrix.shape[0]
         coeffs = c_matrix[n]
@@ -293,7 +305,7 @@ def wavefunction_smmd(n: np.uint64, x: np.ndarray[np.float64]) -> np.ndarray[np.
 
 
 @nb.jit(nopython=True, looplift=True,nogil=True, boundscheck=False, cache=True)
-def c_wavefunction_smmd(n: np.uint64, x: np.ndarray[np.complex128])-> np.ndarray[np.complex128]:
+def c_wavefunction_smmd(n: np.uint64, x: np.ndarray[np.complex128], more_fast: bool = True)-> np.ndarray[np.complex128]:
 
     """
     Compute the wavefunction to a complex vector x using a pre-computed matrix of Hermite polynomial coefficients until n=60 and 
@@ -305,6 +317,10 @@ def c_wavefunction_smmd(n: np.uint64, x: np.ndarray[np.complex128])-> np.ndarray
         Quantum state number.
     x : np.ndarray[np.complex128]
         Position(s) at which to evaluate the wavefunction.
+    more_fast : bool, optional
+        If True, use the optimized method for n <= 60, which relies on a pre-computed matrix of coefficients for faster computation. 
+        For n > 60 or if False, use the general recursion method. Defaults to True.
+
    
 
     Returns
@@ -329,7 +345,7 @@ def c_wavefunction_smmd(n: np.uint64, x: np.ndarray[np.complex128])-> np.ndarray
 
     x_size = x.shape[0]
 
-    if(n<=60):
+    if(n<=60 and more_fast):
         
         c_size = c_matrix.shape[0]
         coeffs = c_matrix[n]

@@ -10,10 +10,10 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       158,          7]
-NotebookDataLength[    136822,       3147]
+NotebookDataLength[    136820,       3147]
 NotebookOptionsPosition[    133627,       3084]
-NotebookOutlinePosition[    134095,       3101]
-CellTagsIndexPosition[    134052,       3098]
+NotebookOutlinePosition[    134093,       3101]
+CellTagsIndexPosition[    134050,       3098]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
@@ -3082,7 +3082,7 @@ TraditionalForm]\\) ms\""}, "LineLegend", DisplayFunction -> (FormBox[
 }, Open  ]]
 }, Open  ]]
 },
-WindowSize->{949, 466.5},
+WindowSize->{949, 461},
 WindowMargins->{{0, Automatic}, {Automatic, 0}},
 SpellingDictionaries->{"CorrectWords"->{"Single", "Onedimensional"}},
 FrontEndVersion->"13.3 for Microsoft Windows (64-bit) (July 24, 2023)",
