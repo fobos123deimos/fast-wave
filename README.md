@@ -211,7 +211,7 @@ Multi-Mode functions also use the Numba decorator with the same arguments, in ad
 
 <br>
 
-<img src="https://github.com/user-attachments/assets/56edb956-742b-4e17-af0e-7169207a455c" alt="Screenshot 2024-07-14 at 18-51-19 Captioned algorithm algpseudocode example - Online LaTeX Editor Overleaf" width="600">
+<img src="https://github.com/user-attachments/assets/0d1cdeb2-1912-4794-b321-832ec2c0b3fd" alt="Fast Wave to the Single-Mode Problems" width="600">
 
 <br>
 <br>
