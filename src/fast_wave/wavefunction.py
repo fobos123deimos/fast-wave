@@ -637,14 +637,18 @@ else:
 try:
 
     # Basic functionality test
-    test_output_udsm = wavefunction_smod(2, 10.0)
-    test_output_udmm = wavefunction_mmod(2, 10.0)
-    test_output_mdsm = wavefunction_smmd(2, np.array([10.0,4.5]))
-    test_output_mdsm = wavefunction_mmmd(2, np.array([10.0,4.5]))
-    test_output_c_udsm = c_wavefunction_smod(2, 10.0 + 0.0j)
-    test_output_c_udmm = c_wavefunction_mmod(2, 10.0 + 0.0j)
-    test_output_c_mdsm = c_wavefunction_smmd(2, np.array([10.0 + 0.0j,4.5 + 0.0j]))
-    test_output_c_mdsm = c_wavefunction_mmmd(2, np.array([10.0 + 0.0j,4.5 + 0.0j]))
+    test_output_smod = wavefunction_smod(2, 10.0)
+    test_output_smod_less_fast = wavefunction_smod(2, 10.0, more_fast=False)
+    test_output_mmod = wavefunction_mmod(2, 10.0)
+    test_output_smmd = wavefunction_smmd(2, np.array([10.0,4.5]))
+    test_output_smmd_less_fast = wavefunction_smmd(2, np.array([10.0,4.5]), more_fast=False)
+    test_output_mmmd = wavefunction_mmmd(2, np.array([10.0,4.5]))
+    test_output_c_smod = c_wavefunction_smod(2, 10.0 + 0.0j)
+    test_output_c_smod_less_fast = c_wavefunction_smod(2, 10.0 + 0.0j, more_fast=False)
+    test_output_c_mmod = c_wavefunction_mmod(2, 10.0 + 0.0j)
+    test_output_c_smmd = c_wavefunction_smmd(2, np.array([10.0 + 0.0j,4.5 + 0.0j]))
+    test_output_c_smmd_less_fast = c_wavefunction_smmd(2, np.array([10.0 + 0.0j,4.5 + 0.0j]), more_fast=False)
+    test_output_c_mmmd = c_wavefunction_mmmd(2, np.array([10.0 + 0.0j,4.5 + 0.0j]))
     compilation_test = True
     print(f"Functionality Test Passed: {compilation_test}")
 except Exception as e:
