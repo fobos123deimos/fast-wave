@@ -17,7 +17,6 @@ install_requires = [
     "numpy==1.26.4",
     "scipy==1.13.0",
     "sympy==1.12",
-    "mpmath==1.3.0",
 ]
 
 test_requires = [

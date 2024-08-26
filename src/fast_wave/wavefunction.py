@@ -264,9 +264,9 @@ def wavefunction_smmd(n: np.uint64, x: np.ndarray[np.float64], more_fast: bool =
     Examples
     --------
     ```python
-    >>> wavefunction_smmd(0,(1.0,2.0))
+    >>> wavefunction_smmd(0,np.array([1.0, 2.0]))
     array([0.45558067, 0.10165379])
-    >>> wavefunction_smmd(61,(1.0,2.0))
+    >>> wavefunction_smmd(61,np.array([1.0, 2.0]))
     array([-0.23930492, -0.01677378])
     ```
 
@@ -331,9 +331,9 @@ def c_wavefunction_smmd(n: np.uint64, x: np.ndarray[np.complex128], more_fast: b
     Examples
     --------
     ```python
-    >>> c_wavefunction_smmd(0,(1.0 + 1.0j, 2.0 + 2.0j))
+    >>> c_wavefunction_smmd(0,np.array([1.0 + 1.0j, 2.0 + 2.0j]))
     array([ 0.40583486-0.63205035j, -0.49096842+0.56845369j])
-    >>> c_wavefunction_smmd(61,(1.0 + 1.0j, 2.0 + 2.0j))
+    >>> c_wavefunction_smmd(61,np.array([1.0 + 1.0j, 2.0 + 2.0j]))
     array([-7.56548941e+03+9.21498621e+02j, -1.64189542e+08-3.70892077e+08j])
     ```
 
@@ -475,7 +475,7 @@ def wavefunction_mmmd(n: np.uint64, x: np.ndarray[np.float64]) -> np.ndarray[np.
     Examples
     --------
     ```python
-    >>> wavefunction_mmmd(1,(1.0 ,2.0))
+    >>> wavefunction_mmmd(1,np.array([1.0, 2.0]))
     array([[0.45558067, 0.10165379],
            [0.64428837, 0.28752033]])
     ```
@@ -518,7 +518,7 @@ def c_wavefunction_mmmd(n: np.uint64, x: np.ndarray[np.complex128]) -> np.ndarra
     Examples
     --------
     ```python
-    >>> c_wavefunction_mmmd(1,(1.0 + 1.0j,2.0 + 2.0j))
+    >>> c_wavefunction_mmmd(1,np.array([1.0 + 1.0j, 2.0 + 2.0j]))
     array([[ 0.40583486-0.63205035j, -0.49096842+0.56845369j],
            [ 1.46779135-0.31991701j, -2.99649822+0.21916143j]])
     ```
