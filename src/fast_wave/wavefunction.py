@@ -1,6 +1,6 @@
 # BSD 3-Clause License
 #
-# Copyright (c) 2024, Pikachu
+# Copyright (c) 2024, Matheus Gomes Cordeiro 
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -118,10 +118,10 @@ def create_hermite_coefficients_matrix(n_max: np.uint64) -> np.ndarray:
 
 
 @nb.jit(nopython=True, looplift=True, nogil=True, boundscheck=False, cache=True)
-def wavefunction_smod(n: np.uint64, x:np.float64, more_fast:bool = True)->np.float64:
+def wavefunction_smod(n: np.uint64, x:np.float64, more_fast:bool = True) -> np.float64:
 
     """
-    Compute the wavefunction to an real scalar x using a pre-computed matrix of Hermite polynomial coefficients until n=60 and 
+    Compute the wavefunction to a real scalar x using a pre-computed matrix of Hermite polynomial coefficients until n=60 and 
     then use the adapted recursion relation for multidimensional M-mode wavefunction for higher orders.
 
     Parameters
@@ -305,7 +305,7 @@ def wavefunction_smmd(n: np.uint64, x: np.ndarray[np.float64], more_fast: bool =
 
 
 @nb.jit(nopython=True, looplift=True,nogil=True, boundscheck=False, cache=True)
-def c_wavefunction_smmd(n: np.uint64, x: np.ndarray[np.complex128], more_fast: bool = True)-> np.ndarray[np.complex128]:
+def c_wavefunction_smmd(n: np.uint64, x: np.ndarray[np.complex128], more_fast: bool = True) -> np.ndarray[np.complex128]:
 
     """
     Compute the wavefunction to a complex vector x using a pre-computed matrix of Hermite polynomial coefficients until n=60 and 
@@ -371,7 +371,7 @@ def c_wavefunction_smmd(n: np.uint64, x: np.ndarray[np.complex128], more_fast: b
 
 
 @nb.jit(nopython=True, looplift=True,nogil=True, boundscheck=False, cache=True)
-def wavefunction_mmod(n: np.uint64, x:np.float64)-> np.ndarray[np.float64]:
+def wavefunction_mmod(n: np.uint64, x:np.float64) -> np.ndarray[np.float64]:
 
     """
     Compute the wavefunction to a real scalar x to all modes until the mode n using the recursion relation for multidimensional M-mode wavefunction.
@@ -412,7 +412,7 @@ def wavefunction_mmod(n: np.uint64, x:np.float64)-> np.ndarray[np.float64]:
 
 
 @nb.jit(nopython=True, looplift=True,nogil=True, boundscheck=False, cache=True)
-def c_wavefunction_mmod(n: np.uint64, x: np.complex128)-> np.ndarray[np.complex128]: 
+def c_wavefunction_mmod(n: np.uint64, x: np.complex128) -> np.ndarray[np.complex128]: 
 
     """
     Compute the wavefunction to a complex scalar x to all modes until the mode n using the recursion relation for multidimensional M-mode wavefunction.
