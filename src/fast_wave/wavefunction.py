@@ -46,7 +46,7 @@ compilation_test = None
 @nb.jit(nopython=True, looplift=True, nogil=True, boundscheck=False, cache=True)
 def create_normalized_hermite_coefficients_matrix(n_max: np.uint64) -> np.ndarray:
     """
-    Create a matrix of normalized coefficients for Hermite polynomials up to order `n_max`.
+    Create a matrix of coefficients for  normalized Hermite polynomials up to order `n_max`.
 
     Parameters
     ----------
@@ -93,7 +93,7 @@ def create_normalized_hermite_coefficients_matrix(n_max: np.uint64) -> np.ndarra
 def wavefunction_smod(n: np.uint64, x:np.float64, more_fast:bool = True) -> np.float64:
 
     """
-    Compute the wavefunction to a real scalar x using a pre-computed matrix of Hermite polynomial normalized coefficients until n=60 and 
+    Compute the wavefunction to a real scalar x using a pre-computed matrix of normalized Hermite polynomial coefficients until n=60 and 
     then use the adapted recursion relation for multidimensional M-mode wavefunction for higher orders.
 
     Parameters
@@ -150,7 +150,7 @@ def wavefunction_smod(n: np.uint64, x:np.float64, more_fast:bool = True) -> np.f
 def c_wavefunction_smod(n: np.uint64, x: np.complex128, more_fast:bool = True) -> np.complex128:
 
     """
-    Compute the wavefunction to a complex scalar x using a pre-computed matrix of Hermite polynomial normalized coefficients until n=60 and 
+    Compute the wavefunction to a complex scalar x using a pre-computed matrix of normalized Hermite polynomial coefficients until n=60 and 
     then use the adapted recursion relation for multidimensional M-mode wavefunction for higher orders.
 
     Parameters
@@ -207,7 +207,7 @@ def c_wavefunction_smod(n: np.uint64, x: np.complex128, more_fast:bool = True) -
 def wavefunction_smmd(n: np.uint64, x: np.ndarray[np.float64], more_fast: bool = True) -> np.ndarray[np.float64]:
 
     """
-    Compute the wavefunction to a real vector x using a pre-computed matrix of Hermite polynomial normalized coefficients until n=60 and 
+    Compute the wavefunction to a real vector x using a pre-computed matrix of normalized Hermite polynomial coefficients until n=60 and 
     then use the adapted recursion relation for multidimensional M-mode wavefunction for higher orders.
 
     Parameters
@@ -269,7 +269,7 @@ def wavefunction_smmd(n: np.uint64, x: np.ndarray[np.float64], more_fast: bool =
 def c_wavefunction_smmd(n: np.uint64, x: np.ndarray[np.complex128], more_fast: bool = True) -> np.ndarray[np.complex128]:
 
     """
-    Compute the wavefunction to a complex vector x using a pre-computed matrix of Hermite polynomial normalized coefficients until n=60 and 
+    Compute the wavefunction to a complex vector x using a pre-computed matrix of normalized Hermite polynomial coefficients until n=60 and 
     then use the adapted recursion relation for multidimensional M-mode wavefunction for higher orders.
 
     Parameters
@@ -567,7 +567,7 @@ def wavefunction(s_mode: bool = True, o_dimensional: bool = True, complex_bool: 
         
 """
 Main execution block to initialize the coefficient matrix and test the wavefunction computation.
-This block checks for the existence of the precomputed Hermite polynomial coefficients matrix. If it doesn't exist,
+This block checks for the existence of the precomputed normalized Hermite polynomial coefficients matrix. If it doesn't exist,
 it computes the matrix and saves it for future use. Then, it performs a basic test to verify that the wavefunction
 computation works as expected.
 
