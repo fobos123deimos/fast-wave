@@ -35,47 +35,18 @@ from functools import lru_cache
 
 import numpy as np
 import numba as nb
-from sympy import symbols, diff, exp, Poly
 
 # Adjusting numba settings to optimize parallel computations
 nb.set_num_threads(nb.get_num_threads())
 
 # Global variables for coefficient matrix and compilation status check
-c_matrix = None
+c_s_matrix = None
 compilation_test = None
 
-def hermite_sympy(n: np.uint64) -> Poly:
+@nb.jit(nopython=True, looplift=True, nogil=True, boundscheck=False, cache=True)
+def create_normalized_hermite_coefficients_matrix(n_max: np.uint64) -> np.ndarray:
     """
-    Compute the nth Hermite polynomial using symbolic differentiation.
-
-    Parameters
-    ----------
-    n : np.uint64
-        Order of the Hermite polynomial.
-
-    Returns
-    -------
-    Poly
-        The nth Hermite polynomial as a sympy expression.
-
-    Examples
-    --------
-    ```
-    >>> hermite_sympy(2)
-    4*x**2 - 2
-    ```
-
-    References
-    ----------
-    - Wikipedia contributors. (2021). Hermite polynomials. In Wikipedia, The Free Encyclopedia. Retrieved from https://en.wikipedia.org/wiki/Hermite_polynomials
-    """
-    x = symbols("x")
-    return 1 if n == 0 else ((-1) ** n) * exp(x ** 2) * diff(exp(-x ** 2), x, n)
-
-
-def create_hermite_coefficients_matrix(n_max: np.uint64) -> np.ndarray:
-    """
-    Create a matrix of coefficients for Hermite polynomials up to order `n_max`.
+    Create a matrix of normalized coefficients for Hermite polynomials up to order `n_max`.
 
     Parameters
     ----------
@@ -90,11 +61,11 @@ def create_hermite_coefficients_matrix(n_max: np.uint64) -> np.ndarray:
     Examples
     --------
     ```
-    >>> create_hermite_coefficients_matrix(3)
-    array([[  0.,   0.,   0.,   1.],
-          [  0.,   0.,   2.,   0.],
-          [  0.,   4.,   0.,  -2.],
-          [  8.,   0., -12.,   0.]])
+    >>> create_normalized_hermite_coefficients_matrix(3)
+    array([[ 0.        ,  0.        ,  0.        ,  0.75112554],
+           [ 0.        ,  0.        ,  1.06225193,  0.        ],
+           [ 0.        ,  1.06225193,  0.        , -0.53112597],
+           [ 0.86732507,  0.        , -1.30098761,  0.        ]])
     ```
 
     References
@@ -103,16 +74,17 @@ def create_hermite_coefficients_matrix(n_max: np.uint64) -> np.ndarray:
     - NIST Digital Library of Mathematical Functions. https://dlmf.nist.gov/, Release 1.0.28 of 2020-09-15.
     - Sympy Documentation: https://docs.sympy.org/latest/modules/polys/index.html
     """
-    x = symbols("x")
-    C = np.zeros((n_max + 1, n_max + 1), dtype=np.float64)
-    C[0, n_max] = 1
+    C_s = np.zeros((n_max + 1, n_max + 1), dtype=np.float64)
 
-    for n in range(1, n_max + 1):
-        c = Poly(hermite_sympy(n), x).all_coeffs()
-        for index in range(n, -1, -1):
-            C[n, (n_max + 1) - index - 1] = float(c[n - index])
+    for i in range(n_max+1):
+        for j in range(n_max+1):
+            if((j>=(n_max-i)) and ((n_max-i+j)%2 == 0)):
+                C_s[i,j] = ( ((-1)**((j-n_max+i)/2)) * (2**(n_max-j-(i*0.5))) ) / ( math.gamma(((j-n_max+i)/2) + 1) * math.gamma(n_max-j + 1) )
+            else:
+                C_s[i,j] = 0.0
+        C_s[i] *= math.gamma(i+1)**0.5
 
-    return C
+    return C_s/(np.pi**0.25) 
 
 
 
@@ -121,7 +93,7 @@ def create_hermite_coefficients_matrix(n_max: np.uint64) -> np.ndarray:
 def wavefunction_smod(n: np.uint64, x:np.float64, more_fast:bool = True) -> np.float64:
 
     """
-    Compute the wavefunction to a real scalar x using a pre-computed matrix of Hermite polynomial coefficients until n=60 and 
+    Compute the wavefunction to a real scalar x using a pre-computed matrix of Hermite polynomial normalized coefficients until n=60 and 
     then use the adapted recursion relation for multidimensional M-mode wavefunction for higher orders.
 
     Parameters
@@ -143,9 +115,9 @@ def wavefunction_smod(n: np.uint64, x:np.float64, more_fast:bool = True) -> np.f
     Examples
     --------
     ```python
-    >>> wavefunction_smud(0, 1.0)
+    >>> wavefunction_smod(0, 1.0)
     0.45558067201133257
-    >>> wavefunction_smud(61, 1.0)
+    >>> wavefunction_smod(61, 1.0)
     -0.2393049199171131
     ```
 
@@ -156,18 +128,15 @@ def wavefunction_smod(n: np.uint64, x:np.float64, more_fast:bool = True) -> np.f
     """
     
     if(n<=60 and more_fast):
-        c_size = c_matrix.shape[0]
-        coeffs = c_matrix[n]
+        c_size = c_s_matrix.shape[0]
+        n_coeffs = c_s_matrix[n]
         result = 0.0
-        for i in range(c_size):
-            c = coeffs[c_size - i - 1]
-            if(c!=0.0):
-                result += c*(x**i)
-        
-        return result*((2 ** (-0.5 * n)) * (math.gamma(n+1) ** (-0.5)) * (np.pi ** (-0.25))) * np.exp(-(x ** 2) / 2) 
-    
-    else:
+        for i in range(c_size-n-1,c_size,2):
+            c = n_coeffs[i]
+            result += c*(x**(c_size-i-1))
 
+        return result * np.exp(-(x ** 2) / 2)
+    else:
         result = np.array([0.0] * (n+1))
         result[0] = (np.pi ** (-0.25))*np.exp(-(x ** 2) / 2) 
 
@@ -181,7 +150,7 @@ def wavefunction_smod(n: np.uint64, x:np.float64, more_fast:bool = True) -> np.f
 def c_wavefunction_smod(n: np.uint64, x: np.complex128, more_fast:bool = True) -> np.complex128:
 
     """
-    Compute the wavefunction to a complex scalar x using a pre-computed matrix of Hermite polynomial coefficients until n=60 and 
+    Compute the wavefunction to a complex scalar x using a pre-computed matrix of Hermite polynomial normalized coefficients until n=60 and 
     then use the adapted recursion relation for multidimensional M-mode wavefunction for higher orders.
 
     Parameters
@@ -203,9 +172,9 @@ def c_wavefunction_smod(n: np.uint64, x: np.complex128, more_fast:bool = True) -
     Examples
     --------
     ```python
-    >>> c_wavefunction_smud(0,1.0+2.0j)
+    >>> c_wavefunction_smod(0,1.0+2.0j)
     (-1.4008797330262455-3.0609780602975003j)
-    >>> c_wavefunction_smud(61,1.0+2.0j)
+    >>> c_wavefunction_smod(61,1.0+2.0j)
     (-511062135.47555304+131445997.75753704j)
     ```
 
@@ -216,18 +185,15 @@ def c_wavefunction_smod(n: np.uint64, x: np.complex128, more_fast:bool = True) -
     """
 
     if(n<=60 and more_fast):
-        c_size = c_matrix.shape[0]
-        coeffs = c_matrix[n]
+        c_size = c_s_matrix.shape[0]
+        n_coeffs = c_s_matrix[n]
         result = 0.0 + 0.0j
-        for i in range(c_size):
-            c = coeffs[c_size - i - 1]
-            if(c!=0.0):
-                result += c*(x**i)
-        
-        return result*((2 ** (-0.5 * n)) * (math.gamma(n+1) ** (-0.5)) * (np.pi ** (-0.25))) * np.exp(-(x ** 2) / 2) 
-    
-    else:
+        for i in range(c_size-n-1,c_size,2):
+            c = n_coeffs[i]
+            result += c*(x**(c_size-i-1))
 
+        return result * np.exp(-(x ** 2) / 2)
+    else:
         result = np.array([0.0 + 0.0j] * (n+1))
         result[0] = (np.pi ** (-0.25))*np.exp(-(x ** 2) / 2) 
 
@@ -241,7 +207,7 @@ def c_wavefunction_smod(n: np.uint64, x: np.complex128, more_fast:bool = True) -
 def wavefunction_smmd(n: np.uint64, x: np.ndarray[np.float64], more_fast: bool = True) -> np.ndarray[np.float64]:
 
     """
-    Compute the wavefunction to a real vector x using a pre-computed matrix of Hermite polynomial coefficients until n=60 and 
+    Compute the wavefunction to a real vector x using a pre-computed matrix of Hermite polynomial normalized coefficients until n=60 and 
     then use the adapted recursion relation for multidimensional M-mode wavefunction for higher orders.
 
     Parameters
@@ -279,21 +245,16 @@ def wavefunction_smmd(n: np.uint64, x: np.ndarray[np.float64], more_fast: bool =
     x_size = x.shape[0]
 
     if(n<=60 and more_fast):
-        
-        c_size = c_matrix.shape[0]
-        coeffs = c_matrix[n]
+        c_size = c_s_matrix.shape[0]
+        n_coeffs = c_s_matrix[n]
         result = np.array([0.0] * (x_size))
         for j in range(x_size):
-            for i in range(c_size):
-                c = coeffs[c_size - i - 1]
-                if(c!=0.0):
-                    result[j] += c*(x[j]**i)
+            for i in range(c_size-n-1,c_size,2):
+                c = n_coeffs[i]
+                result[j] += c*(x[j]**(c_size-i-1))
             result[j] *= np.exp(-(x[j] ** 2) / 2)
-        
-        return result*(np.pi ** (-0.25))*((2**n) * math.gamma(n+1))**(-0.5)
-    
+        return result
     else:
-
         result = np.array([[0.0]*(x_size)]*(n+1))
         result[0] = (np.pi ** (-0.25))*np.exp(-(x ** 2) / 2) 
 
@@ -308,7 +269,7 @@ def wavefunction_smmd(n: np.uint64, x: np.ndarray[np.float64], more_fast: bool =
 def c_wavefunction_smmd(n: np.uint64, x: np.ndarray[np.complex128], more_fast: bool = True) -> np.ndarray[np.complex128]:
 
     """
-    Compute the wavefunction to a complex vector x using a pre-computed matrix of Hermite polynomial coefficients until n=60 and 
+    Compute the wavefunction to a complex vector x using a pre-computed matrix of Hermite polynomial normalized coefficients until n=60 and 
     then use the adapted recursion relation for multidimensional M-mode wavefunction for higher orders.
 
     Parameters
@@ -346,21 +307,16 @@ def c_wavefunction_smmd(n: np.uint64, x: np.ndarray[np.complex128], more_fast: b
     x_size = x.shape[0]
 
     if(n<=60 and more_fast):
-        
-        c_size = c_matrix.shape[0]
-        coeffs = c_matrix[n]
+        c_size = c_s_matrix.shape[0]
+        n_coeffs = c_s_matrix[n]
         result = np.array([0.0 + 0.0j] * (x_size))
         for j in range(x_size):
-            for i in range(c_size):
-                c = coeffs[c_size - i - 1]
-                if(c!=0.0):
-                    result[j] += c*(x[j]**i)
+            for i in range(c_size-n-1,c_size,2):
+                c = n_coeffs[i]
+                result[j] += c*(x[j]**(c_size-i-1))
             result[j] *= np.exp(-(x[j] ** 2) / 2)
-        
-        return result*(np.pi ** (-0.25))*((2**n) * math.gamma(n+1))**(-0.5)
-    
+        return result
     else:
-
         result = np.array([[0.0 + 0.0j]*(x_size)]*(n+1))
         result[0] = (np.pi ** (-0.25))*np.exp(-(x ** 2) / 2) 
 
@@ -392,7 +348,7 @@ def wavefunction_mmod(n: np.uint64, x:np.float64) -> np.ndarray[np.float64]:
     Examples
     --------
     ```python
-    >>> wavefunction_mmud(1,1.0)
+    >>> wavefunction_mmod(1,1.0)
     array([0.45558067, 0.64428837])
     ```
 
@@ -433,7 +389,7 @@ def c_wavefunction_mmod(n: np.uint64, x: np.complex128) -> np.ndarray[np.complex
     Examples
     --------
     ```python
-    >>> c_wavefunction_mmud(1,1.0 +2.0j)
+    >>> c_wavefunction_mmod(1,1.0 +2.0j)
     array([-1.40087973-3.06097806j,  6.67661026-8.29116292j])
     ```
 
@@ -622,16 +578,16 @@ References
   .
 """
 package_dir = os.path.dirname(__file__)  
-matrix_filename = 'C_matrix.pickle'
+matrix_filename = 'C_s_matrix.pickle'
 matrix_path = os.path.join(package_dir, matrix_filename)
 
 if os.path.isfile(matrix_path):
     with open(matrix_path, 'rb') as file:
-        c_matrix = pickle.load(file)
+        c_s_matrix = pickle.load(file)
 else:
-    c_matrix = create_hermite_coefficients_matrix(60)
+    c_s_matrix = create_normalized_hermite_coefficients_matrix(60)
     with open(matrix_path, 'wb') as file:
-        pickle.dump(c_matrix, file)
+        pickle.dump(c_s_matrix, file)
 
 
 try:

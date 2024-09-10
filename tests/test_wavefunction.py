@@ -1,41 +1,27 @@
 import pytest
 import numpy as np
-from sympy import symbols
 from src.fast_wave.wavefunction import *
 
 @pytest.fixture(scope="module", autouse=True)
-def initialize_c_matrix():
+def initialize_c_s_matrix():
     """
-    Fixture to initialize the global variable c_matrix before running tests.
+    Fixture to initialize the global variable c_s_matrix before running tests.
     """
-    global c_matrix
-    c_matrix = create_hermite_coefficients_matrix(60)
-
-def test_hermite_sympy():
-    """
-    Tests the hermite_sympy function to verify the accuracy of Hermite polynomial computation.
-    """
-    x = symbols("x")
-    h0 = hermite_sympy(0)
-    h1 = hermite_sympy(1)
-    h2 = hermite_sympy(2)
-
-    assert h0 == 1
-    assert h1 == 2 * x
-    assert h2 == 4 * x**2 - 2
+    global c_s_matrix
+    c_s_matrix = create_normalized_hermite_coefficients_matrix(60)
 
 def test_create_hermite_coefficients_table():
     """
-    Tests the create_hermite_coefficients_table function to verify if the coefficient matrix is correct.
+    Tests the create_normalized_hermite_coefficients_table function to verify if the normalized coefficient matrix is correct.
     """
     n_max = 2
-    coeffs_table = create_hermite_coefficients_matrix(n_max)
+    coeffs_table = create_normalized_hermite_coefficients_matrix(n_max)
     
     expected_table = np.zeros((3, 3))
-    expected_table[0, 2] = 1  # H0 = 1
-    expected_table[1, 1] = 2  # H1 = 2x
-    expected_table[2, 0] = 4  # H2 = 4x^2 - 2
-    expected_table[2, 2] = -2
+    expected_table[0, 2] = 0.75112554 
+    expected_table[1, 1] = 1.06225193  
+    expected_table[2, 0] = 1.06225193 
+    expected_table[2, 2] = -0.53112597
 
     assert np.allclose(coeffs_table, expected_table)
 
