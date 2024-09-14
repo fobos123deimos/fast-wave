@@ -72,7 +72,7 @@ def hermite_sympy(n: np.uint64) -> Poly:
     x = symbols("x")
     return 1 if n == 0 else ((-1) ** n) * exp(x ** 2) * diff(exp(-x ** 2), x, n)
 
-@nb.jit(nopython=True, looplift=True, nogil=True, boundscheck=False, cache=True)
+
 def create_normalized_hermite_coefficients_matrix(n_max: np.uint64) -> np.ndarray:
     """
     Create a matrix of coefficients for  normalized Hermite polynomials up to order `n_max`.
