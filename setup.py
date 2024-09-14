@@ -5,7 +5,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
 
 name = "fast_wave"
-version = "1.3.0"
+version = "1.3.1"
 description = "Package for the calculation of the time-independent wavefunction." 
 author_email = "matheusgomescord@gmail.com"
 url = "https://github.com/pikachu123deimos/fast-wave" 
@@ -16,6 +16,7 @@ install_requires = [
     "numba==0.59.1",
     "numpy==1.26.4",
     "scipy==1.13.0",
+    "sympy==1.12",
 ]
 
 test_requires = [
