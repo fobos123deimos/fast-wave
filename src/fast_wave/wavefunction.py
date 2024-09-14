@@ -104,18 +104,18 @@ def create_normalized_hermite_coefficients_matrix(n_max: np.uint64) -> np.ndarra
     - Sympy Documentation: https://docs.sympy.org/latest/modules/polys/index.html
     """
     x = symbols("x")
-    C = np.zeros((n_max + 1, n_max + 1), dtype=np.float64)
-    C[0, n_max] = 1
+    C_s = np.zeros((n_max + 1, n_max + 1), dtype=np.float64)
+    C_s[0, n_max] = 1
 
     for n in range(1, n_max + 1):
         c = Poly(hermite_sympy(n), x).all_coeffs()
         for index in range(n, -1, -1):
-            C[n, (n_max + 1) - index - 1] = float(c[n - index])
+            C_s[n, (n_max + 1) - index - 1] = float(c[n - index])
 
     for i in range(n_max + 1):
-        C[i] /=  (np.pi**0.50 * (2**i) * math.gamma(i+1))**0.5
+        C_s[i] /=  (np.pi**0.50 * (2**i) * math.gamma(i+1))**0.5
 
-    return C 
+    return C_s 
 
 
 
@@ -163,8 +163,7 @@ def wavefunction_smod(n: np.uint64, x:np.float64, more_fast:bool = True) -> np.f
         n_coeffs = c_s_matrix[n]
         result = 0.0
         for i in range(c_size-n-1,c_size,2):
-            c = n_coeffs[i]
-            result += c*(x**(c_size-i-1))
+            result += n_coeffs[i]*(x**(c_size-i-1))
 
         return result * np.exp(-(x ** 2) / 2)
     else:
@@ -220,8 +219,7 @@ def c_wavefunction_smod(n: np.uint64, x: np.complex128, more_fast:bool = True) -
         n_coeffs = c_s_matrix[n]
         result = 0.0 + 0.0j
         for i in range(c_size-n-1,c_size,2):
-            c = n_coeffs[i]
-            result += c*(x**(c_size-i-1))
+            result += n_coeffs[i]*(x**(c_size-i-1))
 
         return result * np.exp(-(x ** 2) / 2)
     else:
@@ -281,8 +279,7 @@ def wavefunction_smmd(n: np.uint64, x: np.ndarray[np.float64], more_fast: bool =
         result = np.array([0.0] * (x_size))
         for j in range(x_size):
             for i in range(c_size-n-1,c_size,2):
-                c = n_coeffs[i]
-                result[j] += c*(x[j]**(c_size-i-1))
+                result[j] += n_coeffs[i]*(x[j]**(c_size-i-1))
             result[j] *= np.exp(-(x[j] ** 2) / 2)
         return result
     else:
@@ -343,8 +340,7 @@ def c_wavefunction_smmd(n: np.uint64, x: np.ndarray[np.complex128], more_fast: b
         result = np.array([0.0 + 0.0j] * (x_size))
         for j in range(x_size):
             for i in range(c_size-n-1,c_size,2):
-                c = n_coeffs[i]
-                result[j] += c*(x[j]**(c_size-i-1))
+                result[j] += n_coeffs[i]*(x[j]**(c_size-i-1))
             result[j] *= np.exp(-(x[j] ** 2) / 2)
         return result
     else:
