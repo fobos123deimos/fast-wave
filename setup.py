@@ -5,7 +5,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
 
 name = "fast_wave"
-version = "1.3.1"
+version = "1.3.2"
 description = "Package for the calculation of the time-independent wavefunction." 
 author_email = "matheusgomescord@gmail.com"
 url = "https://github.com/pikachu123deimos/fast-wave" 
