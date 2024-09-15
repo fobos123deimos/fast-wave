@@ -53,38 +53,62 @@ def test_wavefunction_computation():
     c_wave_mmmd = wavefunction(s_mode = False, o_dimensional = False, complex_bool = True, cache = False, cache_size = 128)
 
     # Testing basic functionality
-    test_output_odsm = wave_smod(2, 10.0)
-    assert isinstance(test_output_odsm, float)
+    test_output_odsm_2 = wave_smod(2, 10.0)
+    assert isinstance(test_output_odsm_2, float)
 
-    test_output_odsm_less_fast = wave_smod(2, 10.0, more_fast = False)
-    assert isinstance(test_output_odsm_less_fast, float)
+    test_output_odsm_61 = wave_smod(61, 10.0)
+    assert isinstance(test_output_odsm_61, float)
+
+    test_output_odsm_less_fast_2 = wave_smod(2, 10.0, more_fast = False)
+    assert isinstance(test_output_odsm_less_fast_2, float)
+
+    test_output_odsm_less_fast_61 = wave_smod(61, 10.0, more_fast = False)
+    assert isinstance(test_output_odsm_less_fast_61, float)
     
     test_output_odmm = wave_mmod(2, 10.0)
     assert isinstance(test_output_odmm, np.ndarray)
     
-    test_output_mdsm = wave_smmd(2, np.array([10.0, 4.5]))
-    assert isinstance(test_output_mdsm, np.ndarray)
+    test_output_mdsm_2 = wave_smmd(2, np.array([10.0, 4.5]))
+    assert isinstance(test_output_mdsm_2, np.ndarray)
 
-    test_output_mdsm_less_fast = wave_smmd(2, np.array([10.0, 4.5]), more_fast = False)
-    assert isinstance(test_output_mdsm_less_fast, np.ndarray)
+    test_output_mdsm_61 = wave_smmd(61, np.array([10.0, 4.5]))
+    assert isinstance(test_output_mdsm_61, np.ndarray)
+
+    test_output_mdsm_less_fast_2 = wave_smmd(2, np.array([10.0, 4.5]), more_fast = False)
+    assert isinstance(test_output_mdsm_less_fast_2, np.ndarray)
+
+    test_output_mdsm_less_fast_61 = wave_smmd(61, np.array([10.0, 4.5]), more_fast = False)
+    assert isinstance(test_output_mdsm_less_fast_61, np.ndarray)
     
     test_output_mdmm = wave_mmmd(2, np.array([10.0, 4.5]))
     assert isinstance(test_output_mdmm, np.ndarray)
     
-    test_output_c_odsm = c_wave_smod(2, 10.0 + 0.0j)
-    assert isinstance(test_output_c_odsm, complex)
+    test_output_c_odsm_2 = c_wave_smod(2, 10.0 + 0.0j)
+    assert isinstance(test_output_c_odsm_2, complex)
 
-    test_output_c_odsm_less_fast = c_wave_smod(2, 10.0 + 0.0j, more_fast = False)
-    assert isinstance(test_output_c_odsm_less_fast, complex)
+    test_output_c_odsm_61 = c_wave_smod(61, 10.0 + 0.0j)
+    assert isinstance(test_output_c_odsm_61, complex)
+
+    test_output_c_odsm_less_fast_2 = c_wave_smod(2, 10.0 + 0.0j, more_fast = False)
+    assert isinstance(test_output_c_odsm_less_fast_2, complex)
+
+    test_output_c_odsm_less_fast_61 = c_wave_smod(61, 10.0 + 0.0j, more_fast = False)
+    assert isinstance(test_output_c_odsm_less_fast_61, complex)
     
     test_output_c_odmm = c_wave_mmod(2, 10.0 + 0.0j)
     assert isinstance(test_output_c_odmm, np.ndarray)
     
-    test_output_c_mdsm = c_wave_smmd(2, np.array([10.0 + 0.0j, 4.5 + 0.0j]))
-    assert isinstance(test_output_c_mdsm, np.ndarray)
+    test_output_c_mdsm_2 = c_wave_smmd(2, np.array([10.0 + 0.0j, 4.5 + 0.0j]))
+    assert isinstance(test_output_c_mdsm_2, np.ndarray)
 
-    test_output_c_mdsm_less_fast = c_wave_smmd(2, np.array([10.0 + 0.0j, 4.5 + 0.0j]), more_fast = False)
-    assert isinstance(test_output_c_mdsm_less_fast, np.ndarray)
+    test_output_c_mdsm_61 = c_wave_smmd(61, np.array([10.0 + 0.0j, 4.5 + 0.0j]))
+    assert isinstance(test_output_c_mdsm_61, np.ndarray)
+
+    test_output_c_mdsm_less_fast_2 = c_wave_smmd(2, np.array([10.0 + 0.0j, 4.5 + 0.0j]), more_fast = False)
+    assert isinstance(test_output_c_mdsm_less_fast_2, np.ndarray)
+
+    test_output_c_mdsm_less_fast_61 = c_wave_smmd(61, np.array([10.0 + 0.0j, 4.5 + 0.0j]), more_fast = False)
+    assert isinstance(test_output_c_mdsm_less_fast_61, np.ndarray)
     
     test_output_c_mdmm = c_wave_mmmd(2, np.array([10.0 + 0.0j, 4.5 + 0.0j]))
     assert isinstance(test_output_c_mdmm, np.ndarray)
