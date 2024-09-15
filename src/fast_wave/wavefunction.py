@@ -117,7 +117,36 @@ def create_normalized_hermite_coefficients_matrix(n_max: np.uint64) -> np.ndarra
 
     return C_s 
 
+def delete_normalized_hermite_coefficients_matrix():
 
+    """
+    Delete the 'C_s_matrix.pickle' file from the local directory.
+
+    Parameters
+    ----------
+    None
+        This function doesn't receive anything.
+
+    Returns
+    -------
+    None
+        This function doesn't return anything. It prints a success message if the file is deleted, 
+        or an error message if the file was not found or there was an issue with deletion.
+
+    """
+
+    package_dir = os.path.dirname(__file__)  
+    matrix_filename = 'C_s_matrix.pickle'
+    matrix_path = os.path.join(package_dir, matrix_filename)
+    
+    if os.path.exists(matrix_path):
+        try:
+            os.remove(matrix_path)
+            print(f"File {matrix_path} successfully removed.")
+        except Exception as e:
+            print(f"Error while trying to remove the file: {e}")
+    else:
+        print(f"File {matrix_path} not found.")
 
 
 @nb.jit(nopython=True, looplift=True, nogil=True, boundscheck=False, cache=True)
