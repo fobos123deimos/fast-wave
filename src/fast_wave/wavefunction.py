@@ -196,13 +196,16 @@ def wavefunction_smod(n: np.uint64, x:np.float64, more_fast:bool = True) -> np.f
 
         return result * np.exp(-(x ** 2) / 2)
     else:
-        result = np.array([0.0] * (n+1))
-        result[0] = (np.pi ** (-0.25))*np.exp(-(x ** 2) / 2) 
+        r0 = 0.0
+        r1 = (np.pi ** (-0.25)) * np.exp(-(x ** 2) / 2)
+        r2 = 0.0
 
         for index in range(n):
-            result[index+1]  = 2*x*(result[index]/np.sqrt(2*(index+1))) - np.sqrt(index/(index+1)) * result[index-1]
-            
-        return result[-1]
+            r2 = 2 * x * (r1 / np.sqrt(2 * (index + 1))) - np.sqrt(index / (index + 1)) * r0 
+            r0 = r1
+            r1 = r2
+
+        return r2
     
 
 @nb.jit(nopython=True, looplift=True, nogil=True, boundscheck=False, cache=True)
@@ -252,13 +255,16 @@ def c_wavefunction_smod(n: np.uint64, x: np.complex128, more_fast:bool = True) -
 
         return result * np.exp(-(x ** 2) / 2)
     else:
-        result = np.array([0.0 + 0.0j] * (n+1))
-        result[0] = (np.pi ** (-0.25))*np.exp(-(x ** 2) / 2) 
+        r0 = 0.0 + 0.0j
+        r1 = (np.pi ** (-0.25)) * np.exp(-(x ** 2) / 2)
+        r2 = 0.0 + 0.0j
 
         for index in range(n):
-            result[index+1]  = 2*x*(result[index]/np.sqrt(2*(index+1))) - np.sqrt(index/(index+1)) * result[index-1]
-            
-        return result[-1]
+            r2 = 2 * x * (r1 / np.sqrt(2 * (index + 1))) - np.sqrt(index / (index + 1)) * r0 
+            r0 = r1
+            r1 = r2
+
+        return r2
 
 
 @nb.jit(nopython=True, looplift=True,nogil=True, boundscheck=False, cache=True)
