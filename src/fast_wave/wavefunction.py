@@ -205,7 +205,7 @@ def wavefunction_smod(n: np.uint64, x:np.float64, more_fast:bool = True) -> np.f
             r0 = r1
             r1 = r2
 
-        return r2
+        return r1
     
 
 @nb.jit(nopython=True, looplift=True, nogil=True, boundscheck=False, cache=True)
@@ -264,7 +264,7 @@ def c_wavefunction_smod(n: np.uint64, x: np.complex128, more_fast:bool = True) -
             r0 = r1
             r1 = r2
 
-        return r2
+        return r1
 
 
 @nb.jit(nopython=True, looplift=True,nogil=True, boundscheck=False, cache=True)
