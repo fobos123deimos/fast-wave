@@ -2,7 +2,6 @@ import setuptools
 from setuptools import find_packages, Extension
 from Cython.Build import cythonize
 import numpy as np
-import os
 
 
 with open("README.md", "r", encoding="utf-8") as fh:
