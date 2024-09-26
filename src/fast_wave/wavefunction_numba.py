@@ -28,10 +28,7 @@
 # OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-import os
-import pickle
 import math
-from functools import lru_cache
 from sympy import symbols, diff, exp, Poly
 
 import numpy as np
@@ -117,44 +114,13 @@ def create_normalized_hermite_coefficients_matrix(n_max: np.uint64) -> np.ndarra
 
     return C_s 
 
-def delete_normalized_hermite_coefficients_matrix():
-
-    """
-    Delete the 'C_s_matrix.pickle' file from the local directory.
-
-    Parameters
-    ----------
-    None
-        This function doesn't receive anything.
-
-    Returns
-    -------
-    None
-        This function doesn't return anything. It prints a success message if the file is deleted, 
-        or an error message if the file was not found or there was an issue with deletion.
-
-    """
-
-    package_dir = os.path.dirname(__file__)  
-    matrix_filename = 'C_s_matrix.pickle'
-    matrix_path = os.path.join(package_dir, matrix_filename)
-    
-    if os.path.exists(matrix_path):
-        try:
-            os.remove(matrix_path)
-            print(f"File {matrix_path} successfully removed.")
-        except Exception as e:
-            print(f"Error while trying to remove the file: {e}")
-    else:
-        print(f"File {matrix_path} not found.")
-
 
 @nb.jit(nopython=True, looplift=True, nogil=True, boundscheck=False, cache=True)
-def wavefunction_smod(n: np.uint64, x:np.float64, more_fast:bool = True) -> np.float64:
+def psi_n_single_fock_single_position(n: np.uint64, x:np.float64, more_fast:bool = True) -> np.float64:
 
     """
     Compute the wavefunction to a real scalar x using a pre-computed matrix of normalized Hermite polynomial coefficients until n=60 and 
-    then use the adapted recursion relation for multidimensional M-mode wavefunction for higher orders.
+    then use the adapted recurrence relation for higher orders.
 
     Parameters
     ----------
@@ -175,9 +141,9 @@ def wavefunction_smod(n: np.uint64, x:np.float64, more_fast:bool = True) -> np.f
     Examples
     --------
     ```python
-    >>> wavefunction_smod(0, 1.0)
+    >>> psi_n_single_fock_single_position(0, 1.0)
     0.45558067201133257
-    >>> wavefunction_smod(61, 1.0)
+    >>> psi_n_single_fock_single_position(61, 1.0)
     -0.2393049199171131
     ```
 
@@ -209,11 +175,11 @@ def wavefunction_smod(n: np.uint64, x:np.float64, more_fast:bool = True) -> np.f
     
 
 @nb.jit(nopython=True, looplift=True, nogil=True, boundscheck=False, cache=True)
-def c_wavefunction_smod(n: np.uint64, x: np.complex128, more_fast:bool = True) -> np.complex128:
+def psi_n_single_fock_single_position_complex(n: np.uint64, x: np.complex128, more_fast:bool = True) -> np.complex128:
 
     """
     Compute the wavefunction to a complex scalar x using a pre-computed matrix of normalized Hermite polynomial coefficients until n=60 and 
-    then use the adapted recursion relation for multidimensional M-mode wavefunction for higher orders.
+    then use the adapted recurrence relation for higher orders.
 
     Parameters
     ----------
@@ -234,9 +200,9 @@ def c_wavefunction_smod(n: np.uint64, x: np.complex128, more_fast:bool = True) -
     Examples
     --------
     ```python
-    >>> c_wavefunction_smod(0,1.0+2.0j)
+    >>> psi_n_single_fock_single_position_complex(0,1.0+2.0j)
     (-1.4008797330262455-3.0609780602975003j)
-    >>> c_wavefunction_smod(61,1.0+2.0j)
+    >>> psi_n_single_fock_single_position_complex(61,1.0+2.0j)
     (-511062135.47555304+131445997.75753704j)
     ```
 
@@ -268,11 +234,11 @@ def c_wavefunction_smod(n: np.uint64, x: np.complex128, more_fast:bool = True) -
 
 
 @nb.jit(nopython=True, looplift=True,nogil=True, boundscheck=False, cache=True)
-def wavefunction_smmd(n: np.uint64, x: np.ndarray[np.float64], more_fast: bool = True) -> np.ndarray[np.float64]:
+def psi_n_single_fock_multiple_position(n: np.uint64, x: np.ndarray[np.float64], more_fast: bool = True) -> np.ndarray[np.float64]:
 
     """
     Compute the wavefunction to a real vector x using a pre-computed matrix of normalized Hermite polynomial coefficients until n=60 and 
-    then use the adapted recursion relation for multidimensional M-mode wavefunction for higher orders.
+    then use the adapted recurrence relation for higher orders.
 
     Parameters
     ----------
@@ -294,9 +260,9 @@ def wavefunction_smmd(n: np.uint64, x: np.ndarray[np.float64], more_fast: bool =
     Examples
     --------
     ```python
-    >>> wavefunction_smmd(0,np.array([1.0, 2.0]))
+    >>> psi_n_single_fock_multiple_position(0,np.array([1.0, 2.0]))
     array([0.45558067, 0.10165379])
-    >>> wavefunction_smmd(61,np.array([1.0, 2.0]))
+    >>> psi_n_single_fock_multiple_position(61,np.array([1.0, 2.0]))
     array([-0.23930492, -0.01677378])
     ```
 
@@ -329,11 +295,11 @@ def wavefunction_smmd(n: np.uint64, x: np.ndarray[np.float64], more_fast: bool =
 
 
 @nb.jit(nopython=True, looplift=True,nogil=True, boundscheck=False, cache=True)
-def c_wavefunction_smmd(n: np.uint64, x: np.ndarray[np.complex128], more_fast: bool = True) -> np.ndarray[np.complex128]:
+def psi_n_single_fock_multiple_position_complex(n: np.uint64, x: np.ndarray[np.complex128], more_fast: bool = True) -> np.ndarray[np.complex128]:
 
     """
     Compute the wavefunction to a complex vector x using a pre-computed matrix of normalized Hermite polynomial coefficients until n=60 and 
-    then use the adapted recursion relation for multidimensional M-mode wavefunction for higher orders.
+    then use the adapted recurrence relation for higher orders.
 
     Parameters
     ----------
@@ -355,9 +321,9 @@ def c_wavefunction_smmd(n: np.uint64, x: np.ndarray[np.complex128], more_fast: b
     Examples
     --------
     ```python
-    >>> c_wavefunction_smmd(0,np.array([1.0 + 1.0j, 2.0 + 2.0j]))
+    >>> psi_n_single_fock_multiple_position_complex(0,np.array([1.0 + 1.0j, 2.0 + 2.0j]))
     array([ 0.40583486-0.63205035j, -0.49096842+0.56845369j])
-    >>> c_wavefunction_smmd(61,np.array([1.0 + 1.0j, 2.0 + 2.0j]))
+    >>> psi_n_single_fock_multiple_position_complex(61,np.array([1.0 + 1.0j, 2.0 + 2.0j]))
     array([-7.56548941e+03+9.21498621e+02j, -1.64189542e+08-3.70892077e+08j])
     ```
 
@@ -389,10 +355,10 @@ def c_wavefunction_smmd(n: np.uint64, x: np.ndarray[np.complex128], more_fast: b
 
 
 @nb.jit(nopython=True, looplift=True,nogil=True, boundscheck=False, cache=True)
-def wavefunction_mmod(n: np.uint64, x:np.float64) -> np.ndarray[np.float64]:
+def psi_n_multiple_fock_single_position(n: np.uint64, x:np.float64) -> np.ndarray[np.float64]:
 
     """
-    Compute the wavefunction to a real scalar x to all modes until the mode n using the recursion relation for multidimensional M-mode wavefunction.
+    Compute the wavefunction to a real scalar x to all fock states until n using the recurrence relation.
 
     Parameters
     ----------
@@ -410,7 +376,7 @@ def wavefunction_mmod(n: np.uint64, x:np.float64) -> np.ndarray[np.float64]:
     Examples
     --------
     ```python
-    >>> wavefunction_mmod(1,1.0)
+    >>> psi_n_multiple_fock_single_position(1,1.0)
     array([0.45558067, 0.64428837])
     ```
 
@@ -430,10 +396,10 @@ def wavefunction_mmod(n: np.uint64, x:np.float64) -> np.ndarray[np.float64]:
 
 
 @nb.jit(nopython=True, looplift=True,nogil=True, boundscheck=False, cache=True)
-def c_wavefunction_mmod(n: np.uint64, x: np.complex128) -> np.ndarray[np.complex128]: 
+def psi_n_multiple_fock_single_position_complex(n: np.uint64, x: np.complex128) -> np.ndarray[np.complex128]: 
 
     """
-    Compute the wavefunction to a complex scalar x to all modes until the mode n using the recursion relation for multidimensional M-mode wavefunction.
+    Compute the wavefunction to a complex scalar x to all fock states until n using the recurrence relation.
 
     Parameters
     ----------
@@ -451,7 +417,7 @@ def c_wavefunction_mmod(n: np.uint64, x: np.complex128) -> np.ndarray[np.complex
     Examples
     --------
     ```python
-    >>> c_wavefunction_mmod(1,1.0 +2.0j)
+    >>> psi_n_multiple_fock_single_position_complex(1,1.0 +2.0j)
     array([-1.40087973-3.06097806j,  6.67661026-8.29116292j])
     ```
 
@@ -472,10 +438,10 @@ def c_wavefunction_mmod(n: np.uint64, x: np.complex128) -> np.ndarray[np.complex
 
 
 @nb.jit(nopython=True, looplift=True,nogil=True, boundscheck=False, cache=True)
-def wavefunction_mmmd(n: np.uint64, x: np.ndarray[np.float64]) -> np.ndarray[np.ndarray[np.float64]]:
+def psi_n_multiple_fock_multiple_position(n: np.uint64, x: np.ndarray[np.float64]) -> np.ndarray[np.ndarray[np.float64]]:
 
     """
-    Compute the wavefunction to a real vector x to all modes until the mode n using the recursion relation for multidimensional M-mode wavefunction.
+    Compute the wavefunction to a real vector x to all fock states until n using the recurrence relation.
 
     Parameters
     ----------
@@ -493,7 +459,7 @@ def wavefunction_mmmd(n: np.uint64, x: np.ndarray[np.float64]) -> np.ndarray[np.
     Examples
     --------
     ```python
-    >>> wavefunction_mmmd(1,np.array([1.0, 2.0]))
+    >>> psi_n_multiple_fock_multiple_position(1,np.array([1.0, 2.0]))
     array([[0.45558067, 0.10165379],
            [0.64428837, 0.28752033]])
     ```
@@ -515,10 +481,10 @@ def wavefunction_mmmd(n: np.uint64, x: np.ndarray[np.float64]) -> np.ndarray[np.
 
 
 @nb.jit(nopython=True, looplift=True,nogil=True, boundscheck=False, cache=True)
-def c_wavefunction_mmmd(n: np.uint64, x: np.ndarray[np.complex128]) -> np.ndarray[np.ndarray[np.float64]]:
+def psi_n_multiple_fock_multiple_position_complex(n: np.uint64, x: np.ndarray[np.complex128]) -> np.ndarray[np.ndarray[np.float64]]:
 
     """
-    Compute the wavefunction to a complex vector x to all modes until the mode n using the recursion relation for multidimensional M-mode wavefunction.
+    Compute the wavefunction to a complex vector x to all fock states until n using the recurrence relation.
 
     Parameters
     ----------
@@ -536,7 +502,7 @@ def c_wavefunction_mmmd(n: np.uint64, x: np.ndarray[np.complex128]) -> np.ndarra
     Examples
     --------
     ```python
-    >>> c_wavefunction_mmmd(1,np.array([1.0 + 1.0j, 2.0 + 2.0j]))
+    >>> psi_n_multiple_fock_multiple_position_complex(1,np.array([1.0 + 1.0j, 2.0 + 2.0j]))
     array([[ 0.40583486-0.63205035j, -0.49096842+0.56845369j],
            [ 1.46779135-0.31991701j, -2.99649822+0.21916143j]])
     ```
@@ -555,83 +521,9 @@ def c_wavefunction_mmmd(n: np.uint64, x: np.ndarray[np.complex128]) -> np.ndarra
         result[index+1]  = 2*x*(result[index]/np.sqrt(2*(index+1))) - np.sqrt(index/(index+1)) * result[index-1]
         
     return result
-
-def wavefunction(s_mode: bool = True, o_dimensional: bool = True, complex_bool: bool = False, cache: bool = False, cache_size: np.uint64 = 128) -> nb.core.registry.CPUDispatcher:
-
-    """
-    Computes the wavefunction of a quantum harmonic oscillator .This function dispatches to different implementations of the wavefunction depending on the specified parameters.
-
-    Parameters:
-    ----------
-    s_mode : bool 
-             Whether to use the single-mode recursion (True) or the multi-mode recursion (False). Defaults to True.
-    o_dimensional : bool 
-                    Whether to evaluate the wavefunction for a single coordinate (True) or multiple coordinates (False). Defaults to True.
-    complex_boll : bool 
-                   Whether to return the complex wavefunction (True) or the real wavefunction (False). Defaults to False.
-    cache : bool  
-            Whether to cache the results of the wavefunction computation using least-recently-used caching. Defaults to False.
-    cache_size : np.uint64 
-                 The maximum size of the cache to use. Defaults to 128.
-
-    Returns:
-    -------
-        nb.core.registry.CPUDispatcher: 
-        A dispatcher object that resolves to the appropriate wavefunction implementation based on the input parameters.
-   """
-    
-    if(s_mode):
-        if(o_dimensional):
-            if(not(complex_bool)):
-                if(not(cache)):
-                    return wavefunction_smod
-                else:
-                    return lru_cache(maxsize=cache_size)(wavefunction_smod)
-            else:
-                if(not(cache)):
-                    return c_wavefunction_smod
-                else:
-                    return lru_cache(maxsize=cache_size)(c_wavefunction_smod)
-        else:
-            if(not(complex_bool)):
-                if(not(cache)):
-                    return wavefunction_smmd
-                else:
-                    return lru_cache(maxsize=cache_size)(wavefunction_smmd)
-            else:
-                if(not(cache)):
-                    return c_wavefunction_smmd
-                else:
-                    return lru_cache(maxsize=cache_size)(c_wavefunction_smmd)
-    else:
-        if(o_dimensional):
-            if(not(complex_bool)):
-                if(not(cache)):
-                    return wavefunction_mmod
-                else:
-                    return lru_cache(maxsize=cache_size)(wavefunction_mmod)
-            else:
-                if(not(cache)):
-                    return c_wavefunction_mmod
-                else:
-                    return lru_cache(maxsize=cache_size)(c_wavefunction_mmod)
-        else:
-            if(not(complex_bool)):
-                if(not(cache)):
-                    return wavefunction_mmmd
-                else:
-                    return lru_cache(maxsize=cache_size)(wavefunction_mmmd)
-            else:
-                if(not(cache)):
-                    return c_wavefunction_mmmd
-                else:
-                    return lru_cache(maxsize=cache_size)(c_wavefunction_mmmd)
         
 """
 Main execution block to initialize the coefficient matrix and test the wavefunction computation.
-This block checks for the existence of the precomputed normalized Hermite polynomial coefficients matrix. If it doesn't exist,
-it computes the matrix and saves it for future use. Then, it performs a basic test to verify that the wavefunction
-computation works as expected.
 
 References
 ----------
@@ -639,42 +531,32 @@ References
   https://docs.python.org/3/tutorial/modules.html 
   .
 """
-package_dir = os.path.dirname(__file__)  
-matrix_filename = 'C_s_matrix.pickle'
-matrix_path = os.path.join(package_dir, matrix_filename)
 
-if os.path.isfile(matrix_path):
-    with open(matrix_path, 'rb') as file:
-        c_s_matrix = pickle.load(file)
-else:
-    c_s_matrix = create_normalized_hermite_coefficients_matrix(60)
-    with open(matrix_path, 'wb') as file:
-        pickle.dump(c_s_matrix, file)
-
+c_s_matrix = create_normalized_hermite_coefficients_matrix(60)
 
 try:
 
     # Basic functionality test
-    test_output_smod_2 = wavefunction_smod(2, 10.0)
-    test_output_smod_less_fast_2 = wavefunction_smod(2, 10.0, more_fast=False)
-    test_output_smod_61 = wavefunction_smod(61, 10.0)
-    test_output_smod_less_fast_61 = wavefunction_smod(61, 10.0, more_fast=False)
-    test_output_mmod = wavefunction_mmod(2, 10.0)
-    test_output_smmd_2 = wavefunction_smmd(2, np.array([10.0,4.5]))
-    test_output_smmd_less_fast_2 = wavefunction_smmd(2, np.array([10.0,4.5]), more_fast=False)
-    test_output_smmd_61 = wavefunction_smmd(61, np.array([10.0,4.5]))
-    test_output_smmd_less_fast_61 = wavefunction_smmd(61, np.array([10.0,4.5]), more_fast=False)
-    test_output_mmmd = wavefunction_mmmd(2, np.array([10.0,4.5]))
-    test_output_c_smod = c_wavefunction_smod(2, 10.0 + 0.0j)
-    test_output_c_smod_less_fast = c_wavefunction_smod(2, 10.0 + 0.0j, more_fast=False)
-    test_output_c_smod_61 = c_wavefunction_smod(61, 10.0 + 0.0j)
-    test_output_c_smod_less_fast_61 = c_wavefunction_smod(61, 10.0 + 0.0j, more_fast=False)
-    test_output_c_mmod = c_wavefunction_mmod(2, 10.0 + 0.0j)
-    test_output_c_smmd = c_wavefunction_smmd(2, np.array([10.0 + 0.0j,4.5 + 0.0j]))
-    test_output_c_smmd_less_fast = c_wavefunction_smmd(2, np.array([10.0 + 0.0j,4.5 + 0.0j]), more_fast=False)
-    test_output_c_smmd_61 = c_wavefunction_smmd(61, np.array([10.0 + 0.0j,4.5 + 0.0j]))
-    test_output_c_smmd_less_fast_61 = c_wavefunction_smmd(61, np.array([10.0 + 0.0j,4.5 + 0.0j]), more_fast=False)
-    test_output_c_mmmd = c_wavefunction_mmmd(2, np.array([10.0 + 0.0j,4.5 + 0.0j]))
+    test_output_sfsp_2 = psi_n_single_fock_single_position(2, 10.0)
+    test_output_sfsp_less_fast_2 = psi_n_single_fock_single_position(2, 10.0, more_fast=False)
+    test_output_sfsp_61 = psi_n_single_fock_single_position(61, 10.0)
+    test_output_sfsp_less_fast_61 = psi_n_single_fock_single_position(61, 10.0, more_fast=False)
+    test_output_mfsp = psi_n_multiple_fock_single_position(2, 10.0)
+    test_output_sfmp_2 = psi_n_single_fock_multiple_position(2, np.array([10.0,4.5]))
+    test_output_sfmp_less_fast_2 = psi_n_single_fock_multiple_position(2, np.array([10.0,4.5]), more_fast=False)
+    test_output_sfmp_61 = psi_n_single_fock_multiple_position(61, np.array([10.0,4.5]))
+    test_output_sfmp_less_fast_61 = psi_n_single_fock_multiple_position(61, np.array([10.0,4.5]), more_fast=False)
+    test_output_mfmp = psi_n_multiple_fock_multiple_position(2, np.array([10.0,4.5]))
+    test_output_sfsp_c = psi_n_single_fock_single_position_complex(2, 10.0 + 0.0j)
+    test_output_sfsp_c_less_fast = psi_n_single_fock_single_position_complex(2, 10.0 + 0.0j, more_fast=False)
+    test_output_sfsp_c_61 = psi_n_single_fock_single_position_complex(61, 10.0 + 0.0j)
+    test_output_sfsp_c_less_fast_61 = psi_n_single_fock_single_position_complex(61, 10.0 + 0.0j, more_fast=False)
+    test_output_mfsp_c = psi_n_multiple_fock_single_position_complex(2, 10.0 + 0.0j)
+    test_output_sfmp_c = psi_n_single_fock_multiple_position(2, np.array([10.0 + 0.0j,4.5 + 0.0j]))
+    test_output_sfmp_c_less_fast = psi_n_single_fock_multiple_position(2, np.array([10.0 + 0.0j,4.5 + 0.0j]), more_fast=False)
+    test_output_sfmp_c_61 = psi_n_single_fock_multiple_position(61, np.array([10.0 + 0.0j,4.5 + 0.0j]))
+    test_output_sfmp_c_less_fast_61 = psi_n_single_fock_multiple_position(61, np.array([10.0 + 0.0j,4.5 + 0.0j]), more_fast=False)
+    test_output_mfmp_c = psi_n_multiple_fock_multiple_position_complex(2, np.array([10.0 + 0.0j,4.5 + 0.0j]))
     compilation_test = True
     print(f"Functionality Test Passed: {compilation_test}")
 except Exception as e:
