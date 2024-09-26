@@ -1,0 +1,6 @@
+include README.md          
+include LICENSE           
+include setup.py            
+
+recursive-include meu_pacote *.pyx  
+recursive-include meu_pacote *.pxd  

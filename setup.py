@@ -1,11 +1,15 @@
 import setuptools
-from setuptools import find_packages
+from setuptools import find_packages, Extension
+from Cython.Build import cythonize
+import numpy as np
+import os
+
 
 with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
 
 name = "fast_wave"
-version = "1.4.1"
+version = "1.4.2"
 description = "Package for the calculation of the time-independent wavefunction." 
 author_email = "matheusgomescord@gmail.com"
 url = "https://github.com/pikachu123deimos/fast-wave" 
@@ -33,6 +37,10 @@ classifiers = [
     'Development Status :: 5 - Production/Stable', 
 ]
 
+extensions = [
+    Extension("fast_wave.wavefunction_cython", ["fast_wave/wavefunction_cython.pyx"]),
+]
+
 setuptools.setup(
     name=name,
     version=version,
@@ -47,4 +55,6 @@ setuptools.setup(
     packages=packages,
     package_dir={'': 'src'},
     classifiers=classifiers,
+    ext_modules=cythonize("src/fast_wave/wavefunction_cython.pyx"),
+    include_dirs=[np.get_include()]
 )
