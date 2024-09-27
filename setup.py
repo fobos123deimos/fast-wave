@@ -6,7 +6,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
 
 name = "fast_wave"
-version = "1.4.11"
+version = "1.4.12"
 description = "Package for the calculation of the time-independent wavefunction." 
 author_email = "matheusgomescord@gmail.com"
 url = "https://github.com/pikachu123deimos/fast-wave" 
@@ -26,7 +26,7 @@ test_requires = [
 
 packages = find_packages(where='src')
 
-package_data = {'fast_wave': ['*.pyd']}
+package_data = {'fast_wave': ['*.pyd', '*.so']}
 
 classifiers = [
     'Programming Language :: Python :: 3.11',  
