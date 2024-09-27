@@ -116,7 +116,7 @@ def create_normalized_hermite_coefficients_matrix(n_max: np.uint64) -> np.ndarra
 
 
 @nb.jit(nopython=True, looplift=True, nogil=True, boundscheck=False, cache=True)
-def psi_n_single_fock_single_position(n: np.uint64, x:np.float64, more_fast:bool = True) -> np.float64:
+def psi_n_single_fock_single_position(n: np.uint64, x:np.float64, CS_matrix:bool = True) -> np.float64:
 
     """
     Compute the wavefunction to a real scalar x using a pre-computed matrix of normalized Hermite polynomial coefficients until n=60 and 
@@ -153,7 +153,7 @@ def psi_n_single_fock_single_position(n: np.uint64, x:np.float64, more_fast:bool
       015402. doi:10.1088/1361-6404/aa9584
     """
     
-    if(n<=60 and more_fast):
+    if(n<=60 and CS_matrix):
         c_size = c_s_matrix.shape[0]
         n_coeffs = c_s_matrix[n]
         result = 0.0
@@ -175,7 +175,7 @@ def psi_n_single_fock_single_position(n: np.uint64, x:np.float64, more_fast:bool
     
 
 @nb.jit(nopython=True, looplift=True, nogil=True, boundscheck=False, cache=True)
-def psi_n_single_fock_single_position_complex(n: np.uint64, x: np.complex128, more_fast:bool = True) -> np.complex128:
+def psi_n_single_fock_single_position_complex(n: np.uint64, x: np.complex128, CS_matrix:bool = True) -> np.complex128:
 
     """
     Compute the wavefunction to a complex scalar x using a pre-computed matrix of normalized Hermite polynomial coefficients until n=60 and 
@@ -212,7 +212,7 @@ def psi_n_single_fock_single_position_complex(n: np.uint64, x: np.complex128, mo
       015402. doi:10.1088/1361-6404/aa9584
     """
 
-    if(n<=60 and more_fast):
+    if(n<=60 and CS_matrix):
         c_size = c_s_matrix.shape[0]
         n_coeffs = c_s_matrix[n]
         result = 0.0 + 0.0j
@@ -234,7 +234,7 @@ def psi_n_single_fock_single_position_complex(n: np.uint64, x: np.complex128, mo
 
 
 @nb.jit(nopython=True, looplift=True,nogil=True, boundscheck=False, cache=True)
-def psi_n_single_fock_multiple_position(n: np.uint64, x: np.ndarray[np.float64], more_fast: bool = True) -> np.ndarray[np.float64]:
+def psi_n_single_fock_multiple_position(n: np.uint64, x: np.ndarray[np.float64], CS_matrix: bool = True) -> np.ndarray[np.float64]:
 
     """
     Compute the wavefunction to a real vector x using a pre-computed matrix of normalized Hermite polynomial coefficients until n=60 and 
@@ -274,7 +274,7 @@ def psi_n_single_fock_multiple_position(n: np.uint64, x: np.ndarray[np.float64],
 
     x_size = x.shape[0]
 
-    if(n<=60 and more_fast):
+    if(n<=60 and CS_matrix):
         c_size = c_s_matrix.shape[0]
         n_coeffs = c_s_matrix[n]
         result = np.array([0.0] * (x_size))
@@ -295,7 +295,7 @@ def psi_n_single_fock_multiple_position(n: np.uint64, x: np.ndarray[np.float64],
 
 
 @nb.jit(nopython=True, looplift=True,nogil=True, boundscheck=False, cache=True)
-def psi_n_single_fock_multiple_position_complex(n: np.uint64, x: np.ndarray[np.complex128], more_fast: bool = True) -> np.ndarray[np.complex128]:
+def psi_n_single_fock_multiple_position_complex(n: np.uint64, x: np.ndarray[np.complex128], CS_matrix: bool = True) -> np.ndarray[np.complex128]:
 
     """
     Compute the wavefunction to a complex vector x using a pre-computed matrix of normalized Hermite polynomial coefficients until n=60 and 
@@ -335,7 +335,7 @@ def psi_n_single_fock_multiple_position_complex(n: np.uint64, x: np.ndarray[np.c
 
     x_size = x.shape[0]
 
-    if(n<=60 and more_fast):
+    if(n<=60 and CS_matrix):
         c_size = c_s_matrix.shape[0]
         n_coeffs = c_s_matrix[n]
         result = np.array([0.0 + 0.0j] * (x_size))
@@ -537,25 +537,25 @@ c_s_matrix = create_normalized_hermite_coefficients_matrix(60)
 try:
 
     # Basic functionality test
-    test_output_sfsp_2 = psi_n_single_fock_single_position(2, 10.0)
-    test_output_sfsp_less_fast_2 = psi_n_single_fock_single_position(2, 10.0, more_fast=False)
-    test_output_sfsp_61 = psi_n_single_fock_single_position(61, 10.0)
-    test_output_sfsp_less_fast_61 = psi_n_single_fock_single_position(61, 10.0, more_fast=False)
+    test_output_sfsp_CS_matrix_2 = psi_n_single_fock_single_position(2, 10.0)
+    test_output_sfsp_2 = psi_n_single_fock_single_position(2, 10.0, CS_matrix=False)
+    test_output_sfsp_CS_matrix_61 = psi_n_single_fock_single_position(61, 10.0)
+    test_output_sfsp_61 = psi_n_single_fock_single_position(61, 10.0, CS_matrix=False)
     test_output_mfsp = psi_n_multiple_fock_single_position(2, 10.0)
-    test_output_sfmp_2 = psi_n_single_fock_multiple_position(2, np.array([10.0,4.5]))
-    test_output_sfmp_less_fast_2 = psi_n_single_fock_multiple_position(2, np.array([10.0,4.5]), more_fast=False)
-    test_output_sfmp_61 = psi_n_single_fock_multiple_position(61, np.array([10.0,4.5]))
-    test_output_sfmp_less_fast_61 = psi_n_single_fock_multiple_position(61, np.array([10.0,4.5]), more_fast=False)
+    test_output_sfmp_CS_matrix_2 = psi_n_single_fock_multiple_position(2, np.array([10.0,4.5]))
+    test_output_sfmp_2 = psi_n_single_fock_multiple_position(2, np.array([10.0,4.5]), CS_matrix=False)
+    test_output_sfmp_CS_matrix_61 = psi_n_single_fock_multiple_position(61, np.array([10.0,4.5]))
+    test_output_sfmp_61 = psi_n_single_fock_multiple_position(61, np.array([10.0,4.5]), CS_matrix=False)
     test_output_mfmp = psi_n_multiple_fock_multiple_position(2, np.array([10.0,4.5]))
-    test_output_sfsp_c = psi_n_single_fock_single_position_complex(2, 10.0 + 0.0j)
-    test_output_sfsp_c_less_fast = psi_n_single_fock_single_position_complex(2, 10.0 + 0.0j, more_fast=False)
-    test_output_sfsp_c_61 = psi_n_single_fock_single_position_complex(61, 10.0 + 0.0j)
-    test_output_sfsp_c_less_fast_61 = psi_n_single_fock_single_position_complex(61, 10.0 + 0.0j, more_fast=False)
+    test_output_sfsp_c_CS_matrix_2 = psi_n_single_fock_single_position_complex(2, 10.0 + 0.0j)
+    test_output_sfsp_c_2 = psi_n_single_fock_single_position_complex(2, 10.0 + 0.0j, CS_matrix=False)
+    test_output_sfsp_c_CS_matrix_61 = psi_n_single_fock_single_position_complex(61, 10.0 + 0.0j)
+    test_output_sfsp_c_61 = psi_n_single_fock_single_position_complex(61, 10.0 + 0.0j, CS_matrix=False)
     test_output_mfsp_c = psi_n_multiple_fock_single_position_complex(2, 10.0 + 0.0j)
-    test_output_sfmp_c = psi_n_single_fock_multiple_position_complex(2, np.array([10.0 + 0.0j,4.5 + 0.0j]))
-    test_output_sfmp_c_less_fast = psi_n_single_fock_multiple_position_complex(2, np.array([10.0 + 0.0j,4.5 + 0.0j]), more_fast=False)
-    test_output_sfmp_c_61 = psi_n_single_fock_multiple_position_complex(61, np.array([10.0 + 0.0j,4.5 + 0.0j]))
-    test_output_sfmp_c_less_fast_61 = psi_n_single_fock_multiple_position_complex(61, np.array([10.0 + 0.0j,4.5 + 0.0j]), more_fast=False)
+    test_output_sfmp_c_CS_matrix_2 = psi_n_single_fock_multiple_position_complex(2, np.array([10.0 + 0.0j,4.5 + 0.0j]))
+    test_output_sfmp_c_2 = psi_n_single_fock_multiple_position_complex(2, np.array([10.0 + 0.0j,4.5 + 0.0j]), CS_matrix=False)
+    test_output_sfmp_c_CS_matrix_61 = psi_n_single_fock_multiple_position_complex(61, np.array([10.0 + 0.0j,4.5 + 0.0j]))
+    test_output_sfmp_c_61 = psi_n_single_fock_multiple_position_complex(61, np.array([10.0 + 0.0j,4.5 + 0.0j]), CS_matrix=False)
     test_output_mfmp_c = psi_n_multiple_fock_multiple_position_complex(2, np.array([10.0 + 0.0j,4.5 + 0.0j]))
     compilation_test = True
     print(f"Functionality Test Passed: {compilation_test}")
