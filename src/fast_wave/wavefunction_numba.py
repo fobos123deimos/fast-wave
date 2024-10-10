@@ -274,7 +274,7 @@ def psi_n_single_fock_multiple_position(n: np.uint64, x: np.ndarray[np.float64],
 
     x_size = x.shape[0]
 
-    if(n<=60 and CS_matrix):
+    if(n<=60 and x_size<= 35 and CS_matrix):
         c_size = c_s_matrix.shape[0]
         n_coeffs = c_s_matrix[n]
         result = np.array([0.0] * (x_size))
@@ -335,7 +335,7 @@ def psi_n_single_fock_multiple_position_complex(n: np.uint64, x: np.ndarray[np.c
 
     x_size = x.shape[0]
 
-    if(n<=60 and CS_matrix):
+    if(n<=60 and x_size<= 35 and CS_matrix):
         c_size = c_s_matrix.shape[0]
         n_coeffs = c_s_matrix[n]
         result = np.array([0.0 + 0.0j] * (x_size))
