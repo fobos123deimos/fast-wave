@@ -148,7 +148,7 @@ cpdef double complex psi_n_single_fock_single_position_complex(int n, double com
 @cython.cfunc
 @cython.locals(x_size=np.npy_intp, j=int, i=int, k=int, temp1=double, temp2=double)
 @cython.boundscheck(False)
-cpdef np.ndarray[np.float64_t, ndim=1] psi_n_single_fock_multiple_position(int n, tuple x):
+cpdef np.ndarray[np.float64_t, ndim=1] psi_n_single_fock_multiple_position(int n, np.ndarray[np.float64_t, ndim=1] x):
 
     """
     Compute the wavefunction to a real vector x using adapted recurrence relation.
@@ -157,7 +157,7 @@ cpdef np.ndarray[np.float64_t, ndim=1] psi_n_single_fock_multiple_position(int n
     ----------
     n : int
         Quantum state number.
-    x : tuple
+    x : np.ndarray[np.float64_t]
         Position(s) at which to evaluate the wavefunction.
 
 
@@ -181,22 +181,21 @@ cpdef np.ndarray[np.float64_t, ndim=1] psi_n_single_fock_multiple_position(int n
       015402. doi:10.1088/1361-6404/aa9584
     """
     
-    x_size = len(x)
-    cdef np.ndarray[np.float64_t, ndim=1] x_array = np.array(x, dtype=np.float64)
+    x_size = x.shape[0]
     cdef np.ndarray[np.float64_t, ndim=2] result = np.zeros((n + 1, x_size), dtype=np.float64)
 
     for j in range(x_size):
-        result[0, j] = (pi ** (-0.25)) * exp(-(x_array[j] ** 2) / 2)
+        result[0, j] = (pi ** (-0.25)) * exp(-(x[j] ** 2) / 2)
 
     for i in range(n):
         temp1 = sqrt(2 * (i + 1))
         temp2 = sqrt(i / (i + 1))
         if(i == 0):
             for k in range(x_size):
-                result[i + 1, k] = 2 * x_array[k] * (result[i, k] / temp1)
+                result[i + 1, k] = 2 * x[k] * (result[i, k] / temp1)
         else:
             for k in range(x_size):
-                result[i + 1, k] = 2 * x_array[k] * (result[i, k] / temp1) - temp2 * result[i - 1, k]
+                result[i + 1, k] = 2 * x[k] * (result[i, k] / temp1) - temp2 * result[i - 1, k]
 
     return result[-1, :]
 
@@ -204,7 +203,7 @@ cpdef np.ndarray[np.float64_t, ndim=1] psi_n_single_fock_multiple_position(int n
 @cython.cfunc
 @cython.locals(x_size=np.npy_intp, j=int, i=int, k=int, temp1=complex, temp2=complex)
 @cython.boundscheck(False)
-cpdef np.ndarray[np.complex128_t, ndim=1] psi_n_single_fock_multiple_position_complex(int n, tuple x):
+cpdef np.ndarray[np.complex128_t, ndim=1] psi_n_single_fock_multiple_position_complex(int n, np.ndarray[np.complex128_t, ndim=1] x):
 
     """
     Compute the wavefunction to a complex vector x using adapted recurrence relation.
@@ -213,7 +212,7 @@ cpdef np.ndarray[np.complex128_t, ndim=1] psi_n_single_fock_multiple_position_co
     ----------
     n : int
         Quantum state number.
-    x : tuple
+    x : np.ndarray[np.complex128_t]
         Position(s) at which to evaluate the wavefunction.
 
 
@@ -237,22 +236,21 @@ cpdef np.ndarray[np.complex128_t, ndim=1] psi_n_single_fock_multiple_position_co
       015402. doi:10.1088/1361-6404/aa9584
     """
     
-    x_size = len(x)
-    cdef np.ndarray[np.complex128_t, ndim=1] x_array = np.array(x, dtype=np.complex128)
+    x_size = x.shape[0]
     cdef np.ndarray[np.complex128_t, ndim=2] result = np.zeros((n + 1, x_size), dtype=np.complex128)
 
     for j in range(x_size):
-        result[0, j] = (cpi ** (-0.25)) * cexp(-(x_array[j] ** 2) / 2)
+        result[0, j] = (cpi ** (-0.25)) * cexp(-(x[j] ** 2) / 2)
 
     for i in range(n):
         temp1 = csqrt(2 * (i + 1))
         temp2 = csqrt(i / (i + 1))
         if(i == 0):
             for k in range(x_size):
-                result[i + 1, k] = 2 * x_array[k] * (result[i, k] / temp1)
+                result[i + 1, k] = 2 * x[k] * (result[i, k] / temp1)
         else:
             for k in range(x_size):
-                result[i + 1, k] = 2 * x_array[k] * (result[i, k] / temp1) - temp2 * result[i - 1, k]
+                result[i + 1, k] = 2 * x[k] * (result[i, k] / temp1) - temp2 * result[i - 1, k]
 
     return result[-1, :]
 
@@ -353,7 +351,7 @@ cpdef np.ndarray[np.complex128_t, ndim=1] psi_n_multiple_fock_single_position_co
 @cython.cfunc
 @cython.locals(x_size=np.npy_intp, j=int, i=int, k=int, temp1=double, temp2=double)
 @cython.boundscheck(False)
-cpdef np.ndarray[np.float64_t, ndim=2] psi_n_multiple_fock_multiple_position(int n, tuple x):
+cpdef np.ndarray[np.float64_t, ndim=2] psi_n_multiple_fock_multiple_position(int n, np.ndarray[np.float64_t, ndim=1] x):
 
     """
     Compute the wavefunction to a real vector x to all fock states until n using adapted recurrence relation.
@@ -362,7 +360,7 @@ cpdef np.ndarray[np.float64_t, ndim=2] psi_n_multiple_fock_multiple_position(int
     ----------
     n : int
         Quantum state number.
-    x : tuple
+    x : np.ndarray[np.float64_t]
         Position(s) at which to evaluate the wavefunction.
 
 
@@ -385,22 +383,21 @@ cpdef np.ndarray[np.float64_t, ndim=2] psi_n_multiple_fock_multiple_position(int
       015402. doi:10.1088/1361-6404/aa9584
     """
     
-    x_size = len(x)
-    cdef np.ndarray[np.float64_t, ndim=1] x_array = np.array(x, dtype=np.float64)
+    x_size = x.shape[0]
     cdef np.ndarray[np.float64_t, ndim=2] result = np.zeros((n + 1, x_size), dtype=np.float64)
 
     for j in range(x_size):
-        result[0, j] = (pi ** (-0.25)) * exp(-(x_array[j] ** 2) / 2)
+        result[0, j] = (pi ** (-0.25)) * exp(-(x[j] ** 2) / 2)
 
     for i in range(n):
         temp1 = sqrt(2 * (i + 1))
         temp2 = sqrt(i / (i + 1))
         if(i == 0):
             for k in range(x_size):
-                result[i + 1, k] = 2 * x_array[k] * (result[i, k] / temp1)
+                result[i + 1, k] = 2 * x[k] * (result[i, k] / temp1)
         else:
             for k in range(x_size):
-                result[i + 1, k] = 2 * x_array[k] * (result[i, k] / temp1) - temp2 * result[i - 1, k]
+                result[i + 1, k] = 2 * x[k] * (result[i, k] / temp1) - temp2 * result[i - 1, k]
 
     return result
 
@@ -408,7 +405,7 @@ cpdef np.ndarray[np.float64_t, ndim=2] psi_n_multiple_fock_multiple_position(int
 @cython.cfunc
 @cython.locals(x_size=np.npy_intp, j=int, i=int, k=int, temp1=complex, temp2=complex)
 @cython.boundscheck(False)
-cpdef np.ndarray[np.complex128_t, ndim=2] psi_n_multiple_fock_multiple_position_complex(int n, tuple x):
+cpdef np.ndarray[np.complex128_t, ndim=2] psi_n_multiple_fock_multiple_position_complex(int n, np.ndarray[np.complex128_t, ndim=1] x):
 
     """
     Compute the wavefunction to a complex vector x to all fock states until n using adapted recurrence relation.
@@ -417,7 +414,7 @@ cpdef np.ndarray[np.complex128_t, ndim=2] psi_n_multiple_fock_multiple_position_
     ----------
     n : int
         Quantum state number.
-    x : tuple
+    x : np.ndarray[np.float64_t]
         Position(s) at which to evaluate the wavefunction.
 
 
@@ -440,21 +437,20 @@ cpdef np.ndarray[np.complex128_t, ndim=2] psi_n_multiple_fock_multiple_position_
       015402. doi:10.1088/1361-6404/aa9584
     """
     
-    x_size = len(x)
-    cdef np.ndarray[np.complex128_t, ndim=1] x_array = np.array(x, dtype=np.complex128)
+    x_size = x.shape[0]
     cdef np.ndarray[np.complex128_t, ndim=2] result = np.zeros((n + 1, x_size), dtype=np.complex128)
 
     for j in range(x_size):
-        result[0, j] = (cpi ** (-0.25)) * cexp(-(x_array[j] ** 2) / 2)
+        result[0, j] = (cpi ** (-0.25)) * cexp(-(x[j] ** 2) / 2)
 
     for i in range(n):
         temp1 = csqrt(2 * (i + 1))
         temp2 = csqrt(i / (i + 1))
         if(i == 0):
             for k in range(x_size):
-                result[i + 1, k] = 2 * x_array[k] * (result[i, k] / temp1)
+                result[i + 1, k] = 2 * x[k] * (result[i, k] / temp1)
         else:
             for k in range(x_size):
-                result[i + 1, k] = 2 * x_array[k] * (result[i, k] / temp1) - temp2 * result[i - 1, k]
+                result[i + 1, k] = 2 * x[k] * (result[i, k] / temp1) - temp2 * result[i - 1, k]
 
     return result
