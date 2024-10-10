@@ -234,7 +234,7 @@ def psi_n_single_fock_single_position_complex(n: np.uint64, x: np.complex128, CS
 
 
 @nb.jit(nopython=True, looplift=True,nogil=True, boundscheck=False, cache=True)
-def psi_n_single_fock_multiple_position(n: np.uint64, x: np.ndarray[np.float64], CS_matrix: bool = True) -> np.ndarray[np.float64]:
+def psi_n_single_fock_multiple_position(n: np.uint64, x: tuple, CS_matrix: bool = True) -> np.ndarray[np.float64]:
 
     """
     Compute the wavefunction to a real vector x using a pre-computed matrix of normalized Hermite polynomial coefficients until n=60 and 
@@ -244,7 +244,7 @@ def psi_n_single_fock_multiple_position(n: np.uint64, x: np.ndarray[np.float64],
     ----------
     n : np.uint64
         Quantum state number.
-    x : np.ndarray[np.float64]
+    x : tuple(float)
         Position(s) at which to evaluate the wavefunction.
     more_fast : bool, optional
         If True, use the optimized method for n <= 60, which relies on a pre-computed matrix of coefficients for faster computation. 
@@ -271,7 +271,7 @@ def psi_n_single_fock_multiple_position(n: np.uint64, x: np.ndarray[np.float64],
     - Pérez-Jordá, J. M. (2017). On the recursive solution of the quantum harmonic oscillator. *European Journal of Physics*, 39(1), 
       015402. doi:10.1088/1361-6404/aa9584
     """
-
+    x = np.array(x, dtype=np.float64)
     x_size = x.shape[0]
 
     if(n<=60 and CS_matrix):
@@ -295,7 +295,7 @@ def psi_n_single_fock_multiple_position(n: np.uint64, x: np.ndarray[np.float64],
 
 
 @nb.jit(nopython=True, looplift=True,nogil=True, boundscheck=False, cache=True)
-def psi_n_single_fock_multiple_position_complex(n: np.uint64, x: np.ndarray[np.complex128], CS_matrix: bool = True) -> np.ndarray[np.complex128]:
+def psi_n_single_fock_multiple_position_complex(n: np.uint64, x: tuple, CS_matrix: bool = True) -> np.ndarray[np.complex128]:
 
     """
     Compute the wavefunction to a complex vector x using a pre-computed matrix of normalized Hermite polynomial coefficients until n=60 and 
@@ -305,7 +305,7 @@ def psi_n_single_fock_multiple_position_complex(n: np.uint64, x: np.ndarray[np.c
     ----------
     n : np.uint64
         Quantum state number.
-    x : np.ndarray[np.complex128]
+    x : tuple(complex)
         Position(s) at which to evaluate the wavefunction.
     more_fast : bool, optional
         If True, use the optimized method for n <= 60, which relies on a pre-computed matrix of coefficients for faster computation. 
@@ -332,7 +332,7 @@ def psi_n_single_fock_multiple_position_complex(n: np.uint64, x: np.ndarray[np.c
     - Pérez-Jordá, J. M. (2017). On the recursive solution of the quantum harmonic oscillator. *European Journal of Physics*, 39(1), 
       015402. doi:10.1088/1361-6404/aa9584
     """
-
+    x = np.array(x, dtype=np.complex128)
     x_size = x.shape[0]
 
     if(n<=60 and CS_matrix):
@@ -438,7 +438,7 @@ def psi_n_multiple_fock_single_position_complex(n: np.uint64, x: np.complex128) 
 
 
 @nb.jit(nopython=True, looplift=True,nogil=True, boundscheck=False, cache=True)
-def psi_n_multiple_fock_multiple_position(n: np.uint64, x: np.ndarray[np.float64]) -> np.ndarray[np.ndarray[np.float64]]:
+def psi_n_multiple_fock_multiple_position(n: np.uint64, x: tuple) -> np.ndarray[np.ndarray[np.float64]]:
 
     """
     Compute the wavefunction to a real vector x to all fock states until n using the recurrence relation.
@@ -447,7 +447,7 @@ def psi_n_multiple_fock_multiple_position(n: np.uint64, x: np.ndarray[np.float64
     ----------
     n : np.uint64
         Quantum state number.
-    x : np.ndarray[np.float64]
+    x : tuple(float)
         Position(s) at which to evaluate the wavefunction.
    
 
@@ -469,7 +469,7 @@ def psi_n_multiple_fock_multiple_position(n: np.uint64, x: np.ndarray[np.float64
     - Pérez-Jordá, J. M. (2017). On the recursive solution of the quantum harmonic oscillator. *European Journal of Physics*, 39(1), 
       015402. doi:10.1088/1361-6404/aa9584
     """
-    
+    x = np.array(x, dtype=np.float64)
     x_size = x.shape[0]
     result = np.array([[0.0]*(x_size)]*(n+1))
     result[0] = (np.pi ** (-0.25))*np.exp(-(x ** 2) / 2) 
@@ -481,7 +481,7 @@ def psi_n_multiple_fock_multiple_position(n: np.uint64, x: np.ndarray[np.float64
 
 
 @nb.jit(nopython=True, looplift=True,nogil=True, boundscheck=False, cache=True)
-def psi_n_multiple_fock_multiple_position_complex(n: np.uint64, x: np.ndarray[np.complex128]) -> np.ndarray[np.ndarray[np.float64]]:
+def psi_n_multiple_fock_multiple_position_complex(n: np.uint64, x: tuple) -> np.ndarray[np.ndarray[np.float64]]:
 
     """
     Compute the wavefunction to a complex vector x to all fock states until n using the recurrence relation.
@@ -490,7 +490,7 @@ def psi_n_multiple_fock_multiple_position_complex(n: np.uint64, x: np.ndarray[np
     ----------
     n : np.uint64
         Quantum state number.
-    x : np.ndarray[np.complex128]
+    x : tuple(complex)
         Position(s) at which to evaluate the wavefunction.
    
 
@@ -512,7 +512,7 @@ def psi_n_multiple_fock_multiple_position_complex(n: np.uint64, x: np.ndarray[np
     - Pérez-Jordá, J. M. (2017). On the recursive solution of the quantum harmonic oscillator. *European Journal of Physics*, 39(1), 
       015402. doi:10.1088/1361-6404/aa9584
     """
-    
+    x = np.array(x, dtype=np.complex128)
     x_size = x.shape[0]
     result = np.array([[0.0 + 0.0j]*(x_size)]*(n+1))
     result[0] = (np.pi ** (-0.25))*np.exp(-(x ** 2) / 2) 
@@ -542,21 +542,21 @@ try:
     test_output_sfsp_CS_matrix_61 = psi_n_single_fock_single_position(61, 10.0)
     test_output_sfsp_61 = psi_n_single_fock_single_position(61, 10.0, CS_matrix=False)
     test_output_mfsp = psi_n_multiple_fock_single_position(2, 10.0)
-    test_output_sfmp_CS_matrix_2 = psi_n_single_fock_multiple_position(2, np.array([10.0,4.5]))
-    test_output_sfmp_2 = psi_n_single_fock_multiple_position(2, np.array([10.0,4.5]), CS_matrix=False)
-    test_output_sfmp_CS_matrix_61 = psi_n_single_fock_multiple_position(61, np.array([10.0,4.5]))
-    test_output_sfmp_61 = psi_n_single_fock_multiple_position(61, np.array([10.0,4.5]), CS_matrix=False)
-    test_output_mfmp = psi_n_multiple_fock_multiple_position(2, np.array([10.0,4.5]))
+    test_output_sfmp_CS_matrix_2 = psi_n_single_fock_multiple_position(2, (10.0,4.5))
+    test_output_sfmp_2 = psi_n_single_fock_multiple_position(2, (10.0,4.5), CS_matrix=False)
+    test_output_sfmp_CS_matrix_61 = psi_n_single_fock_multiple_position(61, (10.0,4.5))
+    test_output_sfmp_61 = psi_n_single_fock_multiple_position(61, (10.0,4.5), CS_matrix=False)
+    test_output_mfmp = psi_n_multiple_fock_multiple_position(2, (10.0,4.5))
     test_output_sfsp_c_CS_matrix_2 = psi_n_single_fock_single_position_complex(2, 10.0 + 0.0j)
     test_output_sfsp_c_2 = psi_n_single_fock_single_position_complex(2, 10.0 + 0.0j, CS_matrix=False)
     test_output_sfsp_c_CS_matrix_61 = psi_n_single_fock_single_position_complex(61, 10.0 + 0.0j)
     test_output_sfsp_c_61 = psi_n_single_fock_single_position_complex(61, 10.0 + 0.0j, CS_matrix=False)
     test_output_mfsp_c = psi_n_multiple_fock_single_position_complex(2, 10.0 + 0.0j)
-    test_output_sfmp_c_CS_matrix_2 = psi_n_single_fock_multiple_position_complex(2, np.array([10.0 + 0.0j,4.5 + 0.0j]))
-    test_output_sfmp_c_2 = psi_n_single_fock_multiple_position_complex(2, np.array([10.0 + 0.0j,4.5 + 0.0j]), CS_matrix=False)
-    test_output_sfmp_c_CS_matrix_61 = psi_n_single_fock_multiple_position_complex(61, np.array([10.0 + 0.0j,4.5 + 0.0j]))
-    test_output_sfmp_c_61 = psi_n_single_fock_multiple_position_complex(61, np.array([10.0 + 0.0j,4.5 + 0.0j]), CS_matrix=False)
-    test_output_mfmp_c = psi_n_multiple_fock_multiple_position_complex(2, np.array([10.0 + 0.0j,4.5 + 0.0j]))
+    test_output_sfmp_c_CS_matrix_2 = psi_n_single_fock_multiple_position_complex(2, (10.0 + 0.0j,4.5 + 0.0j))
+    test_output_sfmp_c_2 = psi_n_single_fock_multiple_position_complex(2, (10.0 + 0.0j,4.5 + 0.0j), CS_matrix=False)
+    test_output_sfmp_c_CS_matrix_61 = psi_n_single_fock_multiple_position_complex(61, (10.0 + 0.0j,4.5 + 0.0j))
+    test_output_sfmp_c_61 = psi_n_single_fock_multiple_position_complex(61, (10.0 + 0.0j,4.5 + 0.0j), CS_matrix=False)
+    test_output_mfmp_c = psi_n_multiple_fock_multiple_position_complex(2, (10.0 + 0.0j,4.5 + 0.0j))
     compilation_test = True
     print(f"Functionality Test Passed: {compilation_test}")
 except Exception as e:

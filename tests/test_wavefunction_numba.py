@@ -60,19 +60,19 @@ def test_wavefunction_computation():
     test_output_mfsp = wn.psi_n_multiple_fock_single_position(2, 10.0)
     assert isinstance(test_output_mfsp , np.ndarray)
     
-    test_output_sfmp_CS_matrix_2 = wn.psi_n_single_fock_multiple_position(2, np.array([10.0, 4.5]))
+    test_output_sfmp_CS_matrix_2 = wn.psi_n_single_fock_multiple_position(2, (10.0, 4.5))
     assert isinstance(test_output_sfmp_CS_matrix_2, np.ndarray)
 
-    test_output_sfmp_61 = wn.psi_n_single_fock_multiple_position(61, np.array([10.0, 4.5]))
+    test_output_sfmp_61 = wn.psi_n_single_fock_multiple_position(61, (10.0, 4.5))
     assert isinstance(test_output_sfmp_61, np.ndarray)
 
-    test_output_sfmp_2 = wn.psi_n_single_fock_multiple_position(2, np.array([10.0, 4.5]), CS_matrix = False)
+    test_output_sfmp_2 = wn.psi_n_single_fock_multiple_position(2, (10.0, 4.5), CS_matrix = False)
     assert isinstance( test_output_sfmp_2, np.ndarray)
 
-    test_output_sfmp_61 = wn.psi_n_single_fock_multiple_position(61, np.array([10.0, 4.5]), CS_matrix = False)
+    test_output_sfmp_61 = wn.psi_n_single_fock_multiple_position(61, (10.0, 4.5), CS_matrix = False)
     assert isinstance(test_output_sfmp_61, np.ndarray)
     
-    test_output_mfmp = wn.psi_n_multiple_fock_multiple_position(2, np.array([10.0, 4.5]))
+    test_output_mfmp = wn.psi_n_multiple_fock_multiple_position(2, (10.0, 4.5))
     assert isinstance(test_output_mfmp, np.ndarray)
     
     test_output_sfsp_c_CS_matrix_2 = wn.psi_n_single_fock_single_position_complex(2, 10.0 + 0.0j)
@@ -90,19 +90,19 @@ def test_wavefunction_computation():
     test_output_mfsp_c = wn.psi_n_multiple_fock_single_position_complex(2, 10.0 + 0.0j)
     assert isinstance(test_output_mfsp_c, np.ndarray)
     
-    test_output_sfmp_c_CS_matrix_2 = wn.psi_n_single_fock_multiple_position_complex(2, np.array([10.0 + 0.0j, 4.5 + 0.0j]))
+    test_output_sfmp_c_CS_matrix_2 = wn.psi_n_single_fock_multiple_position_complex(2, (10.0 + 0.0j, 4.5 + 0.0j))
     assert isinstance(test_output_sfmp_c_CS_matrix_2, np.ndarray)
 
-    test_output_sfmp_c_61 = wn.psi_n_single_fock_multiple_position_complex(61, np.array([10.0 + 0.0j, 4.5 + 0.0j]))
+    test_output_sfmp_c_61 = wn.psi_n_single_fock_multiple_position_complex(61, (10.0 + 0.0j, 4.5 + 0.0j))
     assert isinstance(test_output_sfmp_c_61, np.ndarray)
 
-    test_output_sfmp_c_2 = wn.psi_n_single_fock_multiple_position_complex(2, np.array([10.0 + 0.0j, 4.5 + 0.0j]), CS_matrix = False)
+    test_output_sfmp_c_2 = wn.psi_n_single_fock_multiple_position_complex(2, (10.0 + 0.0j, 4.5 + 0.0j), CS_matrix = False)
     assert isinstance(test_output_sfmp_c_2, np.ndarray)
 
-    test_output_sfmp_c_61 = wn.psi_n_single_fock_multiple_position_complex(61, np.array([10.0 + 0.0j, 4.5 + 0.0j]), CS_matrix = False)
+    test_output_sfmp_c_61 = wn.psi_n_single_fock_multiple_position_complex(61, (10.0 + 0.0j, 4.5 + 0.0j), CS_matrix = False)
     assert isinstance(test_output_sfmp_c_61, np.ndarray)
     
-    test_output_mfmp_c = wn.psi_n_multiple_fock_multiple_position_complex(2, np.array([10.0 + 0.0j, 4.5 + 0.0j]))
+    test_output_mfmp_c = wn.psi_n_multiple_fock_multiple_position_complex(2, (10.0 + 0.0j, 4.5 + 0.0j))
     assert isinstance(test_output_mfmp_c, np.ndarray)
     
     print("All functionality tests passed.")
