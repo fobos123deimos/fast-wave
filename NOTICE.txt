@@ -1,0 +1,10 @@
+NOTICE
+
+This product includes software developed by Matheus Gomes Cordeiro under the BSD 3-Clause License.
+
+This product also includes code that is licensed under the Apache License, Version 2.0, from:
+- Xanadu Quantum Technologies Inc. (Copyright 2022)
+- The code derived from this portion is subject to the terms of the Apache License 2.0.
+- For more information, please refer to: http://www.apache.org/licenses/LICENSE-2.0
+
+The original copyright notice for this third-party code is preserved in the relevant files.
