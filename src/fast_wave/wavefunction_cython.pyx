@@ -414,13 +414,13 @@ cpdef np.ndarray[np.complex128_t, ndim=2] psi_n_multiple_fock_multiple_position_
     ----------
     n : int
         Quantum state number.
-    x : np.ndarray[np.float64_t]
+    x : np.ndarray[np.complex128_t]
         Position(s) at which to evaluate the wavefunction.
 
 
     Returns
     -------
-        np.ndarray[np.ndarray[np.float64_t]]
+        np.ndarray[np.ndarray[np.complex128_t]]
         The evaluated wavefunction.
 
     Examples

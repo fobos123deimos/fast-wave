@@ -128,7 +128,7 @@ def psi_n_single_fock_single_position(n: np.uint64, x:np.float64, CS_matrix:bool
         Quantum state number.
     x : np.float64
         Position(s) at which to evaluate the wavefunction.
-    more_fast : bool, optional
+    CS_matrix : bool, optional
         If True, use the optimized method for n <= 60, which relies on a pre-computed matrix of coefficients for faster computation. 
         For n > 60 or if False, use the general recursion method. Defaults to True.
 
@@ -187,7 +187,7 @@ def psi_n_single_fock_single_position_complex(n: np.uint64, x: np.complex128, CS
         Quantum state number.
     x : np.complex128
         Position(s) at which to evaluate the wavefunction.
-    more_fast : bool, optional
+    CS_matrix : bool, optional
         If True, use the optimized method for n <= 60, which relies on a pre-computed matrix of coefficients for faster computation. 
         For n > 60 or if False, use the general recursion method. Defaults to True.
 
@@ -246,7 +246,7 @@ def psi_n_single_fock_multiple_position(n: np.uint64, x: np.ndarray[np.float64],
         Quantum state number.
     x : np.ndarray[np.float64]
         Position(s) at which to evaluate the wavefunction.
-    more_fast : bool, optional
+    CS_matrix : bool, optional
         If True, use the optimized method for n <= 60, which relies on a pre-computed matrix of coefficients for faster computation. 
         For n > 60 or if False, use the general recursion method. Defaults to True.
 
@@ -307,7 +307,7 @@ def psi_n_single_fock_multiple_position_complex(n: np.uint64, x: np.ndarray[np.c
         Quantum state number.
     x : np.ndarray[np.complex128]
         Position(s) at which to evaluate the wavefunction.
-    more_fast : bool, optional
+    CS_matrix : bool, optional
         If True, use the optimized method for n <= 60, which relies on a pre-computed matrix of coefficients for faster computation. 
         For n > 60 or if False, use the general recursion method. Defaults to True.
 
