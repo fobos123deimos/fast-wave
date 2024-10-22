@@ -93,26 +93,27 @@ $$
 
 where $n$ is a non-negative integer, $m$ is the mass of the particle, $\omega$ is the angular frequency of the oscillator, and $H_n$ are the Hermite polynomials. We can use this wavefunction to describe Fock states. 
 
-### The Wavefunction Recurrence
+## 📚 The Wavefunction Recurrence
 
 Most algorithms in this package use a recurrence for the wave function. Here's a way to get to recurrence:
 
-<img src="https://github.com/pikachu123deimos/CoEfficients-Matrix-Wavefunction/assets/20157453/79140387-14e3-4250-ba46-918708bfc15b" alt="wavefunction_recurrence" width="1200">
+<img src="https://github.com/user-attachments/assets/e0d8fdcf-ddde-45b0-b56b-e70f0412680a" alt="wavefunction_recurrence" width="3000">
 
 
-### $\star$ *Inside the Package*
 
-The idea of ​​this package is to use a matrix with Hermite coefficients for sigle_mode problems up to $\mathbf{n\le 60}$ through two functions: 
+## 📚 The Numba Module - Hybrid Solution
 
-- `wavefunction_smod(n,x)` $\mathbf{→}$ *[Single-Mode & Onedimensional]* 
-- `wavefunction_smmd(n,xv)` $\mathbf{→}$ *[Single-Mode & Multidimensional]*
+We use a hybrid solution with two forms for calculating the wave function for problems of Single Fock and Multiple Position (`psi_n_single_fock_multiple_position`). To $n>60$ or $x\\_size>35$, we use the recurrence for the wave function. To $n\le 60$ and $0<x\\_size\le35$ we use a precomputed matrix with the normalized coefficients of the Hermite polynomial as follows:
 
-The use of this coefficient matrix is ​​only used up to the value **60** (value obtained empirically) because from this level onwards the function may present precision errors in its calculations with incoherent results. Even so, there is a small imprecision around the **60th** degree for the coefficient matrix, which is why the functions that work with it have an argument named *more_fast* set to **True**, that is, it is faster but inaccurate around the **60th** degree. When **False**, the algorithm is a little slower but with high precision. Here is an equation that represents this calculation:
 
-- $C_{n}[i]•x^{p}_{i}$ $→$ *[Single-Mode & Onedimensional]*
-- $C_{n}[i]•x^{p}_{ij}$ for each $x_j \in xv$ $→$ *[Single-Mode & Multidimensional]*
+<img src="https://github.com/user-attachments/assets/0d248db6-acdc-42d6-a9c2-b1d600be8fee" alt="wavefunction_recurrence" width="600">
 
-Where $\mathbf{x^{p}}$ is a vector of powers up to **n** and with zeros where there are no coefficients, for example $\mathbf{x^{p}}$ for the polynomial $\mathbf{H_{3}(x)}$ is equal to $\mathbf{x^{p} = [x^{3},0.0,x^{1},0.0]}$. On the other hand, $\mathbf{C_{n}[i]}$ is the row of coefficients for a degree $i$ of the Hermite polynomial for a matrix of Hermite coefficients going up to degree $n$. For this algorithm to perform as efficiently as possible, [Numba's Just-in-Time compilation](https://numba.pydata.org/) is used in conjunction with [lru_cache (Least Recently Used - Cache Management)](https://docs.python.org/3/library/functools.html). The arguments used in the **@jit** decorator were these:
+
+In this equation, $\mathbf{C^{s}_{n}[i]}$ represents the row of normalized coefficients for degree $i$ of the Hermite polynomial, within a matrix of Hermite normalized coefficients that extends up to degree $n$. On the other hand, $\mathbf{x^{p}}$ is a vector of powers up to n, with zeros in place of missing coefficients; for example, $\mathbf{x^{p}}$ is equal to $\mathbf{x^{p} = [x^{3}, 0.0, x^{1}, 0.0]}$. This hybrid algorithm is also used in Single Fock and Single Position (`psi_n_single_fock_single_position`) problems, though it offers no computational advantage in these cases. Additionally, there is an argument named **CS_matrix** for these Single Fock functions, set to **True** to enable the use of this matrix. In other words, you can use only the recurrence relation for the wave function at any value. The use of this coefficient matrix is limited to values up to **60** (determined empirically), as beyond this point, the function may encounter precision errors, resulting in incoherent outputs.
+
+## 📚 The Numba Module - Arguments
+
+For this algorithm to perform as efficiently as possible, [Numba's Just-in-Time compilation](https://numba.pydata.org/) is used in conjunction with [lru_cache (Least Recently Used - Cache Management)](https://docs.python.org/3/library/functools.html). The arguments used in the **@jit** decorator were these:
 
 - **nopython=True:** This argument forces the Numba compiler to operate in "nopython" mode, which means that all the code within the function must be compilable to pure machine code without falling back to the Python interpreter. This results in significant performance improvements by eliminating the overhead of the Python interpreter.
 - **looplift=True:** This argument allows Numba to "lift" loops out of "nopython" mode. That is, if there are loops in the code that cannot be compiled in "nopython" mode, Numba will try to move them outside of the compiled part and execute them as normal Python code.
@@ -120,27 +121,6 @@ Where $\mathbf{x^{p}}$ is a vector of powers up to **n** and with zeros where th
 - **boundscheck=False:** Disables array bounds checking. Normally, Numba checks if array indices are within valid bounds. Disabling this check can increase performance but may result in undefined behavior if there are out-of-bounds accesses.
 - **cache=True:** Enables caching of the compiled function. The first time the function is compiled, Numba stores the compiled version in a cache. On subsequent executions, Numba can reuse the compiled version from the cache instead of recompiling the function, reducing the function's startup time.
 
-
-### $\star$ *Inside the Package*
-
-The idea of ​​this package is to use a recurrence to Wavefunction for sigle_mode problems where $\mathbf{n> 60}$, and for multi_mode problems to all values of $\mathbf{n}$ through these functions:
-
-- `wavefunction_smod(n,x)` $\mathbf{→}$ *[Single-Mode & Onedimensional]* 
-- `wavefunction_smmd(n,xv)` $\mathbf{→}$ *[Single-Mode & Multidimensional]*
-- `wavefunction_mmod(n,x)` $\mathbf{→}$ *[Multi-Mode & Onedimensional]*
-- `wavefunction_mmmd(n,xv)` $\mathbf{→}$ *[Multi-Mode & Multidimensional]*
-
-
-### The Essence of the Package: *"Sigle-mode Problem."*
-
-<br>
-
-<img src="https://github.com/user-attachments/assets/0d1cdeb2-1912-4794-b321-832ec2c0b3fd" alt="Fast Wave to the Single-Mode Problems" width="600">
-
-<br>
-<br>
-
-This algorithm is a representation of the use of all functions of the package to solve single-mode problems. To solve multi-mode problems we use only two functions that are based on the strategies to $n>60$. We can estimate the time complexity for $n\leq60$ with $O(1)$ for the onedimensional case and $O(\mathbf{x}.size)$ for the multidimensional case, just as we can estimate the space complexity with $O(1)$ for the onedimensional case and $O(\mathbf{x}.size)$ for the multidimensional case (result vector allocation). For the case of $n>60$, we have a time complexity value equal to $O(n)$ for the onedimensional case and $O(n*\mathbf{x}.size)$ for the multidimensional case, as well as we have a space complexity of $O(n)$ for the onedimensional case and $O(n*\mathbf{x}.size)$ for the multidimensional case (allocating the result matrix).
 
 ## 📖 References
 
