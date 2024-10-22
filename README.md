@@ -15,12 +15,22 @@ This package represents the time-independent wavefunctions of the Quantum Harmon
 
 ## 📑 Table of Contents
 
-- [Advantages](#-advantages)
-- [Setup](#-setup)
-- [Examples](#-exemples)
-- [Theory](#-theory)
-- [References](#-theory)
-- [Contact](#-contact)
+- [📑 Table of Contents](#-table-of-contents)
+- [✨ Advantages](#-advantages)
+- [🛠️ Setup](#️-setup)
+- [🎨 Examples](#-examples)
+- [🌊 The Wavefunction](#-the-wavefunction)
+  - [Schrödinger Equation](#schrödinger-equation)
+  - [Normalization](#normalization)
+  - [Quantum Harmonic Oscillator](#quantum-harmonic-oscillator)
+- [🔁 The Wavefunction Recurrence](#-the-wavefunction-recurrence)
+- [⚡️The Numba Module - Hybrid Solution](#️the-numba-module---hybrid-solution)
+- [⚡️ The Numba Module - Arguments](#️-the-numba-module---arguments)
+- [⚙️ The Cython Module](#️-the-cython-module)
+- [📖 References](#-references)
+- [🤝 Contributing](#-contributing)
+- [📜 License](#-license)
+- [📬 Contact](#-contact)
 
 ## ✨ Advantages
 
@@ -30,7 +40,7 @@ This package represents the time-independent wavefunctions of the Quantum Harmon
 - **Past response cache**: This package provides a caching module designed to enhance the performance of functions that take multiple positions of a *NumPy* array as input. By leveraging Python's functools.lru_cache, this module stores previously computed results, eliminating the need for redundant calculations. This caching module is inspired by the [caching module](https://github.com/XanaduAI/MrMustard/blob/develop/mrmustard/math/caching.py#L26) from Mr. Mustard, a package from the photonic quantum computing company Xanadu.
 
 
-## 🛠 Setup
+## 🛠️ Setup
 To use this package, simply run the following command in the command line: 
 ```bash
 pip install fast-wave
