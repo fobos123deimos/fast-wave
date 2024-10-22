@@ -27,7 +27,7 @@ This package represents the time-independent wavefunctions of the Quantum Harmon
 
 - **Highly Efficient**: This package includes two fixed-point modules focused on speed. One is implemented using *Numba*, an open-source Just-in-Time (JIT) compiler, and the other module is implemented in *Cython*, a programming language that combines the ease of use of Python with the speed of C..
 - **Highly Accurate**: The functions in this package have precision next to the precision of Wolfram Mathematica and MATLAB. In addition, there is a module just for calculating wave functions with arbitrary-precision using the *mpmath* package.
-- **Past response cache**: This package provides a caching module designed to enhance the performance of functions that take multiple positions of a *NumPy* array as input. By leveraging Python's functools.lru_cache, this module stores previously computed results, eliminating the need for redundant calculations.
+- **Past response cache**: This package provides a caching module designed to enhance the performance of functions that take multiple positions of a *NumPy* array as input. By leveraging Python's functools.lru_cache, this module stores previously computed results, eliminating the need for redundant calculations. This caching module is inspired by the [caching module](https://github.com/XanaduAI/MrMustard/blob/develop/mrmustard/math/caching.py#L26) from Mr. Mustard, a package from the photonic quantum computing company Xanadu.
 
 
 ## 🛠 Setup
@@ -59,7 +59,7 @@ array([[ 0.40583486-0.63205035j, -0.49096842+0.56845369j],
 
 There are other examples in the examples folder: [Speed Tests: Numba & Cython](https://colab.research.google.com/github/fobos123deimos/fast-wave/blob/main/examples/speed_tests_numba_and_cython.ipynb); [Precision Tests: mpmath](https://colab.research.google.com/github/fobos123deimos/fast-wave/blob/main/examples/precision_tests_mpmath.ipynb). In the first one there is a comparison with the [Mr Mustard](https://mrmustard.readthedocs.io/en/stable/) package.
 
-## 📚 The Wavefunction
+## 🌊 The Wavefunction
 
 The wavefunction, $\psi(x)$, is a fundamental concept in quantum mechanics that describes the quantum state of a particle or system. The absolute square of the wavefunction, $|\psi(x)|^2$, represents the probability density of finding the particle at a position $x$.
 
@@ -93,7 +93,7 @@ $$
 
 where $n$ is a non-negative integer, $m$ is the mass of the particle, $\omega$ is the angular frequency of the oscillator, and $H_n$ are the Hermite polynomials. We can use this wavefunction to describe Fock states. 
 
-## 📚 The Wavefunction Recurrence
+## 🔁 The Wavefunction Recurrence
 
 Most algorithms in this package use a recurrence for the wave function. Here's a way to get to recurrence:
 
@@ -101,25 +101,34 @@ Most algorithms in this package use a recurrence for the wave function. Here's a
 
 
 
-## 📚 The Numba Module - Hybrid Solution
+## ⚡️The Numba Module - Hybrid Solution
 
 We use a hybrid solution with two forms for calculating the wave function for problems of Single Fock and Multiple Position (`psi_n_single_fock_multiple_position`). To $n>60$ or $x\\_size>35$, we use the recurrence for the wave function. To $n\le 60$ and $0<x\\_size\le35$ we use a precomputed matrix with the normalized coefficients of the Hermite polynomial as follows:
 
 
-<img src="https://github.com/user-attachments/assets/0d248db6-acdc-42d6-a9c2-b1d600be8fee" alt="wavefunction_recurrence" width="600">
+<img src="https://github.com/user-attachments/assets/0d248db6-acdc-42d6-a9c2-b1d600be8fee" alt="wavefunction_recurrence" width="500">
 
 
 In this equation, $\mathbf{C^{s}_{n}[i]}$ represents the row of normalized coefficients for degree $i$ of the Hermite polynomial, within a matrix of Hermite normalized coefficients that extends up to degree $n$. On the other hand, $\mathbf{x^{p}}$ is a vector of powers up to n, with zeros in place of missing coefficients; for example, $\mathbf{x^{p}}$ is equal to $\mathbf{x^{p} = [x^{3}, 0.0, x^{1}, 0.0]}$. This hybrid algorithm is also used in Single Fock and Single Position (`psi_n_single_fock_single_position`) problems, though it offers no computational advantage in these cases. Additionally, there is an argument named **CS_matrix** for these Single Fock functions, set to **True** to enable the use of this matrix. In other words, you can use only the recurrence relation for the wave function at any value. The use of this coefficient matrix is limited to values up to **60** (determined empirically), as beyond this point, the function may encounter precision errors, resulting in incoherent outputs.
 
-## 📚 The Numba Module - Arguments
+## ⚡️ The Numba Module - Arguments
 
-For this algorithm to perform as efficiently as possible, [Numba's Just-in-Time compilation](https://numba.pydata.org/) is used in conjunction with [lru_cache (Least Recently Used - Cache Management)](https://docs.python.org/3/library/functools.html). The arguments used in the **@jit** decorator were these:
+For this algorithm to perform as efficiently as possible, [Numba's Just-in-Time compilation](https://numba.pydata.org/) is used in conjunction with [lru_cache (Least Recently Used - Cache Management)](https://docs.python.org/3/library/functools.html). The arguments used in the **@nb.jit** decorator were these:
 
 - **nopython=True:** This argument forces the Numba compiler to operate in "nopython" mode, which means that all the code within the function must be compilable to pure machine code without falling back to the Python interpreter. This results in significant performance improvements by eliminating the overhead of the Python interpreter.
 - **looplift=True:** This argument allows Numba to "lift" loops out of "nopython" mode. That is, if there are loops in the code that cannot be compiled in "nopython" mode, Numba will try to move them outside of the compiled part and execute them as normal Python code.
 - **nogil=True:** This argument releases the Python Global Interpreter Lock (GIL) while the function is executing. It is useful for allowing the Numba-compiled code to run in parallel with other Python threads, increasing performance in multi-threaded programs.
 - **boundscheck=False:** Disables array bounds checking. Normally, Numba checks if array indices are within valid bounds. Disabling this check can increase performance but may result in undefined behavior if there are out-of-bounds accesses.
 - **cache=True:** Enables caching of the compiled function. The first time the function is compiled, Numba stores the compiled version in a cache. On subsequent executions, Numba can reuse the compiled version from the cache instead of recompiling the function, reducing the function's startup time.
+
+## ⚙️ The Cython Module
+
+The [Cython](https://cython.org/) module includes compiled files for Linux (**.so**) and Windows (**.pyd**), which allows it to be used in Google Colab (Linux). Additionally, this module supports three versions of Python 3: 3.10, 3.11, and 3.12. All these files are placed in the package folder upon installation. The source code of the Cython module is available in the repository in **.pyx** format. In the functions of the Cython module, some decorators are used to increase speed:
+
+- **@cython.nogil**: This decorator allows a Cython function to release the Global Interpreter Lock (GIL), making it possible to execute that block of code concurrently in multiple threads.
+- **@cython.cfunc**:  This decorator tells Cython to treat the function as a C function, meaning it can be called from other Cython or C code, not just Python. The function will have C-level calling conventions.
+- **@cython.locals(...)**: Declares local variable types to optimize performance.
+- **@cython.boundscheck(False)**: Disables bounds checking for arrays/lists to boost speed, but at the cost of safety. 
 
 
 ## 📖 References
