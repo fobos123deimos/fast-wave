@@ -11,7 +11,7 @@
 
 > Harnessing the Power of the wavefunctions to navigate the quantum realm.🚀🌌
 
-This package represents the time-independent wavefunctions of the Quantum Harmonic Oscillator as Fock states, optimizing the accuracy and efficiency of calculations in Photonic Quantum Computing. 
+This project presents an optimized approach for calculating the wave functions of a quantum harmonic oscillator, with applications in Photonic Quantum Computing simulations. Leveraging Numba and Cython, this approach outperforms the [Mr Mustard](https://mrmustard.readthedocs.io/en/stable/) package in both single-Fock and single-position as well as single-Fock and multiple-position problems.
 
 ## 📑 Table of Contents
 
@@ -36,8 +36,8 @@ This package represents the time-independent wavefunctions of the Quantum Harmon
 
 
 - **Highly Efficient**: This package includes two fixed-point modules focused on speed. One is implemented using *Numba*, an open-source Just-in-Time (JIT) compiler, and the other module is implemented in *Cython*, a programming language that combines the ease of use of Python with the speed of C.
-- **Highly Accurate**: The functions in this package have precision next to the precision of Wolfram Mathematica and MATLAB. In addition, there is a module just for calculating wave functions with arbitrary-precision using the *mpmath* package.
-- **Past response cache**: This package provides a caching module designed to enhance the performance of functions that take multiple positions of a *NumPy* array as input. By leveraging Python's functools.lru_cache, this module stores previously computed results, eliminating the need for redundant calculations. This caching module is inspired by the [caching module](https://github.com/XanaduAI/MrMustard/blob/develop/mrmustard/math/caching.py#L26) from Mr. Mustard, a package from the photonic quantum computing company Xanadu.
+- **Highly Accurate**: The functions in this package have precision next to the precision of Wolfram Mathematica and MATLAB. In addition, there is a module just for calculating wave functions with arbitrary precision using the *mpmath* package.
+- **Past response cache**: This package provides a caching module designed to enhance the performance of functions that take multiple positions of a *NumPy* array as input. This module stores previously computed results by leveraging Python's functools.lru_cache, eliminating the need for redundant calculations. This caching module is inspired by the [caching module](https://github.com/XanaduAI/MrMustard/blob/develop/mrmustard/math/caching.py#L26) from Mr. Mustard, a package from the photonic quantum computing company Xanadu.
 
 
 ## 🛠️ Setup
@@ -143,7 +143,7 @@ The [Cython](https://cython.org/) module includes compiled files for Linux (**.s
 
 ## 📖 References
 
-Our journey through the quantum realm is inspired by the following seminal works:
+Our journey through the quantum realm is inspired by the following:
 
 - Wikipedia contributors. (2021). Hermite polynomials. In Wikipedia, The Free Encyclopedia. Retrieved from https://en.wikipedia.org/wiki/Hermite_polynomials
 - Olver, F. W. J., & Maximon, L. C. (2010). NIST Handbook of Mathematical Functions. Cambridge University Press.
