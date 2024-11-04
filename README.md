@@ -151,6 +151,7 @@ Our journey through the quantum realm is inspired by the following:
 - Sympy Documentation: https://docs.sympy.org/latest/modules/polys/index.html
 - Scipy Documentation on `eval_hermite`: https://docs.scipy.org/doc/scipy/reference/generated/scipy.special.eval_hermite.html
 - Pérez-Jordá, J. M. (2017). On the recursive solution of the quantum harmonic oscillator. *European Journal of Physics*, 39(1), 015402. doi:10.1088/1361-6404/aa9584
+- CORDEIRO, MATHEUS; BEZERRA, I. P. ; VASCONCELOS, H. H. M. . Efficient Computation of the Wave Function ψn(x) using Hermite Coefficient Matrix in Python. In: 7º Workshop Escola de Computação e Informação Quântica (7ª WECIQ), 2024, Rio de Janeiro. ANAIS DO 7º WORKSHOP-ESCOLA DE COMPUTAÇÃO E INFORMAÇÃO QUÂNTICA. Rio de Janeiro: CEFET/RJ, 2024. p. 56-60. 
 
 ## 🤝 Contributing
 
