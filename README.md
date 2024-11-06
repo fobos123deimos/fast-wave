@@ -11,7 +11,7 @@
 
 > Harnessing the Power of the wavefunctions to navigate the quantum realm.🚀🌌
 
-This project presents an optimized approach for calculating the wave functions of a quantum harmonic oscillator, with applications in Photonic Quantum Computing simulations. Leveraging Numba and Cython, this approach outperforms the [Mr Mustard](https://mrmustard.readthedocs.io/en/stable/) package in both single-Fock and single-position as well as single-Fock and multiple-position problems.
+This project presents an optimized approach for calculating the position wave functions of a Fock state of a quantum harmonic oscillator, with applications in Photonic Quantum Computing simulations. Leveraging Numba and Cython, this approach outperforms the [Mr Mustard](https://mrmustard.readthedocs.io/en/stable/) package in computing a single wave function value at a single position and at multiple positions.
 
 ## 📑 Table of Contents
 
@@ -36,7 +36,7 @@ This project presents an optimized approach for calculating the wave functions o
 
 
 - **Highly Efficient**: This package includes two fixed-point modules focused on speed. One is implemented using *Numba*, an open-source Just-in-Time (JIT) compiler, and the other module is implemented in *Cython*, a programming language that combines the ease of use of Python with the speed of C.
-- **Highly Accurate**: The functions in this package have precision next to the precision of Wolfram Mathematica and MATLAB. In addition, there is a module just for calculating wave functions with arbitrary precision using the *mpmath* package.
+- **Highly Accurate**: The functions in this package have precision next to the precision of Wolfram Mathematica and MATLAB. In addition, there is a module for calculating wave functions with arbitrary precision using the *mpmath* package.
 - **Past response cache**: This package provides a caching module designed to enhance the performance of functions that take multiple positions of a *NumPy* array as input. This module stores previously computed results by leveraging Python's functools.lru_cache, eliminating the need for redundant calculations. This caching module is inspired by the [caching module](https://github.com/XanaduAI/MrMustard/blob/develop/mrmustard/math/caching.py#L26) from Mr. Mustard, a package from the photonic quantum computing company Xanadu.
 
 
@@ -56,7 +56,9 @@ Functionality Test Passed: True
 >>> wn.psi_n_multiple_fock_multiple_position(1,np.array([1.0 ,2.0]))
 array([[0.45558067, 0.10165379],
        [0.64428837, 0.28752033]])
+       [Scott: why did that make a 2x2 array?]
 >>> wn.psi_n_multiple_fock_multiple_position_complex(1,np.array([1.0 + 1.0j,2.0 + 2.0j]))
+[Scott: Why are you using complex positions?]
 array([[ 0.40583486-0.63205035j, -0.49096842+0.56845369j],
        [ 1.46779135-0.31991701j, -2.99649822+0.21916143j]])
 >>> wc.psi_n_multiple_fock_multiple_position(1,np.array([1.0 ,2.0]))
@@ -95,17 +97,17 @@ This ensures that the total probability of finding the particle somewhere in spa
 
 ### Quantum Harmonic Oscillator
 
-The wavefunctions of the quantum harmonic oscillator, a system that models particles in a potential well, are given by:
+The $n$-Fock state wave function of the quantum harmonic oscillator, a system that models particles in a quadratic potential well, are given by:
 
 $$
 \psi_n(x) = \left(\frac{m\omega}{\pi\hbar}\right)^{1/4} \frac{1}{\sqrt{2^n n!}} H_n\left(\sqrt{\frac{m\omega}{\hbar}}x\right) e^{-\frac{m\omega x^2}{2\hbar}}
 $$
 
-where $n$ is a non-negative integer, $m$ is the mass of the particle, $\omega$ is the angular frequency of the oscillator, and $H_n$ are the Hermite polynomials. We can use this wavefunction to describe Fock states. 
+where $n$ is a non-negative integer, $m$ is the mass of the particle, $\omega$ is the angular frequency of the oscillator, and $H_n$ are the Hermite polynomials. [Scott: explain that this is also the wave function for an $$n$$-photon state.  Explain how the constants in $$\psi_n$$ change for photons.]
 
 ## 🔁 The Wavefunction Recurrence
 
-Most algorithms in this package use a recurrence for the wave function. Here's a way to get to recurrence:
+Most algorithms in this package use a recurrence in $n$ for the wave function. The wave function's recurrance relation can be obtained starting with the recurrance of Hermite polynomials [Scott: give a reference for this result. Explain that Mr. Mustard uses a similar? the same? recurrance relation. Is any of the calculatios new, invented by you?  I recommend typeseting this in Latex.  It is very hard to read in dark mode on my small laptop screen.]:
 
 <img src="https://github.com/user-attachments/assets/e0d8fdcf-ddde-45b0-b56b-e70f0412680a" alt="wavefunction_recurrence" width="3000">
 
@@ -113,17 +115,17 @@ Most algorithms in this package use a recurrence for the wave function. Here's a
 
 ## ⚡️The Numba Module - Hybrid Solution
 
-We use a hybrid solution with two forms for calculating the wave function for problems of Single Fock and Multiple Position (`psi_n_single_fock_multiple_position`). To $n>60$ or $x\\_size>35$, we use the recurrence for the wave function. To $n\le 60$ and $0<x\\_size\le35$ we use a precomputed matrix with the normalized coefficients of the Hermite polynomial as follows:
+We use a hybrid solution with two algorithms for calculating the wave function for calculating a single Fock wave function's values at multiple positions (Single Fock and Multiple Position) (`psi_n_single_fock_multiple_position`). For $n>60$ or more than 35 positions, we use the recurrence for the wave function. For $n\le 60$ and at most 35 positions we use a precomputed matrix with the normalized coefficients of the Hermite polynomial as follows:[Scott: typset this in latex.]
 
 
 <img src="https://github.com/user-attachments/assets/0d248db6-acdc-42d6-a9c2-b1d600be8fee" alt="wavefunction_recurrence" width="500">
 
 
-In this equation, $\mathbf{C^{s}_{n}[i]}$ represents the row of normalized coefficients for degree $i$ of the Hermite polynomial, within a matrix of Hermite normalized coefficients that extends up to degree $n$. On the other hand, $\mathbf{x^{p}}$ is a vector of powers up to n, with zeros in place of missing coefficients; for example, $\mathbf{x^{p}}$ is equal to $\mathbf{x^{p} = [x^{3}, 0.0, x^{1}, 0.0]}$. This hybrid algorithm is also used in Single Fock and Single Position (`psi_n_single_fock_single_position`) problems, though it offers no computational advantage in these cases. Additionally, there is an argument named **CS_matrix** for these Single Fock functions, set to **True** to enable the use of this matrix. In other words, you can use only the recurrence relation for the wave function at any value. The use of this coefficient matrix is limited to values up to **60** (determined empirically), as beyond this point, the function may encounter precision errors, resulting in incoherent outputs.
+In this equation, $\mathbf{C^{s}_{n}[i]}$ is the row vector of normalized coefficients that multiply each power of $x$ up to $x^n$. The entire matrix $\mathbf{C^s_n}$ of such rows is precomputed up to degree $n=60$[Scott: is that true?].  $\mathbf{x^{p}}$ is a column vector of powers up to n, with zeros in places where the coefficient is zero; for example, for $i=3$, $\mathbf{x^{p}} = [x^{3}, 0.0, x^{1}, 0.0]^T$. This hybrid algorithm is also used in Single Fock and Single Position (`psi_n_single_fock_single_position`) problems, though it offers no computational advantage in these cases. Additionally, there is an argument named **CS_matrix** for these Single Fock functions, set to **True** to enable the use of this matrix. In other words, you can use only the recurrence relation for the wave function at any value. The use of this coefficient matrix is limited to values up to **60** (determined empirically), as beyond this point, the function may encounter precision errors, resulting in incoherent outputs.
 
 ## ⚡️ The Numba Module - Arguments
 
-For this algorithm to perform as efficiently as possible, [Numba's Just-in-Time compilation](https://numba.pydata.org/) is used in conjunction with [lru_cache (Least Recently Used - Cache Management)](https://docs.python.org/3/library/functools.html). The arguments used in the **@nb.jit** decorator were these:
+For this algorithm to perform as efficiently as possible, [Numba's Just-in-Time compilation](https://numba.pydata.org/) is used in conjunction with [lru_cache (Least Recently Used - Cache Management)](https://docs.python.org/3/library/functools.html). The following arguments were used in the **@nb.jit** decorator:
 
 - **nopython=True:** This argument forces the Numba compiler to operate in "nopython" mode, which means that all the code within the function must be compilable to pure machine code without falling back to the Python interpreter. This results in significant performance improvements by eliminating the overhead of the Python interpreter.
 - **looplift=True:** This argument allows Numba to "lift" loops out of "nopython" mode. That is, if there are loops in the code that cannot be compiled in "nopython" mode, Numba will try to move them outside of the compiled part and execute them as normal Python code.
@@ -143,7 +145,7 @@ The [Cython](https://cython.org/) module includes compiled files for Linux (**.s
 
 ## 📖 References
 
-Our journey through the quantum realm is inspired by the following:
+Our journey through the quantum realm is inspired by the following:[Scott: cite these references in the text where they are relevant. Give the references numbers in order to cite them.]
 
 - Wikipedia contributors. (2021). Hermite polynomials. In Wikipedia, The Free Encyclopedia. Retrieved from https://en.wikipedia.org/wiki/Hermite_polynomials
 - Olver, F. W. J., & Maximon, L. C. (2010). NIST Handbook of Mathematical Functions. Cambridge University Press.
@@ -168,4 +170,4 @@ If you have any questions or want to reach out to the team, please send me an em
 
 ---
 
-Enjoy exploring the quantum world! 🌈✨
+Enjoy exploring the quantum world! 🌈✨[Scott: Are we going to find Ant-Man there?]
