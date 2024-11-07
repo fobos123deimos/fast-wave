@@ -109,7 +109,7 @@ $H_{n+1}(x) = 2xH_{n}(x) - 2nH_{n-1}(x) \implies $
 $\Bigg( \displaystyle\frac{e^{-x^{2}/2}}{\sqrt{2^{n-1}(n-1)!\pi^{1/2}}}\Bigg)H_{n+1}(x) = \Bigg( \displaystyle\frac{e^{-x^{2}/2}}{\sqrt{2^{n-1}(n-1)!\pi^{1/2}}}\Bigg)2xH_{n}(x) -\Bigg( \displaystyle\frac{e^{-x^{2}/2}}{\sqrt{2^{n-1}(n-1)!\pi^{1/2}}}\Bigg)2nH_{n-1}(x) \implies$
 
 
-$\Bigg( \displaystyle\frac{e^{x^{2}/2}}{\sqrt{2^{n-1}(n-1)!\pi^{1/2}}}\Bigg)H_{n+1}(x) = \Bigg( \displaystyle\frac{e^{x^{2}/2}}{\sqrt{2^{n-1}(n-1)!\pi^{1/2}}}\Bigg)2xH_{n}(x) -2n\psi_{n-1}(x) \implies $
+$\Bigg( \displaystyle\frac{e^{-x^{2}/2}}{\sqrt{2^{n-1}(n-1)!\pi^{1/2}}}\Bigg)H_{n+1}(x) = \Bigg( \displaystyle\frac{e^{-x^{2}/2}}{\sqrt{2^{n-1}(n-1)!\pi^{1/2}}}\Bigg)2xH_{n}(x) -2n\psi_{n-1}(x) \implies $
 
 
 $\displaystyle\Bigg(\frac{1}{\sqrt{2n}}\Bigg)\Bigg( \displaystyle\frac{e^{-x^{2}/2}}{\sqrt{2^{n-1}(n-1)!\pi^{1/2}}}\Bigg)H_{n+1}(x) = \Bigg(\frac{1}{\sqrt{2n}}\Bigg)\Bigg( \displaystyle\frac{e^{-x^{2}/2}}{\sqrt{2^{n-1}(n-1)!\pi^{1/2}}}\Bigg)2xH_{n}(x) -\Bigg(\frac{1}{\sqrt{2n}}\Bigg)2n\psi_{n-1}(x) \implies$
