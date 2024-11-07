@@ -102,20 +102,26 @@ where $n$ is a non-negative integer, $m$ is the mass of the particle, $\omega$ i
 
 Most algorithms in this package use a recurrence in $n$ for the wave function. The wave function's recurrance relation can be obtained starting with the recurrance of Hermite polynomials [Scott: give a reference for this result. Explain that Mr. Mustard uses a similar? the same? recurrance relation. Is any of the calculatios new, invented by you?  I recommend typeseting this in Latex.  It is very hard to read in dark mode on my small laptop screen.]:
 
-$ $
+
 $H_{n+1}(x) = 2xH_{n}(x) - 2nH_{n-1}(x) \implies $
-$ $
+
+
 $\Bigg( \displaystyle\frac{e^{-x^{2}/2}}{\sqrt{2^{n-1}(n-1)!\pi^{1/2}}}\Bigg)H_{n+1}(x) = \Bigg( \displaystyle\frac{e^{-x^{2}/2}}{\sqrt{2^{n-1}(n-1)!\pi^{1/2}}}\Bigg)2xH_{n}(x) -\Bigg( \displaystyle\frac{e^{-x^{2}/2}}{\sqrt{2^{n-1}(n-1)!\pi^{1/2}}}\Bigg)2nH_{n-1}(x) \implies$
-$ $
+
+
 $\Bigg( \displaystyle\frac{e^{x^{2}/2}}{\sqrt{2^{n-1}(n-1)!\pi^{1/2}}}\Bigg)H_{n+1}(x) = \Bigg( \displaystyle\frac{e^{x^{2}/2}}{\sqrt{2^{n-1}(n-1)!\pi^{1/2}}}\Bigg)2xH_{n}(x) -2n\psi_{n-1}(x) \implies $
-$ $
+
+
 $\displaystyle\Bigg(\frac{1}{\sqrt{2n}}\Bigg)\Bigg( \displaystyle\frac{e^{-x^{2}/2}}{\sqrt{2^{n-1}(n-1)!\pi^{1/2}}}\Bigg)H_{n+1}(x) = \Bigg(\frac{1}{\sqrt{2n}}\Bigg)\Bigg( \displaystyle\frac{e^{-x^{2}/2}}{\sqrt{2^{n-1}(n-1)!\pi^{1/2}}}\Bigg)2xH_{n}(x) -\Bigg(\frac{1}{\sqrt{2n}}\Bigg)2n\psi_{n-1}(x) \implies$
-$ $
+
+
 $\Bigg(\displaystyle\frac{e^{-x^{2}/2}}{\sqrt{2^{n}n!\pi^{1/2}}}\Bigg) H_{n+1}(x) = 2x\psi_{n}(x) - \Bigg(\frac{2n}{\sqrt{2n}}\Bigg)\psi_{n-1}(x) \implies$
-$ $
+
+
 $\displaystyle\Bigg(\frac{1}{\sqrt{2(n+1)}}\Bigg)\Bigg(\displaystyle\frac{e^{-x^{2}/2}}{\sqrt{2^{n}n!\pi^{1/2}}}\Bigg) H_{n+1}(x) = \displaystyle\Bigg(\frac{1}{\sqrt{2(n+1)}}\Bigg)2x\psi_{n}(x) - \displaystyle\Bigg(\frac{1}{\sqrt{2(n+1)}}\Bigg)\Bigg(\frac{2n}{\sqrt{2n}}\Bigg)\psi_{n-1}(x) \implies$
-$ $
-$\psi_{n+1}(x) = \displaystyle\Bigg(\sqrt{\frac{2}{n+1}}\Bigg)x\psi_{n}(x) -\Bigg(\sqrt{\frac{n}{n+1}}\Bigg)\psi_{n-1}(x) \; \centerdot$
+
+
+$\psi_{n+1}(x) = \displaystyle\Bigg(\sqrt{\frac{2}{n+1}}\Bigg)x\psi_{n}(x) -\Bigg(\sqrt{\frac{n}{n+1}}\Bigg)\psi_{n-1}(x) \quad \centerdot$
 
 
 
@@ -123,11 +129,13 @@ $\psi_{n+1}(x) = \displaystyle\Bigg(\sqrt{\frac{2}{n+1}}\Bigg)x\psi_{n}(x) -\Big
 ## ⚡️The Numba Module - Hybrid Solution
 
 We use a hybrid solution with two algorithms for calculating the wave function for calculating a single Fock wave function's values at multiple positions (Single Fock and Multiple Position) (`psi_n_single_fock_multiple_position`). For $n>60$ or more than 35 positions, we use the recurrence for the wave function. For $n\le 60$ and at most 35 positions we use a precomputed matrix with the normalized coefficients of the Hermite polynomial as follows:
-$ $
+
+
 $$\psi_{i}(x) = \displaystyle\frac{1}{\sqrt{2^{i}i!\pi^{1/2}}}H_{i}(x)e^{-x^{2}/2} = \frac{1}{\sqrt{2^{i}i!\pi^{1/2}}}\mathbf{C_{n}[i]} \cdot  \mathbf{x^{p}} e^{-x^{2}/2} \implies $$
 
-$$\psi_{i}(x) = \mathbf{C^{s}_{n}[i]\cdot x^{p}e^{-x^{2}/2} \; \centerdot}$$
-$ $
+
+$$\psi_{i}(x) = \mathbf{C^{s}_{n}[i]\cdot x^{p}e^{-x^{2}/2} \quad \centerdot}$$
+
 
 In this equation, $\mathbf{C^{s}_{n}[i]}$ is the row vector of normalized coefficients that multiply each power of $x$ up to $x^n$. The entire matrix $\mathbf{C^s_n}$ of such rows is precomputed up to degree $n=60$[Scott: is that true?].  $\mathbf{x^{p}}$ is a column vector of powers up to n, with zeros in places where the coefficient is zero; for example, for $i=3$, $\mathbf{x^{p}} = [x^{3}, 0.0, x^{1}, 0.0]^T$. This hybrid algorithm is also used in Single Fock and Single Position (`psi_n_single_fock_single_position`) problems, though it offers no computational advantage in these cases. Additionally, there is an argument named **CS_matrix** for these Single Fock functions, set to **True** to enable the use of this matrix. In other words, you can use only the recurrence relation for the wave function at any value. The use of this coefficient matrix is limited to values up to **60** (determined empirically), as beyond this point, the function may encounter precision errors, resulting in incoherent outputs.
 
