@@ -57,16 +57,9 @@ Functionality Test Passed: True
 array([[0.45558067, 0.10165379],
        [0.64428837, 0.28752033]])
        [Scott: why did that make a 2x2 array?]
->>> wn.psi_n_multiple_fock_multiple_position_complex(1,np.array([1.0 + 1.0j,2.0 + 2.0j]))
-[Scott: Why are you using complex positions?]
-array([[ 0.40583486-0.63205035j, -0.49096842+0.56845369j],
-       [ 1.46779135-0.31991701j, -2.99649822+0.21916143j]])
 >>> wc.psi_n_multiple_fock_multiple_position(1,np.array([1.0 ,2.0]))
 array([[0.45558067, 0.10165379],
        [0.64428837, 0.28752033]])
->>> wc.psi_n_multiple_fock_multiple_position_complex(1,np.array([1.0 + 1.0j,2.0 + 2.0j]))
-array([[ 0.40583486-0.63205035j, -0.49096842+0.56845369j],
-       [ 1.46779135-0.31991701j, -2.99649822+0.21916143j]])
 ```
 
 There are other examples in the examples folder: [Speed Tests: Numba & Cython](https://colab.research.google.com/github/fobos123deimos/fast-wave/blob/main/examples/speed_tests_numba_and_cython.ipynb); [Precision Tests: mpmath](https://colab.research.google.com/github/fobos123deimos/fast-wave/blob/main/examples/precision_tests_mpmath.ipynb). In the first one there is a comparison with the [Mr Mustard](https://mrmustard.readthedocs.io/en/stable/) package.
@@ -165,9 +158,4 @@ This project is available under the *BSD 3-Clause License*. See the LICENSE file
 
 ## 📬 Contact
 
-If you have any questions or want to reach out to the team, please send me an email at [matheusgomescord@gmail.com](matheusgomescord@gmail.com)
-.
-
----
-
-Enjoy exploring the quantum world! 🌈✨[Scott: Are we going to find Ant-Man there?]
+If you have any questions or want to reach out to the team, please send me an email at [matheusgomescord@gmail.com](matheusgomescord@gmail.com).
