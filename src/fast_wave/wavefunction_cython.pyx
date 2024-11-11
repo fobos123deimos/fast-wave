@@ -40,6 +40,7 @@ from cmath import exp as cexp, sqrt as csqrt, pi as cpi
 @cython.cfunc
 @cython.locals(index=int, r0=double, r1=double, r2=double)
 @cython.boundscheck(False)
+@cython.cdivision(True)
 cpdef double psi_n_single_fock_single_position(int n, double x):
 
     """
@@ -94,6 +95,7 @@ cpdef double psi_n_single_fock_single_position(int n, double x):
 @cython.cfunc
 @cython.locals(index=int, r0=complex, r1=complex, r2=complex)
 @cython.boundscheck(False)
+@cython.cdivision(True)
 cpdef double complex psi_n_single_fock_single_position_complex(int n, double complex x):
 
     """
@@ -148,6 +150,7 @@ cpdef double complex psi_n_single_fock_single_position_complex(int n, double com
 @cython.cfunc
 @cython.locals(x_size=np.npy_intp, j=int, i=int, k=int, temp1=double, temp2=double)
 @cython.boundscheck(False)
+@cython.cdivision(True)
 cpdef np.ndarray[np.float64_t, ndim=1] psi_n_single_fock_multiple_position(int n, np.ndarray[np.float64_t, ndim=1] x):
 
     """
@@ -183,9 +186,10 @@ cpdef np.ndarray[np.float64_t, ndim=1] psi_n_single_fock_multiple_position(int n
     
     x_size = x.shape[0]
     cdef np.ndarray[np.float64_t, ndim=2] result = np.zeros((n + 1, x_size), dtype=np.float64)
+    pi_025 = pi ** (-0.25)
 
     for j in range(x_size):
-        result[0, j] = (pi ** (-0.25)) * exp(-(x[j] ** 2) / 2)
+        result[0, j] = pi_025 * exp(-(x[j] ** 2) / 2)
 
     for i in range(n):
         temp1 = sqrt(2 * (i + 1))
@@ -203,6 +207,7 @@ cpdef np.ndarray[np.float64_t, ndim=1] psi_n_single_fock_multiple_position(int n
 @cython.cfunc
 @cython.locals(x_size=np.npy_intp, j=int, i=int, k=int, temp1=complex, temp2=complex)
 @cython.boundscheck(False)
+@cython.cdivision(True)
 cpdef np.ndarray[np.complex128_t, ndim=1] psi_n_single_fock_multiple_position_complex(int n, np.ndarray[np.complex128_t, ndim=1] x):
 
     """
@@ -238,9 +243,10 @@ cpdef np.ndarray[np.complex128_t, ndim=1] psi_n_single_fock_multiple_position_co
     
     x_size = x.shape[0]
     cdef np.ndarray[np.complex128_t, ndim=2] result = np.zeros((n + 1, x_size), dtype=np.complex128)
+    cpi_025 = cpi ** (-0.25)
 
     for j in range(x_size):
-        result[0, j] = (cpi ** (-0.25)) * cexp(-(x[j] ** 2) / 2)
+        result[0, j] =  cpi_025 * cexp(-(x[j] ** 2) / 2)
 
     for i in range(n):
         temp1 = csqrt(2 * (i + 1))
@@ -259,6 +265,7 @@ cpdef np.ndarray[np.complex128_t, ndim=1] psi_n_single_fock_multiple_position_co
 @cython.cfunc
 @cython.locals(index=int)
 @cython.boundscheck(False)
+@cython.cdivision(True)
 cpdef np.ndarray[np.float64_t, ndim=1] psi_n_multiple_fock_single_position(int n, double x):
 
     """
@@ -305,6 +312,7 @@ cpdef np.ndarray[np.float64_t, ndim=1] psi_n_multiple_fock_single_position(int n
 @cython.cfunc
 @cython.locals(index=int)
 @cython.boundscheck(False)
+@cython.cdivision(True)
 cpdef np.ndarray[np.complex128_t, ndim=1] psi_n_multiple_fock_single_position_complex(int n, double complex x):
 
     """
@@ -351,6 +359,7 @@ cpdef np.ndarray[np.complex128_t, ndim=1] psi_n_multiple_fock_single_position_co
 @cython.cfunc
 @cython.locals(x_size=np.npy_intp, j=int, i=int, k=int, temp1=double, temp2=double)
 @cython.boundscheck(False)
+@cython.cdivision(True)
 cpdef np.ndarray[np.float64_t, ndim=2] psi_n_multiple_fock_multiple_position(int n, np.ndarray[np.float64_t, ndim=1] x):
 
     """
@@ -385,9 +394,10 @@ cpdef np.ndarray[np.float64_t, ndim=2] psi_n_multiple_fock_multiple_position(int
     
     x_size = x.shape[0]
     cdef np.ndarray[np.float64_t, ndim=2] result = np.zeros((n + 1, x_size), dtype=np.float64)
+    pi_025 = pi ** (-0.25)
 
     for j in range(x_size):
-        result[0, j] = (pi ** (-0.25)) * exp(-(x[j] ** 2) / 2)
+        result[0, j] = pi_025 * exp(-(x[j] ** 2) / 2)
 
     for i in range(n):
         temp1 = sqrt(2 * (i + 1))
@@ -405,6 +415,7 @@ cpdef np.ndarray[np.float64_t, ndim=2] psi_n_multiple_fock_multiple_position(int
 @cython.cfunc
 @cython.locals(x_size=np.npy_intp, j=int, i=int, k=int, temp1=complex, temp2=complex)
 @cython.boundscheck(False)
+@cython.cdivision(True)
 cpdef np.ndarray[np.complex128_t, ndim=2] psi_n_multiple_fock_multiple_position_complex(int n, np.ndarray[np.complex128_t, ndim=1] x):
 
     """
@@ -439,9 +450,10 @@ cpdef np.ndarray[np.complex128_t, ndim=2] psi_n_multiple_fock_multiple_position_
     
     x_size = x.shape[0]
     cdef np.ndarray[np.complex128_t, ndim=2] result = np.zeros((n + 1, x_size), dtype=np.complex128)
+    cpi_025 = cpi ** (-0.25)
 
     for j in range(x_size):
-        result[0, j] = (cpi ** (-0.25)) * cexp(-(x[j] ** 2) / 2)
+        result[0, j] =  cpi_025 * cexp(-(x[j] ** 2) / 2)
 
     for i in range(n):
         temp1 = csqrt(2 * (i + 1))
