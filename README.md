@@ -4,14 +4,14 @@
 ![Fast_Wave_logo](https://github.com/pikachu123deimos/CoEfficients-Matrix-Wavefunction/assets/20157453/e1de91d2-3792-4b21-9553-7c13ce372a76)
 
 
-![Version](https://img.shields.io/badge/version-1.3.0-blue.svg?cacheSeconds=2592000) [![License](https://img.shields.io/badge/license-BSD%203--Clause-blue.svg)](https://github.com/pikachu123deimos/CoEfficients-Matrix-Wavefunction/blob/main/LICENSE)
+![Version](https://img.shields.io/badge/version-1.5.1-blue.svg?cacheSeconds=2592000) [![License](https://img.shields.io/badge/license-BSD%203--Clause-blue.svg)](https://github.com/pikachu123deimos/CoEfficients-Matrix-Wavefunction/blob/main/LICENSE)
 
 
 <br>
 
 > Harnessing the Power of the wavefunctions to navigate the quantum realm.🚀🌌
 
-This project presents an optimized approach for calculating the position wave functions of a Fock state of a quantum harmonic oscillator, with applications in Photonic Quantum Computing simulations. Leveraging Numba and Cython, this approach outperforms the [Mr Mustard](https://mrmustard.readthedocs.io/en/stable/) package in computing a single wave function value at a single position and at multiple positions.
+This project presents an optimized approach for calculating the position wave functions of a Fock state of a quantum harmonic oscillator, with applications in Photonic Quantum Computing simulations. Leveraging [Numba](https://numba.pydata.org/)  [[1](#-ref)] and [Cython](https://cython.org/) [[2](#-ref)], this approach outperforms the [Mr Mustard](https://mrmustard.readthedocs.io/en/stable/) package [[3,4](#-ref)] in computing a single wave function value at a single position and at multiple positions.
 
 ## 📑 Table of Contents
 
@@ -66,41 +66,51 @@ There are other examples in the examples folder: [Speed Tests: Numba & Cython](h
 
 ## 🌊 The Wavefunction
 
-The wavefunction, $\psi(x)$, is a fundamental concept in quantum mechanics that describes the quantum state of a particle or system. The absolute square of the wavefunction, $|\psi(x)|^2$, represents the probability density of finding the particle at a position $x$.
+The wavefunction, $\psi(x)$, is a fundamental concept in quantum mechanics that describes the quantum state of a particle or system. The absolute square of the wavefunction, $|\psi(x)|^2$, represents the probability density of finding the particle at a position $x$ [[5](#-ref)].
 
 ### Schrödinger Equation
 
-The behavior of a wavefunction is governed by the Schrödinger equation, a fundamental equation in quantum mechanics:
+The behavior of a wavefunction is governed by the Schrödinger equation, a fundamental equation in quantum mechanics [[2](#-references)]:
 
 $$
-i\hbar\frac{\partial}{\partial t}\psi(x,t) = \hat{H}\psi(x,t)
+i\hbar\frac{\partial}{\partial t}\Psi(x,t) = \Bigg[-\frac{\hbar}{2m}\frac{\partial^2}{\partial x^{2}} + V(x,t)\Bigg]\Psi(x,t)
 $$
 
-where $i$ is the imaginary unit, $\hbar$ is the reduced Planck's constant, $\hat{H}$ is the Hamiltonian operator, and $\psi(x,t)$ is the wavefunction of the system at position $x$ and time $t$.
+where $i$ represents the imaginary unit, and $hbar$ is the reduced Planck constant. The parameter $m$ denotes the mass of the particle, while $V(x,t)$ represents the potential that defines the environment in which the particle exists. The expression $\big[-\frac{\hbar}{2m}\frac{\partial^2}{\partial x^{2}} + V(x,t)\big]$ is the Hamiltonian operator $\hat{H}$. The function $\Psi(x,t)$, called the wavefunction, describes the state of the system at position $x$ and time $t$ and yields complex values.
 
 ### Normalization
 
-For the wavefunction to be physically meaningful, it must be normalized:
+For the wavefunction to be physically meaningful, it must be normalized [[6](#-ref)]:
 
 $$
-\int_{-\infty}^{\infty} |\psi(x)|^2 dx = 1
+\int_{-\infty}^{\infty} |\psi(x,t)|^2 dx = 1
 $$
 
 This ensures that the total probability of finding the particle somewhere in space is one.
 
 ### Quantum Harmonic Oscillator
 
-The $n$-Fock state wave function of the quantum harmonic oscillator, a system that models particles in a quadratic potential well, are given by:
+The $n$-Fock state wave function of the quantum harmonic oscillator, a system that models particles in a quadratic potential well, are given by [[7](#-ref)]:
 
 $$
 \psi_n(x) = \left(\frac{m\omega}{\pi\hbar}\right)^{1/4} \frac{1}{\sqrt{2^n n!}} H_n\left(\sqrt{\frac{m\omega}{\hbar}}x\right) e^{-\frac{m\omega x^2}{2\hbar}}
 $$
 
-where $n$ is a non-negative integer, $m$ is the mass of the particle, $\omega$ is the angular frequency of the oscillator, and $H_n$ are the Hermite polynomials. [Scott: explain that this is also the wave function for an $$n$$-photon state.  Explain how the constants in $$\psi_n$$ change for photons.]
+where $n$ is a non-negative integer, $m$ is the mass of the particle, $\omega$ is the angular frequency of the oscillator, and $H_n$ are the Hermite polynomials. 
 
 ## 🔁 The Wavefunction Recurrence
 
-Most algorithms in this package use a recurrence in $n$ for the wave function. The wave function's recurrance relation can be obtained starting with the recurrance of Hermite polynomials [Scott: give a reference for this result. Explain that Mr. Mustard uses a similar? the same? recurrance relation. Is any of the calculatios new, invented by you?  I recommend typeseting this in Latex.  It is very hard to read in dark mode on my small laptop screen.]:
+In essence, Mr Mustard's strategy is to use the [Renormalized Hermite Polynomial](https://mrmustard.readthedocs.io/en/stable/code/api/mrmustard.math.hermite_renormalized.html) [[3,4](#-ref)] for the computation of the wave function of a quantum harmonic oscillator. Below, we show the recurrence for calculating the Renormalized Hermite Polynomial, as well as the method for calculating it using the traditional Hermite polynomial:
+
+$$H_{n+1}^{\; re}(x) = \displaystyle\frac{2}{\sqrt{n+1}}\bigg[xH_{n}^{\; re}(x) - H_{n-1}^{\; re}(x)\sqrt{n-1}\bigg]$$
+
+$$H_{n}^{re}(x) = \displaystyle\frac{H_{n}(x)}{\sqrt{n!}}$$
+
+When we use this polynomial in calculating the wavefunction of a Quantum Harmonic Oscillator, the equation is as follows:
+
+$$\psi_{n}(x) = \displaystyle\frac{1}{\sqrt{2^n}}H_{n}^{\; re}(x)e^{-\frac{x^{2}}{2}}$$
+
+In this package, we implemented a recurrence based on the recursive solution to the wavefunction of the Quantum Harmonic Oscillator presented in the work of José Maria Pérez-Jordá [[7](#-ref)]. The recurrence we implemented was for $\psi_{n+1}$, which we obtained from the recursive definition of the Hermite polynomial [[9](#-ref)], as suggested by José Maria Pérez-Jordá in his article:
 
 
 $H_{n+1}(x) = 2xH_{n}(x) - 2nH_{n-1}(x) \implies $
@@ -137,11 +147,11 @@ $$\psi_{i}(x) = \displaystyle\frac{1}{\sqrt{2^{i}i!\pi^{1/2}}}H_{i}(x)e^{-x^{2}/
 $$\psi_{i}(x) = \mathbf{C^{s}_{n}[i]\cdot x^{p}e^{-x^{2}/2} \quad \centerdot}$$
 
 
-In this equation, $\mathbf{C^{s}_{n}[i]}$ is the row vector of normalized coefficients that multiply each power of $x$ up to $x^n$. The entire matrix $\mathbf{C^s_n}$ of such rows is precomputed up to degree $n=60$[Scott: is that true?].  $\mathbf{x^{p}}$ is a column vector of powers up to n, with zeros in places where the coefficient is zero; for example, for $i=3$, $\mathbf{x^{p}} = [x^{3}, 0.0, x^{1}, 0.0]^T$. This hybrid algorithm is also used in Single Fock and Single Position (`psi_n_single_fock_single_position`) problems, though it offers no computational advantage in these cases. Additionally, there is an argument named **CS_matrix** for these Single Fock functions, set to **True** to enable the use of this matrix. In other words, you can use only the recurrence relation for the wave function at any value. The use of this coefficient matrix is limited to values up to **60** (determined empirically), as beyond this point, the function may encounter precision errors, resulting in incoherent outputs.
+In this equation, $\mathbf{C^{s}_{n}[i]}$ is the row vector of normalized coefficients that multiply each power of $x$ up to $x^n$. The entire matrix $\mathbf{C^s_n}$ of such rows is precomputed up to degree $n=60$[Scott: is that true?].  $\mathbf{x^{p}}$ is a column vector of powers up to n, with zeros in places where the coefficient is zero; for example, for $i=3$, $\mathbf{x^{p}} = [x^{3}, 0.0, x^{1}, 0.0]^T$. This hybrid algorithm is also used in Single Fock and Single Position (`psi_n_single_fock_single_position`) problems, though it offers no computational advantage in these cases. Additionally, there is an argument named **CS_matrix** for these Single Fock functions, set to **True** to enable the use of this matrix. In other words, you can use only the recurrence relation for the wave function at any value. The use of this coefficient matrix is limited to values up to **60** (determined empirically), as beyond this point, the function may encounter precision errors, resulting in incoherent outputs [[10](#-ref)].
 
 ## ⚡️ The Numba Module - Arguments
 
-For this algorithm to perform as efficiently as possible, [Numba's Just-in-Time compilation](https://numba.pydata.org/) is used in conjunction with [lru_cache (Least Recently Used - Cache Management)](https://docs.python.org/3/library/functools.html). The following arguments were used in the **@nb.jit** decorator:
+For this algorithm to perform as efficiently as possible, Numba's Just-in-Time compilationis used in conjunction with [lru_cache (Least Recently Used - Cache Management)](https://docs.python.org/3/library/functools.html). The following arguments were used in the **@nb.jit** decorator:
 
 - **nopython=True:** This argument forces the Numba compiler to operate in "nopython" mode, which means that all the code within the function must be compilable to pure machine code without falling back to the Python interpreter. This results in significant performance improvements by eliminating the overhead of the Python interpreter.
 - **looplift=True:** This argument allows Numba to "lift" loops out of "nopython" mode. That is, if there are loops in the code that cannot be compiled in "nopython" mode, Numba will try to move them outside of the compiled part and execute them as normal Python code.
@@ -151,7 +161,7 @@ For this algorithm to perform as efficiently as possible, [Numba's Just-in-Time 
 
 ## ⚙️ The Cython Module
 
-The [Cython](https://cython.org/) module includes compiled files for Linux (**.so**) and Windows (**.pyd**), which allows it to be used in Google Colab (Linux). Additionally, this module supports three versions of Python 3: 3.10, 3.11, and 3.12. All these files are placed in the package folder upon installation. The source code of the Cython module is available in the repository in **.pyx** format. In the functions of the Cython module, some decorators are used to increase speed:
+The Cython module includes compiled files for Linux (**.so**) and Windows (**.pyd**), which allows it to be used in Google Colab (Linux). Additionally, this module supports three versions of Python 3: 3.10, 3.11, and 3.12. All these files are placed in the package folder upon installation. The source code of the Cython module is available in the repository in **.pyx** format. In the functions of the Cython module, some decorators are used to increase speed:
 
 - **@cython.nogil**: This decorator allows a Cython function to release the Global Interpreter Lock (GIL), making it possible to execute that block of code concurrently in multiple threads.
 - **@cython.cfunc**:  This decorator tells Cython to treat the function as a C function, meaning it can be called from other Cython or C code, not just Python. The function will have C-level calling conventions.
@@ -161,15 +171,18 @@ The [Cython](https://cython.org/) module includes compiled files for Linux (**.s
 
 ## 📖 References
 
-Our journey through the quantum realm is inspired by the following:[Scott: cite these references in the text where they are relevant. Give the references numbers in order to cite them.]
+Our journey through the quantum realm is inspired by the following:
 
-- Wikipedia contributors. (2021). Hermite polynomials. In Wikipedia, The Free Encyclopedia. Retrieved from https://en.wikipedia.org/wiki/Hermite_polynomials
-- Olver, F. W. J., & Maximon, L. C. (2010). NIST Handbook of Mathematical Functions. Cambridge University Press.
-- NIST Digital Library of Mathematical Functions. https://dlmf.nist.gov/, Release 1.0.28 of 2020-09-15.
-- Sympy Documentation: https://docs.sympy.org/latest/modules/polys/index.html
-- Scipy Documentation on `eval_hermite`: https://docs.scipy.org/doc/scipy/reference/generated/scipy.special.eval_hermite.html
-- Pérez-Jordá, J. M. (2017). On the recursive solution of the quantum harmonic oscillator. *European Journal of Physics*, 39(1), 015402. doi:10.1088/1361-6404/aa9584
-- CORDEIRO, MATHEUS; BEZERRA, I. P. ; VASCONCELOS, H. H. M. . Efficient Computation of the Wave Function ψn(x) using Hermite Coefficient Matrix in Python. In: 7º Workshop Escola de Computação e Informação Quântica (7ª WECIQ), 2024, Rio de Janeiro. ANAIS DO 7º WORKSHOP-ESCOLA DE COMPUTAÇÃO E INFORMAÇÃO QUÂNTICA. Rio de Janeiro: CEFET/RJ, 2024. p. 56-60. 
+   1. Lam, S. K., Pitrou, A., & Seibert, S. (2015). _Numba: A LLVM-based Python JIT compiler_. In _Proceedings of the Second Workshop on the LLVM Compiler Infrastructure in HPC_ (LLVM '15) (pp. 7-12). Association for Computing Machinery. https://doi.org/10.1145/2833157.2833162
+   2. Behnel, S., Bradshaw, R., Citro, C., Dalcin, L., Seljebotn, D. S., & Smith, K. (2011). *Cython: The best of both worlds*. Computing in Science & Engineering, 13(2), 31-39. https://doi.org/10.1109/MCSE.2010.118
+   3. Yao, Y., Miatto, F., & Quesada, N. (2024). _Riemannian optimization of photonic quantum circuits in phase and Fock space_ [Preprint]. arXiv:2209.06069. [https://doi.org/10.21468/SciPostPhys.17.3.082](https://doi.org/10.21468/SciPostPhys.17.3.082)
+   4. Miatto, F. M., & Quesada, N. (2020). *_Fast optimization of parametrized quantum optical circuits_* (*Quantum*, 4, 366). [https://doi.org/10.22331/q-2020-11-30-366](https://doi.org/10.22331/q-2020-11-30-366)
+   5. Wikipedia contributors. (2024). *Wave function*. In Wikipedia, The Free Encyclopedia. Retrieved from https://en.wikipedia.org/wiki/Wave_function
+   6. Zwiebach, B. (2022). *Mastering Quantum Mechanics: Essentials, Theory, and Applications*. MIT Press. ISBN: [026204613X](https://www.worldcat.org/isbn/026204613X)([9780262046138](https://www.worldcat.org/isbn/9780262046138))
+   7. Bowers, P. L. (2020). *Lectures on Quantum Mechanics: A Primer for Mathematicians*. Cambridge University Press. ISBN: [1108429769](https://www.worldcat.org/isbn/1108429769) ([9781108429764](https://www.worldcat.org/isbn/9781108429764))
+   8. Pérez-Jordá, J. M. (2017). On the recursive solution of the quantum harmonic oscillator. *European Journal of Physics*, 39(1), 015402. doi:10.1088/1361-6404/aa9584
+   9. Olver, F. W. J., & Maximon, L. C. (2010). NIST Handbook of Mathematical Functions. Cambridge University Press.
+   10. CORDEIRO, MATHEUS; BEZERRA, I. P. ; VASCONCELOS, H. H. M. . Efficient Computation of the Wave Function ψn(x) using Hermite Coefficient Matrix in Python. In: 7º Workshop Escola de Computação e Informação Quântica (7ª WECIQ), 2024, Rio de Janeiro. ANAIS DO 7º WORKSHOP-ESCOLA DE COMPUTAÇÃO E INFORMAÇÃO QUÂNTICA. Rio de Janeiro: CEFET/RJ, 2024. p. 56-60. 
 
 ## 🤝 Contributing
 
