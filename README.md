@@ -180,8 +180,8 @@ Our journey through the quantum realm is inspired by the following:
    5. Wikipedia contributors. (2024). *Wave function*. In Wikipedia, The Free Encyclopedia. Retrieved from https://en.wikipedia.org/wiki/Wave_function
    6. Zwiebach, B. (2022). *Mastering Quantum Mechanics: Essentials, Theory, and Applications*. MIT Press. ISBN: [026204613X](https://www.worldcat.org/isbn/026204613X)([9780262046138](https://www.worldcat.org/isbn/9780262046138))
    7. Bowers, P. L. (2020). *Lectures on Quantum Mechanics: A Primer for Mathematicians*. Cambridge University Press. ISBN: [1108429769](https://www.worldcat.org/isbn/1108429769) ([9781108429764](https://www.worldcat.org/isbn/9781108429764))
-   8. Pérez-Jordá, J. M. (2017). On the recursive solution of the quantum harmonic oscillator. *European Journal of Physics*, 39(1), 015402. doi:10.1088/1361-6404/aa9584
-   9. Olver, F. W. J., & Maximon, L. C. (2010). NIST Handbook of Mathematical Functions. Cambridge University Press.
+   8. Pérez-Jordá, J. M. (2017). On the recursive solution of the quantum harmonic oscillator. *European Journal of Physics*, 39(1), 015402. [doi:10.1088/1361-6404/aa9584](doi:10.1088/1361-6404/aa9584)
+   9. Olver, F. W. J., & Maximon, L. C. (2010). NIST Handbook of Mathematical Functions. Cambridge University Press. ISBN: [0521192250](https://www.worldcat.org/isbn/0521192250) ([9780521192255](https://www.worldcat.org/isbn/9780521192255))
    10. CORDEIRO, MATHEUS; BEZERRA, I. P. ; VASCONCELOS, H. H. M. . Efficient Computation of the Wave Function ψn(x) using Hermite Coefficient Matrix in Python. In: 7º Workshop Escola de Computação e Informação Quântica (7ª WECIQ), 2024, Rio de Janeiro. ANAIS DO 7º WORKSHOP-ESCOLA DE COMPUTAÇÃO E INFORMAÇÃO QUÂNTICA. Rio de Janeiro: CEFET/RJ, 2024. p. 56-60. 
 
 ## 🤝 Contributing
