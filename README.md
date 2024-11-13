@@ -11,7 +11,7 @@
 
 > Harnessing the Power of the wavefunctions to navigate the quantum realm.🚀🌌
 
-This project presents an optimized approach for calculating the position wave functions of a Fock state of a quantum harmonic oscillator, with applications in Photonic Quantum Computing simulations. Leveraging [Numba](https://numba.pydata.org/)  [[1](#-ref)] and [Cython](https://cython.org/) [[2](#-ref)], this approach outperforms the [Mr Mustard](https://mrmustard.readthedocs.io/en/stable/) package [[3,4](#-ref)] in computing a single wave function value at a single position and at multiple positions.
+This project presents an optimized approach for calculating the position wave functions of a Fock state of a quantum harmonic oscillator, with applications in Photonic Quantum Computing simulations. Leveraging [Numba](https://numba.pydata.org/)  [[1](#-ref)] and [Cython](https://cython.org/) [[2](#-ref)], this approach outperforms the [Mr Mustard](https://mrmustard.readthedocs.io/en/stable/) package [[3, 4](#-ref)] in computing a single wave function value at a single position and at multiple positions.
 
 ## 📑 Table of Contents
 
@@ -73,7 +73,7 @@ The wavefunction, $\psi(x)$, is a fundamental concept in quantum mechanics that 
 The behavior of a wavefunction is governed by the Schrödinger equation, a fundamental equation in quantum mechanics [[2](#-references)]:
 
 $$
-i\hbar\frac{\partial}{\partial t}\Psi(x,t) = \Bigg[-\frac{\hbar}{2m}\frac{\partial^2}{\partial x^{2}} + V(x,t)\Bigg]\Psi(x,t)
+i\hbar\frac{\partial}{\partial t}\Psi(x,t) = \Bigg[-\frac{\hbar}{2m}\frac{\partial^2}{\partial x^{2}} + V(x,t)\Bigg]\Psi(x,t) \quad \mathbf{(1)}
 $$
 
 where $i$ represents the imaginary unit, and $hbar$ is the reduced Planck constant. The parameter $m$ denotes the mass of the particle, while $V(x,t)$ represents the potential that defines the environment in which the particle exists. The expression $\big[-\frac{\hbar}{2m}\frac{\partial^2}{\partial x^{2}} + V(x,t)\big]$ is the Hamiltonian operator $\hat{H}$. The function $\Psi(x,t)$, called the wavefunction, describes the state of the system at position $x$ and time $t$ and yields complex values.
@@ -83,7 +83,7 @@ where $i$ represents the imaginary unit, and $hbar$ is the reduced Planck consta
 For the wavefunction to be physically meaningful, it must be normalized [[6](#-ref)]:
 
 $$
-\int_{-\infty}^{\infty} |\psi(x,t)|^2 dx = 1
+\int_{-\infty}^{\infty} |\psi(x,t)|^2 dx = 1 \quad \mathbf{(2)}
 $$
 
 This ensures that the total probability of finding the particle somewhere in space is one.
@@ -93,24 +93,24 @@ This ensures that the total probability of finding the particle somewhere in spa
 The $n$-Fock state wave function of the quantum harmonic oscillator, a system that models particles in a quadratic potential well, are given by [[7](#-ref)]:
 
 $$
-\psi_n(x) = \left(\frac{m\omega}{\pi\hbar}\right)^{1/4} \frac{1}{\sqrt{2^n n!}} H_n\left(\sqrt{\frac{m\omega}{\hbar}}x\right) e^{-\frac{m\omega x^2}{2\hbar}}
+\psi_n(x) = \left(\frac{m\omega}{\pi\hbar}\right)^{1/4} \frac{1}{\sqrt{2^n n!}} H_n\left(\sqrt{\frac{m\omega}{\hbar}}x\right) e^{-\frac{m\omega x^2}{2\hbar}} \quad \mathbf{(3)}
 $$
 
 where $n$ is a non-negative integer, $m$ is the mass of the particle, $\omega$ is the angular frequency of the oscillator, and $H_n$ are the Hermite polynomials. 
 
 ## 🔁 The Wavefunction Recurrence
 
-In essence, Mr Mustard's strategy is to use the [Renormalized Hermite Polynomial](https://mrmustard.readthedocs.io/en/stable/code/api/mrmustard.math.hermite_renormalized.html) [[3,4](#-ref)] for the computation of the wave function of a quantum harmonic oscillator. Below, we show the recurrence for calculating the Renormalized Hermite Polynomial, as well as the method for calculating it using the traditional Hermite polynomial:
+In essence, Mr Mustard's strategy is to use the [Renormalized Hermite Polynomial](https://mrmustard.readthedocs.io/en/stable/code/api/mrmustard.math.hermite_renormalized.html) [[3, 4](#-ref)] for the computation of the wave function of a quantum harmonic oscillator. Below, we show the recurrence for calculating the Renormalized Hermite Polynomial, as well as the method for calculating it using the traditional Hermite polynomial:
 
-$$H_{n+1}^{\; re}(x) = \displaystyle\frac{2}{\sqrt{n+1}}\bigg[xH_{n}^{\; re}(x) - H_{n-1}^{\; re}(x)\sqrt{n-1}\bigg]$$
+$$H_{n+1}^{\; re}(x) = \displaystyle\frac{2}{\sqrt{n+1}}\bigg[xH_{n}^{\; re}(x) - H_{n-1}^{\; re}(x)\sqrt{n-1}\bigg] \quad \mathbf{(4)} $$ 
 
-$$H_{n}^{re}(x) = \displaystyle\frac{H_{n}(x)}{\sqrt{n!}}$$
+$$H_{n}^{re}(x) = \displaystyle\frac{H_{n}(x)}{\sqrt{n!}} \quad \mathbf{(5)} $$ 
 
 When we use this polynomial in calculating the wavefunction of a Quantum Harmonic Oscillator, the equation is as follows:
 
-$$\psi_{n}(x) = \displaystyle\frac{1}{\sqrt{2^n}}H_{n}^{\; re}(x)e^{-\frac{x^{2}}{2}}$$
+$$\psi_{n}(x) = \displaystyle\frac{1}{\sqrt{2^n}}H_{n}^{\; re}(x)e^{-\frac{x^{2}}{2}} \quad \mathbf{(6)} $$ 
 
-In this package, we implemented a recurrence based on the recursive solution to the wavefunction of the Quantum Harmonic Oscillator presented in the work of José Maria Pérez-Jordá [[7](#-ref)]. The recurrence we implemented was for $\psi_{n+1}$, which we obtained from the recursive definition of the Hermite polynomial [[9](#-ref)], as suggested by José Maria Pérez-Jordá in his article:
+In this package, we implemented a recurrence based on the recursive solution to the wavefunction of the Quantum Harmonic Oscillator presented in the work of José Maria Pérez-Jordá [[8](#-ref)]. The recurrence we implemented was for $\psi_{n+1}$, which we obtained from the recursive definition of the Hermite polynomial [[9](#-ref)], as suggested by José Maria Pérez-Jordá in his article:
 
 
 $H_{n+1}(x) = 2xH_{n}(x) - 2nH_{n-1}(x) \implies $
@@ -131,7 +131,7 @@ $\Bigg(\displaystyle\frac{e^{-x^{2}/2}}{\sqrt{2^{n}n!\pi^{1/2}}}\Bigg) H_{n+1}(x
 $\displaystyle\Bigg(\frac{1}{\sqrt{2(n+1)}}\Bigg)\Bigg(\displaystyle\frac{e^{-x^{2}/2}}{\sqrt{2^{n}n!\pi^{1/2}}}\Bigg) H_{n+1}(x) = \displaystyle\Bigg(\frac{1}{\sqrt{2(n+1)}}\Bigg)2x\psi_{n}(x) - \displaystyle\Bigg(\frac{1}{\sqrt{2(n+1)}}\Bigg)\Bigg(\frac{2n}{\sqrt{2n}}\Bigg)\psi_{n-1}(x) \implies$
 
 
-$\psi_{n+1}(x) = \displaystyle\Bigg(\sqrt{\frac{2}{n+1}}\Bigg)x\psi_{n}(x) -\Bigg(\sqrt{\frac{n}{n+1}}\Bigg)\psi_{n-1}(x) \quad \centerdot$
+$$\psi_{n+1}(x) = \displaystyle\Bigg(\sqrt{\frac{2}{n+1}}\Bigg)x\psi_{n}(x) -\Bigg(\sqrt{\frac{n}{n+1}}\Bigg)\psi_{n-1}(x) \quad \mathbf{(7)}$$
 
 
 
@@ -144,7 +144,7 @@ We use a hybrid solution with two algorithms for calculating the wave function f
 $$\psi_{i}(x) = \displaystyle\frac{1}{\sqrt{2^{i}i!\pi^{1/2}}}H_{i}(x)e^{-x^{2}/2} = \frac{1}{\sqrt{2^{i}i!\pi^{1/2}}}\mathbf{C_{n}[i]} \cdot  \mathbf{x^{p}} e^{-x^{2}/2} \implies $$
 
 
-$$\psi_{i}(x) = \mathbf{C^{s}_{n}[i]\cdot x^{p}e^{-x^{2}/2} \quad \centerdot}$$
+$$\psi_{i}(x) = \mathbf{C^{s}_{n}[i]\cdot x^{p}e^{-x^{2}/2} \quad \mathbf{(8)}}$$
 
 
 In this equation, $\mathbf{C^{s}_{n}[i]}$ is the row vector of normalized coefficients that multiply each power of $x$ up to $x^n$. The entire matrix $\mathbf{C^s_n}$ of such rows is precomputed up to degree $n=60$[Scott: is that true?].  $\mathbf{x^{p}}$ is a column vector of powers up to n, with zeros in places where the coefficient is zero; for example, for $i=3$, $\mathbf{x^{p}} = [x^{3}, 0.0, x^{1}, 0.0]^T$. This hybrid algorithm is also used in Single Fock and Single Position (`psi_n_single_fock_single_position`) problems, though it offers no computational advantage in these cases. Additionally, there is an argument named **CS_matrix** for these Single Fock functions, set to **True** to enable the use of this matrix. In other words, you can use only the recurrence relation for the wave function at any value. The use of this coefficient matrix is limited to values up to **60** (determined empirically), as beyond this point, the function may encounter precision errors, resulting in incoherent outputs [[10](#-ref)].
