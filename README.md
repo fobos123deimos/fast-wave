@@ -98,7 +98,19 @@ $$
 \psi_n(x) = \left(\frac{m\omega}{\pi\hbar}\right)^{1/4} \frac{1}{\sqrt{2^n n!}} H_n\left(\sqrt{\frac{m\omega}{\hbar}}x\right) e^{-m\omega x^2/2\hbar} , \quad  n \in \mathbb{N}_{0} \quad \mathbf{(3)}
 $$
 
-where $\mathbf{n}$ represents a non-negative integer corresponding to the different energy states of the system, with energies given by $E_n = \big(n + \frac{1}{2}\big)\hbar \omega$. The term \( \mathbf{H_n} \) denotes the Hermite polynomial of degree $\mathbf{n}$; thus, for each energy state $\mathbf{n}$, there is an associated Hermite polynomial of degree $\mathbf{n}$ within its eigenfunction. The energy eigenfunction for an energy state $\mathbf{n}$ is the wavefunction for an energy state $\mathbf{n}$ of a Quantum Harmonic Oscillator. From this definition, we can then represent the wave function $\Psi(x,t)$ as a series expansion of its family of energy eigenfunctions $\{\psi_{n}(x)\}$ [[5](#-ref)]:
+where $\mathbf{n}$ represents a non-negative integer corresponding to the different energy states of the system, with energies given by $E_n = \big(n + \frac{1}{2}\big)\hbar \omega$. The term \( \mathbf{H_n} \) denotes the Hermite polynomial of degree $\mathbf{n}$; thus, for each energy state $\mathbf{n}$, there is an associated Hermite polynomial of degree $\mathbf{n}$ within its eigenfunction [[5](#-ref)]:
+
+<br>
+
+<div style="text-align: center;">
+    <img src="https://github.com/user-attachments/assets/cd191cda-94cf-47f3-8835-85425e932b22" alt=" " style="max-width: 100%; ">
+    <figcaption style="font-style: italic; color: #666; text-align: center;">
+    <p style="font-style: italic; color: #666;"> Wavefunctions and energies for different $\mathbf{n}$ values. <a href="#-ref">[6]</a></p>
+</div>
+
+<br>
+
+The energy eigenfunction for an energy state $\mathbf{n}$ is the wavefunction for an energy state $\mathbf{n}$ of a Quantum Harmonic Oscillator. From this definition, we can then represent the wave function $\Psi(x,t)$ as a series expansion of its family of energy eigenfunctions $\{\psi_{n}(x)\}$ [[5](#-ref)]:
 
 $$
 \Psi(x,t) = \sum_{n=0}^{\infty} c_{n}\psi_{n}(x)e^{-\mathbf{i}E_{n}t/\hbar} \quad \mathbf{(4)}
@@ -186,9 +198,10 @@ Our journey through the quantum realm is inspired by the following:
    3. Yao, Y., Miatto, F., & Quesada, N. (2024). _Riemannian optimization of photonic quantum circuits in phase and Fock space_ [Preprint]. arXiv:2209.06069. [https://doi.org/10.21468/SciPostPhys.17.3.082](https://doi.org/10.21468/SciPostPhys.17.3.082)
    4. Miatto, F. M., & Quesada, N. (2020). *_Fast optimization of parametrized quantum optical circuits_* (*Quantum*, 4, 366). [https://doi.org/10.22331/q-2020-11-30-366](https://doi.org/10.22331/q-2020-11-30-366)
    5. Bowers, P. L. (2020). *Lectures on Quantum Mechanics: A Primer for Mathematicians*. Cambridge University Press. ISBN: [1108429769](https://www.worldcat.org/isbn/1108429769) ([9781108429764](https://www.worldcat.org/isbn/9781108429764))
-   6. Pérez-Jordá, J. M. (2017). *On the recursive solution of the quantum harmonic oscillator*. European Journal of Physics, 39(1), 015402. [https://doi.org/10.1088/1361-6404/aa9584](https://doi.org/10.1088/1361-6404/aa9584)
-   7. Olver, F. W. J., & Maximon, L. C. (2010). *NIST Handbook of Mathematical Functions*. Cambridge University Press. ISBN: [0521192250](https://www.worldcat.org/isbn/0521192250) ([9780521192255](https://www.worldcat.org/isbn/9780521192255))
-   8.  Cordeiro, M., Bezerra, I. P., & Vasconcelos, H. H. M. (2024). *Efficient computation of the wave function ψn(x) using Hermite coefficient matrix in Python*. In 7º Workshop Escola de Computação e Informação Quântica (7ª WECIQ) (pp. 56-60). CEFET/RJ.
+   6. Aerts, D., Beltran, L. *Quantum Structure in Cognition: Human Language as a Boson Gas of Entangled Words*. Found Sci 25, 755–802 (2020). [https://doi.org/10.1007/s10699-019-09633-4](https://doi.org/10.1007/s10699-019-09633-4)
+   7. Pérez-Jordá, J. M. (2017). *On the recursive solution of the quantum harmonic oscillator*. European Journal of Physics, 39(1), 015402. [https://doi.org/10.1088/1361-6404/aa9584](https://doi.org/10.1088/1361-6404/aa9584)
+   8. Olver, F. W. J., & Maximon, L. C. (2010). *NIST Handbook of Mathematical Functions*. Cambridge University Press. ISBN: [0521192250](https://www.worldcat.org/isbn/0521192250) ([9780521192255](https://www.worldcat.org/isbn/9780521192255))
+   9.  Cordeiro, M., Bezerra, I. P., & Vasconcelos, H. H. M. (2024). *Efficient computation of the wave function ψn(x) using Hermite coefficient matrix in Python*. In 7º Workshop Escola de Computação e Informação Quântica (7ª WECIQ) (pp. 56-60). CEFET/RJ.
 
 ## 🤝 Contributing
 
