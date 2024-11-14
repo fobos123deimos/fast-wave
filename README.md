@@ -159,7 +159,7 @@ In this equation, $\mathbf{C^{s}_{n}[i]}$ is the row vector of normalized coeffi
 
 ## ⚡️ The Numba Module - Arguments
 
-For this algorithm to perform as efficiently as possible, Numba's Just-in-Time compilationis used in conjunction with [lru_cache (Least Recently Used - Cache Management)](https://docs.python.org/3/library/functools.html). The following arguments were used in the **@nb.jit** decorator:
+For this algorithm to perform as efficiently as possible, Numba's Just-in-Time compilation is used in conjunction with [lru_cache (Least Recently Used - Cache Management)](https://docs.python.org/3/library/functools.html). The following arguments were used in the **@nb.jit** decorator:
 
 - **nopython=True:** This argument forces the Numba compiler to operate in "nopython" mode, which means that all the code within the function must be compilable to pure machine code without falling back to the Python interpreter. This results in significant performance improvements by eliminating the overhead of the Python interpreter.
 - **looplift=True:** This argument allows Numba to "lift" loops out of "nopython" mode. That is, if there are loops in the code that cannot be compiled in "nopython" mode, Numba will try to move them outside of the compiled part and execute them as normal Python code.
