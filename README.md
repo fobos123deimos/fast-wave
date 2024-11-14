@@ -11,7 +11,7 @@
 
 > Harnessing the Power of the wavefunctions to navigate the quantum realm.🚀🌌
 
-This project presents an optimized approach for calculating the position wave functions of a Fock state of a quantum harmonic oscillator, with applications in Photonic Quantum Computing simulations. Leveraging [Numba](https://numba.pydata.org/)  [[1](#-ref)] and [Cython](https://cython.org/) [[2](#-ref)], this approach outperforms the [Mr Mustard](https://mrmustard.readthedocs.io/en/stable/) package [[3, 4](#-ref)] in computing a single wave function value at a single position and at multiple positions.
+This project presents an optimized approach for calculating the position wave functions of a Fock state of a quantum harmonic oscillator, with applications in Photonic Quantum Computing simulations. Leveraging [Numba](https://numba.pydata.org/)  [[1](#-references)] and [Cython](https://cython.org/) [[2](#-references)], this approach outperforms the [Mr Mustard](https://mrmustard.readthedocs.io/en/stable/) package [[3, 4](#-references)] in computing a single wave function value at a single position and at multiple positions.
 
 ## 📑 Table of Contents
 
@@ -65,7 +65,7 @@ There are other examples in the examples folder: [Speed Tests: Numba & Cython](h
 
 ## 🌊 The Wavefunction
 
-The wavefunction, $\Psi(x,t)$, is a fundamental concept in quantum mechanics that describes the quantum state of a particle or system. Its absolute square, $|\Psi(x,t)|^2$, represents the probability density of finding the particle at position $\mathbf{x}$ and time $\mathbf{t}$. Due to the normalization property: $\int_{-\infty}^{\infty} |\Psi(x,t)|^2 dx = 1$ it's guaranteed that for a given time $\mathbf{t}$, the total probability of finding the particle somewhere in space is unity [[5](#-ref)].
+The wavefunction, $\Psi(x,t)$, is a fundamental concept in quantum mechanics that describes the quantum state of a particle or system. Its absolute square, $|\Psi(x,t)|^2$, represents the probability density of finding the particle at position $\mathbf{x}$ and time $\mathbf{t}$. Due to the normalization property: $\int_{-\infty}^{\infty} |\Psi(x,t)|^2 dx = 1$ it's guaranteed that for a given time $\mathbf{t}$, the total probability of finding the particle somewhere in space is unity [[5](#-references)].
 
 ###  Schrödinger Equation
 
@@ -79,11 +79,11 @@ where $\mathbf{\hbar}$ is the reduced Planck constant, $\mathbf{m}$ is the mass 
 
 $$ f(t) = Ce^{-iEt/\hbar} \quad \mathbf{(2)}$$
 
-where $\mathbf{C}$ may be considered an arbitrary complex constant and $\mathbf{E}$, the system separation constant can be interpreted as the system's energy. Substituting into the wavefunction we have [[5](#-ref)]:
+where $\mathbf{C}$ may be considered an arbitrary complex constant and $\mathbf{E}$, the system separation constant can be interpreted as the system's energy. Substituting into the wavefunction we have [[5](#-references)]:
 
 $$ \Psi(x,t) = Ce^{-iEt/\hbar}\psi(x) \quad \mathbf{(3)}$$
 
-The term $e^{-\frac{iE}{\hbar}t}$ is called the **phase factor** of $\Psi(x,t)$. In order to find $\psi(x)$ we then solve the time-independent Schröndiger equation [[5](#-ref)]:
+The term $e^{-\frac{iE}{\hbar}t}$ is called the **phase factor** of $\Psi(x,t)$. In order to find $\psi(x)$ we then solve the time-independent Schröndiger equation [[5](#-references)]:
 
 $$
 -\Bigg(\frac{\hbar^{2}}{2m}\Bigg)\psi''(x) + \Bigg(\frac{m\omega^2 x^2}{2}\Bigg)\psi(x) = E\psi(x) \quad \mathbf{(4)}
@@ -92,35 +92,35 @@ $$
 
 ### Quantum Harmonic Oscillator
 
-By solving equation **(4)**, we obtain a family of energy eigenfunctions defined as follows [[5](#-ref)]:
+By solving equation **(4)**, we obtain a family of energy eigenfunctions defined as follows [[5](#-references)]:
 
 $$
 \psi_n(x) = \left(\frac{m\omega}{\pi\hbar}\right)^{1/4} \frac{1}{\sqrt{2^n n!}} H_n\left(\sqrt{\frac{m\omega}{\hbar}}x\right) e^{-m\omega x^2/2\hbar} , \quad  n \in \mathbb{N}_{0} \quad \mathbf{(3)}
 $$
 
-where $\mathbf{n}$ represents a non-negative integer corresponding to the different energy states of the system, with energies given by $E_n = \big(n + \frac{1}{2}\big)\hbar \omega$. The term \( \mathbf{H_n} \) denotes the Hermite polynomial of degree $\mathbf{n}$; thus, for each energy state $\mathbf{n}$, there is an associated Hermite polynomial of degree $\mathbf{n}$ within its eigenfunction [[5](#-ref)]:
+where $\mathbf{n}$ represents a non-negative integer corresponding to the different energy states of the system, with energies given by $E_n = \big(n + \frac{1}{2}\big)\hbar \omega$. The term $\mathbf{H_n}$ denotes the Hermite polynomial of degree $\mathbf{n}$; thus, for each energy state $\mathbf{n}$, there is an associated Hermite polynomial of degree $\mathbf{n}$ within its eigenfunction [[5](#-references)]:
 
 <br>
 
 <div style="text-align: center;">
     <img src="https://github.com/user-attachments/assets/cd191cda-94cf-47f3-8835-85425e932b22" alt=" " style="max-width: 100%; ">
     <figcaption style="font-style: italic; color: #666; text-align: center;">
-    <p style="font-style: italic; color: #666;"> Wavefunctions and energies for different $\mathbf{n}$ values. <a href="#-ref">[6]</a></p>
+    <p style="font-style: italic; color: #666;"> Wavefunctions and energies for different $\mathbf{n}$ values. <a href="#-references">[6]</a></p>
 </div>
 
 <br>
 
-The energy eigenfunction for an energy state $\mathbf{n}$ is the wavefunction for an energy state $\mathbf{n}$ of a Quantum Harmonic Oscillator. From this definition, we can then represent the wave function $\Psi(x,t)$ as a series expansion of its family of energy eigenfunctions $\{\psi_{n}(x)\}$ [[5](#-ref)]:
+The energy eigenfunction for an energy state $\mathbf{n}$ is the wavefunction for an energy state $\mathbf{n}$ of a Quantum Harmonic Oscillator. From this definition, we can then represent the wave function $\Psi(x,t)$ as a series expansion of its family of energy eigenfunctions $\{\psi_{n}(x)\}$ [[5](#-references)]:
 
 $$
 \Psi(x,t) = \sum_{n=0}^{\infty} c_{n}\psi_{n}(x)e^{-\mathbf{i}E_{n}t/\hbar} \quad \mathbf{(4)}
 $$
 
-In this equation, $\mathbf{c_{n}}$ are complex constants that determine the contribution of each eigenfunction $\psi_{n}$ to the total wavefunction $\Psi(x,t)$. These coefficients are chosen to ensure that the wavefunction satisfies the initial condition of the problem ($t=0$) [[5](#-ref)].
+In this equation, $\mathbf{c_{n}}$ are complex constants that determine the contribution of each eigenfunction $\psi_{n}$ to the total wavefunction $\Psi(x,t)$. These coefficients are chosen to ensure that the wavefunction satisfies the initial condition of the problem ($t=0$) [[5](#-references)].
 
 ## 🔁 The Wavefunction Recurrence
 
-In essence, Mr Mustard's strategy is to use the [Renormalized Hermite Polynomial](https://mrmustard.readthedocs.io/en/stable/code/api/mrmustard.math.hermite_renormalized.html) [[3, 4](#-ref)] for the computation of the wavefunction of a quantum harmonic oscillator. Below, we show the recurrence for calculating the Renormalized Hermite Polynomial, as well as the method for calculating it using the traditional Hermite polynomial:
+In essence, Mr Mustard's strategy is to use the [Renormalized Hermite Polynomial](https://mrmustard.readthedocs.io/en/stable/code/api/mrmustard.math.hermite_renormalized.html) [[3, 4](#-references)] for the computation of the wavefunction of a quantum harmonic oscillator. Below, we show the recurrence for calculating the Renormalized Hermite Polynomial, as well as the method for calculating it using the traditional Hermite polynomial:
 
 $$H_{n+1}^{re}(x) = \displaystyle\frac{2}{\sqrt{n+1}}\bigg[xH_{n}^{\; re}(x) - H_{n-1}^{\; re}(x)\sqrt{n-1}\bigg] \quad \mathbf{(4)} $$ 
 
@@ -130,7 +130,7 @@ When we use this polynomial in calculating the wavefunction of a Quantum Harmoni
 
 $$\psi_{n}(x) = \displaystyle\frac{1}{\sqrt{2^n}}H_{n}^{\; re}(x)e^{-\frac{x^{2}}{2}} \quad \mathbf{(6)} $$ 
 
-In this package, we implemented a recurrence based on the recursive solution to the wavefunction of the Quantum Harmonic Oscillator presented in the work of *José Maria Pérez-Jordá* [[8](#-ref)]. The recurrence we implemented was for $\psi_{n+1}$, which we obtained from the recursive definition of the Hermite polynomial [[9](#-ref)], as suggested by *José Maria Pérez-Jordá* in his article:
+In this package, we implemented a recurrence based on the recursive solution to the wavefunction of the Quantum Harmonic Oscillator presented in the work of *José Maria Pérez-Jordá* [[8](#-references)]. The recurrence we implemented was for $\psi_{n+1}$, which we obtained from the recursive definition of the Hermite polynomial [[9](#-references)], as suggested by *José Maria Pérez-Jordá* in his article:
 
 
 $H_{n+1}(x) = 2xH_{n}(x) - 2nH_{n-1}(x) \implies $
@@ -167,7 +167,7 @@ $$\psi_{i}(x) = \displaystyle\frac{1}{\sqrt{2^{i}i!\pi^{1/2}}}H_{i}(x)e^{-x^{2}/
 $$\psi_{i}(x) = \mathbf{C^{s}_{n}[i]\cdot x^{p}e^{-x^{2}/2} \quad \mathbf{(8)}}$$
 
 
-In this equation, $\mathbf{C^{s}_{n}[i]}$ is the row vector of normalized coefficients that multiply each power of $x$ up to $x^n$. The entire matrix $\mathbf{C^s_n}$ of such rows is precomputed up to degree $n=60$[Scott: is that true?].  $\mathbf{x^{p}}$ is a column vector of powers up to n, with zeros in places where the coefficient is zero; for example, for $i=3$, $\mathbf{x^{p}} = [x^{3}, 0.0, x^{1}, 0.0]^T$. This hybrid algorithm is also used in Single Fock and Single Position (`psi_n_single_fock_single_position`) problems, though it offers no computational advantage in these cases. Additionally, there is an argument named **CS_matrix** for these Single Fock functions, set to **True** to enable the use of this matrix. In other words, you can use only the recurrence relation for the wave function at any value. The use of this coefficient matrix is limited to values up to **60** (determined empirically), as beyond this point, the function may encounter precision errors, resulting in incoherent outputs [[10](#-ref)].
+In this equation, $\mathbf{C^{s}_{n}[i]}$ is the row vector of normalized coefficients that multiply each power of $x$ up to $x^n$. The entire matrix $\mathbf{C^s_n}$ of such rows is precomputed up to degree $n=60$[Scott: is that true?].  $\mathbf{x^{p}}$ is a column vector of powers up to n, with zeros in places where the coefficient is zero; for example, for $i=3$, $\mathbf{x^{p}} = [x^{3}, 0.0, x^{1}, 0.0]^T$. This hybrid algorithm is also used in Single Fock and Single Position (`psi_n_single_fock_single_position`) problems, though it offers no computational advantage in these cases. Additionally, there is an argument named **CS_matrix** for these Single Fock functions, set to **True** to enable the use of this matrix. In other words, you can use only the recurrence relation for the wave function at any value. The use of this coefficient matrix is limited to values up to **60** (determined empirically), as beyond this point, the function may encounter precision errors, resulting in incoherent outputs [[10](#-references)].
 
 ## ⚡️ The Numba Module - Arguments
 
