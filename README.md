@@ -98,13 +98,13 @@ $$
 \psi_n(x) = \left(\frac{m\omega}{\pi\hbar}\right)^{1/4} \frac{1}{\sqrt{2^n n!}} H_n\left(\sqrt{\frac{m\omega}{\hbar}}x\right) e^{-m\omega x^2/2\hbar} , \quad  n \in \mathbb{N_{0}} \quad \mathbf{(3)}
 $$
 
-where $\mathbf{n}$ represents a non-negative integer corresponding to the different energy states of the system, with energies given by $E_n = \big(n + \frac{1}{2}\big)\hbar \omega$. The term \( \mathbf{H_n} \) denotes the Hermite polynomial of degree $\mathbf{n}$; thus, for each energy state $\mathbf{n}$, there is an associated Hermite polynomial of degree $\mathbf{n}$ within its eigenfunction. The energy eigenfunction for an energy state $\mathbf{n}$ is understood as the wavefunction for an energy state $\mathbf{n}$ of a Quantum Harmonic Oscillator. From this definition, we can then represent the wave function $\Psi(x,t)$ as a series expansion of its family of energy eigenfunctions $\{\psi_{n}(x)\}$ :
+where $\mathbf{n}$ represents a non-negative integer corresponding to the different energy states of the system, with energies given by $E_n = \big(n + \frac{1}{2}\big)\hbar \omega$. The term \( \mathbf{H_n} \) denotes the Hermite polynomial of degree $\mathbf{n}$; thus, for each energy state $\mathbf{n}$, there is an associated Hermite polynomial of degree $\mathbf{n}$ within its eigenfunction. The energy eigenfunction for an energy state $\mathbf{n}$ is understood as the wavefunction for an energy state $\mathbf{n}$ of a Quantum Harmonic Oscillator. From this definition, we can then represent the wave function $\Psi(x,t)$ as a series expansion of its family of energy eigenfunctions $\{\psi_{n}(x)\}$ [[5](#-ref)]:
 
 $$
 \Psi(x,t) = \sum_{n=0}^{\infty} c_{n}\psi_{n}(x)e^{-\mathbf{i}E_{n}t/\hbar} \quad \mathbf{(4)}
 $$
 
-In this equation, $\mathbf{c_{n}}$ are complex constants that determine the contribution of each eigenfunction $\psi_{n}$ to the total wavefunction $\Psi(x,t)$. These coefficients are chosen to ensure that the wavefunction satisfies the initial condition of the problem ($t=0$).
+In this equation, $\mathbf{c_{n}}$ are complex constants that determine the contribution of each eigenfunction $\psi_{n}$ to the total wavefunction $\Psi(x,t)$. These coefficients are chosen to ensure that the wavefunction satisfies the initial condition of the problem ($t=0$) [[5](#-ref)].
 
 ## 🔁 The Wavefunction Recurrence
 
