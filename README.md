@@ -84,7 +84,7 @@ where $\mathbf{C}$ may be considered an arbitrary complex constant and $\mathbf{
 
 $$ \Psi(y,t) = C \, e^{-iEt/\hbar} \, \psi(y) \quad \mathbf{(3)}$$
 
-The term $e^{-\frac{iE}{\hbar}t}$ is called the **phase factor** of $\Psi(y,t)$. In order to find $\psi(y)$ we then solve the time-independent Schröndiger equation [[5](#-references)]:
+The term $e^{-\frac{iE}{\hbar}t}$ is called the **phase factor** of $\Psi(y,t)$. In order to find $\psi(y)$ we then solve the **time-independent Schröndiger equation** [[5](#-references)]:
 
 $$
 -\Bigg(\frac{\hbar^{2}}{2m}\Bigg) \, \psi''(y) + \Bigg(\frac{m\omega^2 y^2}{2}\Bigg) \, \psi(y) = E \, \psi(y) \quad \mathbf{(4)}
