@@ -22,6 +22,7 @@ This project presents an optimized approach for calculating the position wave fu
 - [🌊 The Wavefunction](#-the-wavefunction)
   - [Schrödinger Equation](#schrödinger-equation)
   - [Quantum Harmonic Oscillator](#quantum-harmonic-oscillator)
+  - [Fock states](#fock-states)
 - [🔁 The Wavefunction Recurrence](#-the-wavefunction-recurrence)
 - [⚡️The Numba Module - Hybrid Solution](#️the-numba-module---hybrid-solution)
 - [⚡️ The Numba Module - Arguments](#️-the-numba-module---arguments)
@@ -65,28 +66,28 @@ There are other examples in the examples folder: [Speed Tests: Numba & Cython](h
 
 ## 🌊 The Wavefunction
 
-The wavefunction, $\Psi(x,t)$, is a fundamental concept in quantum mechanics that describes the quantum state of a particle or system. Its absolute square, $|\Psi(x,t)|^2$, represents the probability density of finding the particle at position $\mathbf{x}$ and time $\mathbf{t}$. Due to the normalization property: $\int_{-\infty}^{\infty} |\Psi(x,t)|^2 dx = 1$ it's guaranteed that for a given time $\mathbf{t}$, the total probability of finding the particle somewhere in space is unity [[5](#-references)].
+The wavefunction, $\Psi(y,t)$, is a fundamental concept in quantum mechanics that describes the quantum state of a particle or system. Its absolute square, $|\Psi(y,t)|^2$, represents the probability density of finding the particle at position $\mathbf{y}$ and time $\mathbf{t}$. Due to the normalization property: $\int_{-\infty}^{\infty} |\Psi(y,t)|^2 dy = 1$ it's guaranteed that for a given time $\mathbf{t}$, the total probability of finding the particle somewhere in space is unity [[5](#-references)].
 
 ###  Schrödinger Equation
 
 The wavefunction is the solution to the Schrödinger equation, a fundamental equation in quantum mechanics:
 
 $$
--\Bigg(\frac{\hbar^{2}}{2m}\Bigg)\frac{\partial^2 \Psi(x,t)}{\partial x^{2}} + \Bigg(\frac{m\omega^2 x^2}{2}\Bigg)\Psi(x,t) = \mathbf{i}\hbar\frac{\partial\Psi(x,t)}{\partial t} \quad \mathbf{(1)}
+-\Bigg(\frac{\hbar^{2}}{2m}\Bigg) \, \frac{\partial^2 \Psi(y,t)}{\partial y^{2}} + \Bigg(\frac{m\omega^2 y^2}{2}\Bigg) \, \Psi(y,t) = \mathbf{i}\hbar \, \frac{\partial\Psi(y,t)}{\partial t} \quad \mathbf{(1)}
 $$
 
-where $\mathbf{\hbar}$ is the reduced Planck constant, $\mathbf{m}$ is the mass of the particle, and $\mathbf{\omega}$ is the angular frequency of the harmonic potential. The symbol $\mathbf{i}$ represents the imaginary unit. When seeking the solution to this equation, we separated the variables as follows: $\Psi(x,t) = \psi(x)f(t)$, and we find as a result for $f(t)$ [[5](#-references)]:
+where $\mathbf{\hbar}$ is the reduced Planck constant, $\mathbf{m}$ is the mass of the particle, and $\mathbf{\omega}$ is the angular frequency of the harmonic potential. The symbol $\mathbf{i}$ represents the imaginary unit. When seeking the solution to this equation, we separated the variables as follows: $\Psi(y,t) = \psi(y)f(t)$, and we find as a result for $f(t)$ [[5](#-references)]:
 
-$$ f(t) = Ce^{-iEt/\hbar} \quad \mathbf{(2)}$$
+$$ f(t) = C \, e^{-iEt/\hbar} \quad \mathbf{(2)}$$
 
 where $\mathbf{C}$ may be considered an arbitrary complex constant and $\mathbf{E}$, the system separation constant can be interpreted as the system's energy. Substituting into the wavefunction we have [[5](#-references)]:
 
-$$ \Psi(x,t) = Ce^{-iEt/\hbar}\psi(x) \quad \mathbf{(3)}$$
+$$ \Psi(y,t) = C \, e^{-iEt/\hbar} \, \psi(y) \quad \mathbf{(3)}$$
 
-The term $e^{-\frac{iE}{\hbar}t}$ is called the **phase factor** of $\Psi(x,t)$. In order to find $\psi(x)$ we then solve the time-independent Schröndiger equation [[5](#-references)]:
+The term $e^{-\frac{iE}{\hbar}t}$ is called the **phase factor** of $\Psi(y,t)$. In order to find $\psi(y)$ we then solve the time-independent Schröndiger equation [[5](#-references)]:
 
 $$
--\Bigg(\frac{\hbar^{2}}{2m}\Bigg)\psi''(x) + \Bigg(\frac{m\omega^2 x^2}{2}\Bigg)\psi(x) = E\psi(x) \quad \mathbf{(4)}
+-\Bigg(\frac{\hbar^{2}}{2m}\Bigg) \, \psi''(y) + \Bigg(\frac{m\omega^2 y^2}{2}\Bigg) \, \psi(y) = E \, \psi(y) \quad \mathbf{(4)}
 $$
 
 
@@ -95,10 +96,10 @@ $$
 By solving equation **(4)**, we obtain a family of energy eigenfunctions defined as follows [[5](#-references)]:
 
 $$
-\psi_n(x) = \left(\frac{m\omega}{\pi\hbar}\right)^{1/4} \frac{1}{\sqrt{2^n n!}} H_n\left(\sqrt{\frac{m\omega}{\hbar}}x\right) e^{-m\omega x^2/2\hbar} , \quad  n \in \mathbb{N}_{0} \quad \mathbf{(3)}
+\psi_n(y) = \left(\frac{m\omega}{\pi\hbar}\right)^{1/4} \left(\frac{1}{\sqrt{2^n n!}}\right) H_n\left(\sqrt{\frac{m\omega}{\hbar}}y\right) e^{-m\omega y^2/2\hbar} , \quad  n \in \mathbb{N}_{0} \quad \mathbf{(5)}
 $$
 
-where $\mathbf{n}$ represents a non-negative integer corresponding to the different energy states of the system, with energies given by $E_n = \big(n + \frac{1}{2}\big)\hbar \omega$. The term $\mathbf{H_n}$ denotes the Hermite polynomial of degree $\mathbf{n}$; thus, for each energy state $\mathbf{n}$, there is an associated Hermite polynomial of degree $\mathbf{n}$ within its eigenfunction [[5](#-references)]:
+where $\mathbf{n}$ represents a non-negative integer corresponding to the different energy states of the system, with energies given by $E_n = \big(n + \frac{1}{2}\big)\hbar \omega$. The term $H_n$ denotes the Hermite polynomial of degree $\mathbf{n}$; thus, for each energy state $\mathbf{n}$, there is an associated Hermite polynomial of degree $\mathbf{n}$ within its eigenfunction [[5](#-references)]:
 
 <br>
 
@@ -113,10 +114,27 @@ where $\mathbf{n}$ represents a non-negative integer corresponding to the differ
 The energy eigenfunction for an energy state $\mathbf{n}$ is the wavefunction for an energy state $\mathbf{n}$ of a Quantum Harmonic Oscillator. From this definition, we can then represent the wave function $\Psi(x,t)$ as a series expansion of its family of energy eigenfunctions $\{\psi_{n}(x)\}$ [[5](#-references)]:
 
 $$
-\Psi(x,t) = \sum_{n=0}^{\infty} c_{n}\psi_{n}(x)e^{-\mathbf{i}E_{n}t/\hbar} \quad \mathbf{(4)}
+\Psi(y,t) = \sum_{n=0}^{\infty} c_{n} \, \psi_{n}(y) \, e^{-\mathbf{i}E_{n}t/\hbar} \quad \mathbf{(6)}
 $$
 
-In this equation, $\mathbf{c_{n}}$ are complex constants that determine the contribution of each eigenfunction $\psi_{n}$ to the total wavefunction $\Psi(x,t)$. These coefficients are chosen to ensure that the wavefunction satisfies the initial condition of the problem ($t=0$) [[5](#-references)].
+In this equation, $\mathbf{c_{n}}$ are complex constants that determine the contribution of each eigenfunction $\psi_{n}(y)$ to the total wavefunction $\Psi(y,t)$. These coefficients are chosen to ensure that the wavefunction satisfies the initial condition of the problem ($t=0$) [[5](#-references)].
+
+### Fock states
+
+When defining the dimensionless variable $ x = \Big(m\omega/\hbar\Big)^{1/2}y $, referred to as the **reduced coordinate**, it follows that $ dy = \Big(\hbar/m\omega\Big)^{1/2}dx $. As a result, we can write [[7](#-references)]:
+
+
+$ \displaystyle\int^{+\infty}_{-\infty} |\psi(y)|^{2} dy = 1 \implies \int^{+\infty}_{-\infty}  \Bigg[\left(\frac{m\omega}{\pi\hbar}\right)^{1/2} \left(\frac{1}{2^n n!}\right) H_n^{2}\left(\sqrt{\frac{m\omega}{\hbar}}y\right) e^{-m\omega y^2/\hbar} \Bigg] dy \implies$ 
+
+
+$\displaystyle\int^{+\infty}_{-\infty} \Bigg[ \left(\frac{m\omega}{\pi\hbar}\right)^{1/2} \left(\frac{1}{2^n n!}\right) H_{n}^{2}(x) \, e^{-x^{2}}\Bigg]\Bigg[\frac{\hbar}{\omega m}\Bigg]^{1/2}dx = 1 \implies \int^{+\infty}_{-\infty} \Bigg[ \left(\frac{1}{2^n n!\sqrt{\pi}}\right) H_{n}^{2}(x) \, e^{-x^{2}}\Bigg]dx = 1 \implies$
+
+
+$\displaystyle\int^{+\infty}_{-\infty} \Bigg| \left(\frac{1}{2^n n!\sqrt{\pi}}\right)^{1/2} H_{n}(x) \, e^{-x^{2}/2}\Bigg|^{2}dx = 1 \implies \int^{+\infty}_{-\infty} |\psi(x)|^{2} dx = 1\implies$
+
+$$\psi_{n}(x) = \left(\frac{1}{2^n n!\sqrt{\pi}}\right)^{1/2} H_{n}(x) \quad e^{-x^{2}/2} \quad \mathbf{(7)}$$
+
+This demonstrates that the wavefunction of a Quantum Harmonic Oscillator can be represented in a more dimensionless form, known as the **Hermite function**, it is also sometimes referred to as the **Gauss-Hermite function**. (equation $\mathbf{7}$) [[8](#-references)]. A more simplified form for this type of function is this: $\psi_{n}(x) = \mathcal{N}_{n} \, H_{n}(x) \, e^{-x^{2}/2}$, where $\mathcal{N}_{n}$ where $\mathcal{N}_{n} = \left[1 /(2^n n!\sqrt{\pi})\right]^{1/2}$ is referred to as the **normalization constant** [[9](#-references)].
 
 ## 🔁 The Wavefunction Recurrence
 
@@ -128,7 +146,7 @@ $$H_{n}^{re}(x) = \displaystyle\frac{H_{n}(x)}{\sqrt{n!}} \quad \mathbf{(5)} $$
 
 When we use this polynomial in calculating the wavefunction of a Quantum Harmonic Oscillator, the equation is as follows:
 
-$$\psi_{n}(x) = \displaystyle\frac{1}{\sqrt{2^n}}H_{n}^{\; re}(x)e^{-\frac{x^{2}}{2}} \quad \mathbf{(6)} $$ 
+$$\psi_{n}(x) = \displaystyle\Bigg(\frac{1}{2^n\sqrt{\pi}}\Bigg)^{1/2}H_{n}^{\; re}(x) \quad e^{-\frac{x^{2}}{2}} \quad \mathbf{(6)} $$ 
 
 In this package, we implemented a recurrence based on the recursive solution to the wavefunction of the Quantum Harmonic Oscillator presented in the work of *José Maria Pérez-Jordá* [[8](#-references)]. The recurrence we implemented was for $\psi_{n+1}$, which we obtained from the recursive definition of the Hermite polynomial [[9](#-references)], as suggested by *José Maria Pérez-Jordá* in his article:
 
@@ -199,9 +217,12 @@ Our journey through the quantum realm is inspired by the following:
    4. Miatto, F. M., & Quesada, N. (2020). *_Fast optimization of parametrized quantum optical circuits_* (*Quantum*, 4, 366). [https://doi.org/10.22331/q-2020-11-30-366](https://doi.org/10.22331/q-2020-11-30-366)
    5. Bowers, P. L. (2020). *Lectures on Quantum Mechanics: A Primer for Mathematicians*. Cambridge University Press. ISBN: [1108429769](https://www.worldcat.org/isbn/1108429769) ([9781108429764](https://www.worldcat.org/isbn/9781108429764))
    6. Aerts, D., Beltran, L. *Quantum Structure in Cognition: Human Language as a Boson Gas of Entangled Words*. Found Sci 25, 755–802 (2020). [https://doi.org/10.1007/s10699-019-09633-4](https://doi.org/10.1007/s10699-019-09633-4)
-   7. Pérez-Jordá, J. M. (2017). *On the recursive solution of the quantum harmonic oscillator*. European Journal of Physics, 39(1), 015402. [https://doi.org/10.1088/1361-6404/aa9584](https://doi.org/10.1088/1361-6404/aa9584)
-   8. Olver, F. W. J., & Maximon, L. C. (2010). *NIST Handbook of Mathematical Functions*. Cambridge University Press. ISBN: [0521192250](https://www.worldcat.org/isbn/0521192250) ([9780521192255](https://www.worldcat.org/isbn/9780521192255))
-   9.  Cordeiro, M., Bezerra, I. P., & Vasconcelos, H. H. M. (2024). *Efficient computation of the wave function ψn(x) using Hermite coefficient matrix in Python*. In 7º Workshop Escola de Computação e Informação Quântica (7ª WECIQ) (pp. 56-60). CEFET/RJ.
+   7. Beiser, A. (2003). *Concepts of Modern Physics*. 6th ed. McGraw Hill. ISBN: [0072448482](https://www.worldcat.org/isbn/0072448482) ([9780072448481](https://www.worldcat.org/isbn/9780072448481))
+   8. Celeghini, E., Gadella, M., & del Olmo, M. A. (2021). *Hermite functions and Fourier series*. Symmetry, 13(5), Article 853. [https://doi.org/10.3390/sym13050853](https://doi.org/10.3390/sym13050853)
+   9. Schleich, W. P. (2001). *Quantum optics in phase space*. Wiley-VCH. ISBN:[352729435X](https://www.worldcat.org/isbn/352729435X) ([9783527294350](https://www.worldcat.org/isbn/9783527294350))
+   10. Pérez-Jordá, J. M. (2017). *On the recursive solution of the quantum harmonic oscillator*. European Journal of Physics, 39(1), 015402. [https://doi.org/10.1088/1361-6404/aa9584](https://doi.org/10.1088/1361-6404/aa9584)
+   11. Olver, F. W. J., & Maximon, L. C. (2010). *NIST Handbook of Mathematical Functions*. Cambridge University Press. ISBN: [0521192250](https://www.worldcat.org/isbn/0521192250) ([9780521192255](https://www.worldcat.org/isbn/9780521192255))
+   12. Cordeiro, M., Bezerra, I. P., & Vasconcelos, H. H. M. (2024). *Efficient computation of the wave function ψn(x) using Hermite coefficient matrix in Python*. In 7º Workshop Escola de Computação e Informação Quântica (7ª WECIQ) (pp. 56-60). CEFET/RJ.
 
 ## 🤝 Contributing
 
