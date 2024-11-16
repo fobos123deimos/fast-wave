@@ -121,20 +121,20 @@ In this equation, $\mathbf{c_{n}}$ are complex constants that determine the cont
 
 ### Fock states
 
-When defining the dimensionless variable $ x = \Big(m\omega/\hbar\Big)^{1/2}y $, referred to as the **reduced coordinate**, it follows that $ dy = \Big(\hbar/m\omega\Big)^{1/2}dx $. As a result, we can write [[7](#-references)]:
+When defining the dimensionless variable $x = \Big(m\omega/\hbar\Big)^{1/2}y$, referred to as the **reduced coordinate**, it follows that $dy = \Big(\hbar/m\omega\Big)^{1/2}dx$. As a result, we can write [[7](#-references)]:
 
 
-$ \displaystyle\int^{+\infty}_{-\infty} |\psi(y)|^{2} dy = 1 \implies \int^{+\infty}_{-\infty}  \Bigg[\left(\frac{m\omega}{\pi\hbar}\right)^{1/2} \left(\frac{1}{2^n n!}\right) H_n^{2}\left(\sqrt{\frac{m\omega}{\hbar}}y\right) e^{-m\omega y^2/\hbar} \Bigg] dy \implies$ 
+$\displaystyle\int_{-\infty}^{+\infty} |\psi(y)|^{2} dy = 1 \implies \int_{-\infty}^{+\infty}\Bigg[\left(\frac{m\omega}{\pi\hbar}\right)^{1/2} \left(\frac{1}{2^n n!}\right) H_n^{2}\left(\sqrt{\frac{m\omega}{\hbar}}y\right) e^{-m\omega y^2/\hbar} \Bigg] dy \implies$ 
 
 
-$\displaystyle\int^{+\infty}_{-\infty} \Bigg[ \left(\frac{m\omega}{\pi\hbar}\right)^{1/2} \left(\frac{1}{2^n n!}\right) H_{n}^{2}(x) \, e^{-x^{2}}\Bigg]\Bigg[\frac{\hbar}{\omega m}\Bigg]^{1/2}dx = 1 \implies \int^{+\infty}_{-\infty} \Bigg[ \left(\frac{1}{2^n n!\sqrt{\pi}}\right) H_{n}^{2}(x) \, e^{-x^{2}}\Bigg]dx = 1 \implies$
+$\displaystyle\int_{-\infty}^{+\infty} \Bigg[ \left(\frac{m\omega}{\pi\hbar}\right)^{1/2} \left(\frac{1}{2^n n!}\right) H_{n}^{2}(x) \, e^{-x^{2}}\Bigg]\Bigg[\frac{\hbar}{\omega m}\Bigg]^{1/2}dx = 1 \implies \int_{-\infty}^{+\infty} \Bigg[ \left(\frac{1}{2^n n!\sqrt{\pi}}\right) H_{n}^{2}(x) \, e^{-x^{2}}\Bigg]dx = 1 \implies$
 
 
-$\displaystyle\int^{+\infty}_{-\infty} \Bigg| \left(\frac{1}{2^n n!\sqrt{\pi}}\right)^{1/2} H_{n}(x) \, e^{-x^{2}/2}\Bigg|^{2}dx = 1 \implies \int^{+\infty}_{-\infty} |\psi(x)|^{2} dx = 1\implies$
+$\displaystyle\int_{-\infty}^{+\infty} \, \left| \left(\frac{1}{2^n n!\sqrt{\pi}}\right)^{1/2} H_{n}(x) \, e^{-x^{2}/2} \right|^{2}dx = 1 \implies \int_{-\infty}^{+\infty} |\psi(x)|^{2} dx = 1\implies$
 
 $$\psi_{n}(x) = \left(\frac{1}{2^n n!\sqrt{\pi}}\right)^{1/2} H_{n}(x) \quad e^{-x^{2}/2} \quad \mathbf{(7)}$$
 
-This demonstrates that the wavefunction of a Quantum Harmonic Oscillator can be represented in a more dimensionless form, known as the **Hermite function**, it is also sometimes referred to as the **Gauss-Hermite function**. (equation $\mathbf{7}$) [[8](#-references)]. A more simplified form for this type of function is this: $\psi_{n}(x) = \mathcal{N}_{n} \, H_{n}(x) \, e^{-x^{2}/2}$, where $\mathcal{N}_{n}$ where $\mathcal{N}_{n} = \left[1 /(2^n n!\sqrt{\pi})\right]^{1/2}$ is referred to as the **normalization constant** [[9](#-references)].
+This demonstrates that the wavefunction of a Quantum Harmonic Oscillator can be represented in a more dimensionless form, known as the **Hermite function**, it is also sometimes referred to as the **Gauss-Hermite function**. (equation $\mathbf{7}$) [[8](#-references)]. A more simplified form for this type of function is this: $\psi_{n}(x) = \mathcal{N_{n}} \, H_{n}(x) \, e^{-x^{2}/2}$, where $\mathcal{N_{n}} = \left[1 /(2^n n!\sqrt{\pi})\right]^{1/2}$ is referred to as the **normalization constant** [[9](#-references)].
 
 ## 🔁 The Wavefunction Recurrence
 
