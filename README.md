@@ -140,13 +140,13 @@ This demonstrates that the wavefunction of a Quantum Harmonic Oscillator can be 
 
 In essence, Mr Mustard's strategy is to use the [Renormalized Hermite Polynomial](https://mrmustard.readthedocs.io/en/stable/code/api/mrmustard.math.hermite_renormalized.html) [[3, 4](#-references)] for the computation of the wavefunction of a quantum harmonic oscillator. Below, we show the recurrence for calculating the Renormalized Hermite Polynomial, as well as the method for calculating it using the traditional Hermite polynomial:
 
-$$H_{n+1}^{re}(x) = \displaystyle\frac{2}{\sqrt{n+1}}\bigg[xH_{n}^{\; re}(x) - H_{n-1}^{\; re}(x)\sqrt{n-1}\bigg] \quad \mathbf{(4)} $$ 
+$$H_{n+1}^{re}(x) = \displaystyle\frac{2}{\sqrt{n+1}}\bigg[xH_{n}^{re}(x) - H_{n-1}^{re}(x)\sqrt{n-1}\bigg] \quad \mathbf{(4)} $$ 
 
 $$H_{n}^{re}(x) = \displaystyle\frac{H_{n}(x)}{\sqrt{n!}} \quad \mathbf{(5)} $$ 
 
 When we use this polynomial in calculating the wavefunction of a Quantum Harmonic Oscillator, the equation is as follows:
 
-$$\psi_{n}(x) = \displaystyle\Bigg(\frac{1}{2^n\sqrt{\pi}}\Bigg)^{1/2}H_{n}^{\; re}(x) \quad e^{-\frac{x^{2}}{2}} \quad \mathbf{(6)} $$ 
+$$\psi_{n}(x) = \displaystyle\Bigg(\frac{1}{2^n\sqrt{\pi}}\Bigg)^{1/2}H_{n}^{re}(x) \quad e^{-\frac{x^{2}}{2}} \quad \mathbf{(6)} $$ 
 
 In this package, we implemented a recurrence based on the recursive solution to the wavefunction of the Quantum Harmonic Oscillator presented in the work of *José Maria Pérez-Jordá* [[8](#-references)]. The recurrence we implemented was for $\psi_{n+1}$, which we obtained from the recursive definition of the Hermite polynomial [[9](#-references)], as suggested by *José Maria Pérez-Jordá* in his article:
 
