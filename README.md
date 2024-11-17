@@ -136,16 +136,18 @@ $$\psi_{n}(x) = \left(\frac{1}{2^n n!\sqrt{\pi}}\right)^{1/2} H_{n}(x) \quad e^{
 
 This demonstrates that the wavefunction of a Quantum Harmonic Oscillator can be represented in a more dimensionless form, known as the **Hermite function**, it is also sometimes referred to as the **Gauss-Hermite function**. (equation $\mathbf{7}$) [[8](#-references)]. A more simplified form for this type of function is this: $\psi_{n}(x) = \mathcal{N_{n}} \, H_{n}(x) \, e^{-x^{2}/2}$, where $\mathcal{N_{n}} = \left[1 /(2^n n!\sqrt{\pi})\right]^{1/2}$ is referred to as the **normalization constant** [[9](#-references)].
 
-This is a type of representation for the wavefunction that enables the modeling of wave functions for **Fock states**, which are energy eigenstates with a well-defined number of particles. When the particles are considered to be photons, $\mathbf{n}$, the degree of the Hermite polynomial, also represents the number of photons. Consequently, the Fock states ($\ket{n}$) become eigenstates of the photon number operator $\hat{n}$, such that $\hat{n}\ket{n}=n\ket{n}$. Moreover, the energy states now correspond to the energy levels of an optical system containing $n$-photons.
+This type of representation for the wavefunction enables the modeling of wave functions for **Fock states**, which are energy eigenstates with a well-defined number of particles. When the particles are considered photons, $\mathbf{n}$, the degree of the Hermite polynomial, also represents the number of photons. Consequently, the Fock states ($\ket{n}$) become eigenstates of the photon number operator $\hat{n}$, such that $\hat{n}\ket{n}=n\ket{n}$. Moreover, the energy states now correspond to the energy levels of an optical system containing $n$-photons [[10](#-references)].
 
 
 $\ket{\psi_{n}} = \displaystyle\frac{1}{\sqrt{n!}}(a^{\dagger})^{n}\ket{\psi_{0}} \implies \psi_{n}(q) = \frac{1}{\sqrt{n!}}\frac{1}{\sqrt{2^{n}}}\Bigg(q - \frac{\partial}{\partial q}\Bigg)^{n}\psi_{0}(q) \implies $
 
-$\psi_{n}(q) = \displaystyle\frac{1}{\sqrt{n!}}\frac{1}{\sqrt{2^{n}}} \, H_{n}(q) \, \psi_{0}(q) \implies \psi_{n}(q) = \displaystyle\frac{1}{\sqrt{n!}}\frac{1}{\sqrt{2^{n}}} \, H_{n}(q) \, \Big(\pi^{-1/4}\Big) \, e^{-q^{2}/2} \implies$
+$\psi_{n}(q) = \displaystyle\frac{1}{\sqrt{n!}}\frac{1}{\sqrt{2^{n}}}  H_{n}(q)  \psi_{0}(q) \implies \psi_{n}(q) = \displaystyle\frac{1}{\sqrt{n!}}\frac{1}{\sqrt{2^{n}}}  H_{n}(q) \Big(\pi^{-1/4}\Big) e^{-q^{2}/2} \implies$
 
-$$\psi_{n}(q) = \displaystyle\left(\frac{1}{2^n n!\sqrt{\pi}}\right)^{1/2} \, H_{n}(q) \quad e^{-q^{2}/2} \quad \mathbf{(8)}$$
+$$\psi_{n}(q) = \displaystyle\left(\frac{1}{2^n n!\sqrt{\pi}}\right)^{1/2} H_{n}(q) \quad e^{-q^{2}/2} \quad \mathbf{(8)}$$
 
-where $\mathbf{q}$ is interpreted as the normalized field amplitude associated with the position quadrature ($\hat{q}$​) and has a dimensionless character similar to $\mathbf{x}$. The wavefunction $\mathbf{n}$ of a Fock state is the projection of the state $\ket{n}$, and as we can observe, the wavefunctions of a Fock state for $n$-photon systems can be interpreted as a family of dimensionless energy eigenfunctions (Hermite functions), similar to those shown by equation $\mathbf{(7)}$.
+where $\mathbf{q}$ is interpreted as the normalized field amplitude associated with the position quadrature ($\hat{q}$​) and has a dimensionless character similar to $\mathbf{x}$ [[10](#-references)]. 
+
+The wavefunction $\mathbf{n}$ of a Fock state is the projection of the state $\ket{n}$, and as we can observe, the wavefunctions of a Fock state for $n$-photon systems can be interpreted as a family of dimensionless energy eigenfunctions (Hermite functions), similar to those shown by equation $\mathbf{(7)}$ [[10](#-references)].
 
 ## 🔁 The Wavefunction Recurrence
 
