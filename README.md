@@ -136,19 +136,30 @@ $$\psi_{n}(x) = \left(\frac{1}{2^n n!\sqrt{\pi}}\right)^{1/2} H_{n}(x) \quad e^{
 
 This demonstrates that the wavefunction of a Quantum Harmonic Oscillator can be represented in a more dimensionless form, known as the **Hermite function**, it is also sometimes referred to as the **Gauss-Hermite function**. (equation $\mathbf{7}$) [[8](#-references)]. A more simplified form for this type of function is this: $\psi_{n}(x) = \mathcal{N_{n}} \, H_{n}(x) \, e^{-x^{2}/2}$, where $\mathcal{N_{n}} = \left[1 /(2^n n!\sqrt{\pi})\right]^{1/2}$ is referred to as the **normalization constant** [[9](#-references)].
 
+This is a type of representation for the wavefunction that enables the modeling of wave functions for **Fock states**, which are energy eigenstates with a well-defined number of particles. When the particles are considered to be photons, $\mathbf{n}$, the degree of the Hermite polynomial, also represents the number of photons. Consequently, the Fock states ($\ket{n}$) become eigenstates of the photon number operator $\hat{n}$, such that $\hat{n}\ket{n}=n\ket{n}$. Moreover, the energy states now correspond to the energy levels of an optical system containing $n$-photons.
+
+
+$\ket{\psi_{n}} = \displaystyle\frac{1}{\sqrt{n!}}(a^{\dagger})^{n}\ket{\psi_{0}} \implies \psi_{n}(q) = \frac{1}{\sqrt{n!}}\frac{1}{\sqrt{2^{n}}}\Bigg(q - \frac{\partial}{\partial q}\Bigg)^{n}\psi_{0}(q) \implies $
+
+$\psi_{n}(q) = \displaystyle\frac{1}{\sqrt{n!}}\frac{1}{\sqrt{2^{n}}} \, H_{n}(q) \, \psi_{0}(q) \implies \psi_{n}(q) = \displaystyle\frac{1}{\sqrt{n!}}\frac{1}{\sqrt{2^{n}}} \, H_{n}(q) \, \Big(\pi^{-1/4}\Big) \, e^{-q^{2}/2} \implies$
+
+$$\psi_{n}(q) = \displaystyle\left(\frac{1}{2^n n!\sqrt{\pi}}\right)^{1/2} \, H_{n}(q) \quad e^{-q^{2}/2} \quad \mathbf{(8)}$$
+
+where $\mathbf{q}$ is interpreted as the normalized field amplitude associated with the position quadrature ($\hat{q}$​) and has a dimensionless character similar to $\mathbf{x}$. The wavefunction $\mathbf{n}$ of a Fock state is the projection of the state $\ket{n}$, and as we can observe, the wavefunctions of a Fock state for $n$-photon systems can be interpreted as a family of dimensionless energy eigenfunctions (Hermite functions), similar to those shown by equation $\mathbf{(7)}$.
+
 ## 🔁 The Wavefunction Recurrence
 
 In essence, Mr Mustard's strategy is to use the [Renormalized Hermite Polynomial](https://mrmustard.readthedocs.io/en/stable/code/api/mrmustard.math.hermite_renormalized.html) [[3, 4](#-references)] for the computation of the wavefunction of a quantum harmonic oscillator. Below, we show the recurrence for calculating the Renormalized Hermite Polynomial, as well as the method for calculating it using the traditional Hermite polynomial:
 
-$$H_{n+1}^{re}(x) = \displaystyle\frac{2}{\sqrt{n+1}}\bigg[xH_{n}^{re}(x) - H_{n-1}^{re}(x)\sqrt{n-1}\bigg] \quad \mathbf{(4)} $$ 
+$$H_{n+1}^{re}(x) = \displaystyle\frac{2}{\sqrt{n+1}}\bigg[xH_{n}^{re}(x) - H_{n-1}^{re}(x)\sqrt{n-1}\bigg] \quad \mathbf{(8)} $$ 
 
-$$H_{n}^{re}(x) = \displaystyle\frac{H_{n}(x)}{\sqrt{n!}} \quad \mathbf{(5)} $$ 
+$$H_{n}^{re}(x) = \displaystyle\frac{H_{n}(x)}{\sqrt{n!}} \quad \mathbf{(10)} $$ 
 
 When we use this polynomial in calculating the wavefunction of a Quantum Harmonic Oscillator, the equation is as follows:
 
-$$\psi_{n}(x) = \displaystyle\Bigg(\frac{1}{2^n\sqrt{\pi}}\Bigg)^{1/2}H_{n}^{re}(x) \quad e^{-\frac{x^{2}}{2}} \quad \mathbf{(6)} $$ 
+$$\psi_{n}(x) = \displaystyle\Bigg(\frac{1}{2^n\sqrt{\pi}}\Bigg)^{1/2}H_{n}^{re}(x) \quad e^{-\frac{x^{2}}{2}} \quad \mathbf{(11)} $$ 
 
-In this package, we implemented a recurrence based on the recursive solution to the wavefunction of the Quantum Harmonic Oscillator presented in the work of *José Maria Pérez-Jordá* [[8](#-references)]. The recurrence we implemented was for $\psi_{n+1}$, which we obtained from the recursive definition of the Hermite polynomial [[9](#-references)], as suggested by *José Maria Pérez-Jordá* in his article:
+In this package, we implemented a recurrence based on the recursive solution to the wavefunction of the Quantum Harmonic Oscillator presented in the work of *José Maria Pérez-Jordá* [[11](#-references)]. The recurrence we implemented was for $\psi_{n+1}$, which we obtained from the recursive definition of the Hermite polynomial [[12](#-references)], as suggested by *José Maria Pérez-Jordá* in his article:
 
 
 $H_{n+1}(x) = 2xH_{n}(x) - 2nH_{n-1}(x) \implies $
@@ -169,7 +180,7 @@ $\Bigg(\displaystyle\frac{e^{-x^{2}/2}}{\sqrt{2^{n}n!\pi^{1/2}}}\Bigg) H_{n+1}(x
 $\displaystyle\Bigg(\frac{1}{\sqrt{2(n+1)}}\Bigg)\Bigg(\displaystyle\frac{e^{-x^{2}/2}}{\sqrt{2^{n}n!\pi^{1/2}}}\Bigg) H_{n+1}(x) = \displaystyle\Bigg(\frac{1}{\sqrt{2(n+1)}}\Bigg)2x\psi_{n}(x) - \displaystyle\Bigg(\frac{1}{\sqrt{2(n+1)}}\Bigg)\Bigg(\frac{2n}{\sqrt{2n}}\Bigg)\psi_{n-1}(x) \implies$
 
 
-$$\psi_{n+1}(x) = \displaystyle\Bigg(\sqrt{\frac{2}{n+1}}\Bigg)x\psi_{n}(x) -\Bigg(\sqrt{\frac{n}{n+1}}\Bigg)\psi_{n-1}(x) \quad \mathbf{(7)}$$
+$$\psi_{n+1}(x) = \displaystyle\Bigg(\sqrt{\frac{2}{n+1}}\Bigg)x\psi_{n}(x) -\Bigg(\sqrt{\frac{n}{n+1}}\Bigg)\psi_{n-1}(x) \quad \mathbf{(12)}$$
 
 
 
@@ -182,10 +193,10 @@ We use a hybrid solution with two algorithms for calculating the wave function f
 $$\psi_{i}(x) = \displaystyle\frac{1}{\sqrt{2^{i}i!\pi^{1/2}}}H_{i}(x)e^{-x^{2}/2} = \frac{1}{\sqrt{2^{i}i!\pi^{1/2}}}\mathbf{C_{n}[i]} \cdot  \mathbf{x^{p}} e^{-x^{2}/2} \implies $$
 
 
-$$\psi_{i}(x) = \mathbf{C^{s}_{n}[i]\cdot x^{p}e^{-x^{2}/2} \quad \mathbf{(8)}}$$
+$$\psi_{i}(x) = \mathbf{C^{s}_{n}[i]\cdot x^{p}e^{-x^{2}/2} \quad \mathbf{(13)}}$$
 
 
-In this equation, $\mathbf{C^{s}_{n}[i]}$ is the row vector of normalized coefficients that multiply each power of $x$ up to $x^n$. The entire matrix $\mathbf{C^s_n}$ of such rows is precomputed up to degree $n=60$[Scott: is that true?].  $\mathbf{x^{p}}$ is a column vector of powers up to n, with zeros in places where the coefficient is zero; for example, for $i=3$, $\mathbf{x^{p}} = [x^{3}, 0.0, x^{1}, 0.0]^T$. This hybrid algorithm is also used in Single Fock and Single Position (`psi_n_single_fock_single_position`) problems, though it offers no computational advantage in these cases. Additionally, there is an argument named **CS_matrix** for these Single Fock functions, set to **True** to enable the use of this matrix. In other words, you can use only the recurrence relation for the wave function at any value. The use of this coefficient matrix is limited to values up to **60** (determined empirically), as beyond this point, the function may encounter precision errors, resulting in incoherent outputs [[10](#-references)].
+In this equation, $\mathbf{C^{s}_{n}[i]}$ is the row vector of normalized coefficients that multiply each power of $x$ up to $x^n$. The entire matrix $\mathbf{C^s_n}$ of such rows is precomputed up to degree $n=60$[Scott: is that true?].  $\mathbf{x^{p}}$ is a column vector of powers up to n, with zeros in places where the coefficient is zero; for example, for $i=3$, $\mathbf{x^{p}} = [x^{3}, 0.0, x^{1}, 0.0]^T$. This hybrid algorithm is also used in Single Fock and Single Position (`psi_n_single_fock_single_position`) problems, though it offers no computational advantage in these cases. Additionally, there is an argument named **CS_matrix** for these Single Fock functions, set to **True** to enable the use of this matrix. In other words, you can use only the recurrence relation for the wave function at any value. The use of this coefficient matrix is limited to values up to **60** (determined empirically), as beyond this point, the function may encounter precision errors, resulting in incoherent outputs [[13](#-references)].
 
 ## ⚡️ The Numba Module - Arguments
 
@@ -220,9 +231,10 @@ Our journey through the quantum realm is inspired by the following:
    7. Beiser, A. (2003). *Concepts of Modern Physics*. 6th ed. McGraw Hill. ISBN: [0072448482](https://www.worldcat.org/isbn/0072448482) ([9780072448481](https://www.worldcat.org/isbn/9780072448481))
    8. Celeghini, E., Gadella, M., & del Olmo, M. A. (2021). *Hermite functions and Fourier series*. Symmetry, 13(5), Article 853. [https://doi.org/10.3390/sym13050853](https://doi.org/10.3390/sym13050853)
    9. Schleich, W. P. (2001). *Quantum optics in phase space*. Wiley-VCH. ISBN:[352729435X](https://www.worldcat.org/isbn/352729435X) ([9783527294350](https://www.worldcat.org/isbn/9783527294350))
-   10. Pérez-Jordá, J. M. (2017). *On the recursive solution of the quantum harmonic oscillator*. European Journal of Physics, 39(1), 015402. [https://doi.org/10.1088/1361-6404/aa9584](https://doi.org/10.1088/1361-6404/aa9584)
-   11. Olver, F. W. J., & Maximon, L. C. (2010). *NIST Handbook of Mathematical Functions*. Cambridge University Press. ISBN: [0521192250](https://www.worldcat.org/isbn/0521192250) ([9780521192255](https://www.worldcat.org/isbn/9780521192255))
-   12. Cordeiro, M., Bezerra, I. P., & Vasconcelos, H. H. M. (2024). *Efficient computation of the wave function ψn(x) using Hermite coefficient matrix in Python*. In 7º Workshop Escola de Computação e Informação Quântica (7ª WECIQ) (pp. 56-60). CEFET/RJ.
+   10. Leonhardt, U. (2010). Essential Quantum Optics: From Quantum Measurements to Black Holes. Cambridge: Cambridge University Press. ISBN: [0521869781](https://www.worldcat.org/isbn/0521869781) ([9780521869782](https://www.worldcat.org/isbn/9780521869782))
+   11. Pérez-Jordá, J. M. (2017). *On the recursive solution of the quantum harmonic oscillator*. European Journal of Physics, 39(1), 015402. [https://doi.org/10.1088/1361-6404/aa9584](https://doi.org/10.1088/1361-6404/aa9584)
+   12. Olver, F. W. J., & Maximon, L. C. (2010). *NIST Handbook of Mathematical Functions*. Cambridge University Press. ISBN: [0521192250](https://www.worldcat.org/isbn/0521192250) ([9780521192255](https://www.worldcat.org/isbn/9780521192255))
+   13. Cordeiro, M., Bezerra, I. P., & Vasconcelos, H. H. M. (2024). *Efficient computation of the wave function ψn(x) using Hermite coefficient matrix in Python*. In 7º Workshop Escola de Computação e Informação Quântica (7ª WECIQ) (pp. 56-60). CEFET/RJ.
 
 ## 🤝 Contributing
 
