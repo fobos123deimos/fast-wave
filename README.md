@@ -84,7 +84,7 @@ where $\mathbf{C}$ may be considered an arbitrary complex constant and $\mathbf{
 
 $$ \Psi(y,t) = C \, e^{-iEt/\hbar} \, \psi(y) \quad \mathbf{(3)}$$
 
-The term $e^{-\frac{iE}{\hbar}t}$ is called the **phase factor** of $\Psi(y,t)$. In order to find $\psi(y)$ we then solve the **time-independent Schröndiger equation** [[5](#-references)]:
+The term $e^{-iEt/\hbar}$ is called the **phase factor** of $\Psi(y,t)$. In order to find $\psi(y)$ we then solve the **time-independent Schröndiger equation** [[5](#-references)]:
 
 $$
 -\Bigg(\frac{\hbar^{2}}{2m}\Bigg) \, \psi''(y) + \Bigg(\frac{m\omega^2 y^2}{2}\Bigg) \, \psi(y) = E \, \psi(y) \quad \mathbf{(4)}
@@ -117,7 +117,7 @@ $$
 \Psi(y,t) = \sum_{n=0}^{\infty} c_{n} \, \psi_{n}(y) \, e^{-\mathbf{i}E_{n}t/\hbar} \quad \mathbf{(6)}
 $$
 
-In this equation, $\mathbf{c_{n}}$ are complex constants that determine the contribution of each eigenfunction $\psi_{n}(y)$ to the total wavefunction $\Psi(y,t)$. These coefficients are chosen to ensure that the wavefunction satisfies the initial condition of the problem ($t=0$) [[5](#-references)].
+where $\mathbf{c_{n}}$ are complex constants that determine the contribution of each eigenfunction $\psi_{n}(y)$ to the total wavefunction $\Psi(y,t)$. These coefficients are chosen to ensure that the wavefunction satisfies the initial condition of the problem ($t=0$) [[5](#-references)].
 
 ### Fock states
 
@@ -198,7 +198,7 @@ $$\psi_{i}(x) = \displaystyle\frac{1}{\sqrt{2^{i}i!\pi^{1/2}}}H_{i}(x)e^{-x^{2}/
 $$\psi_{i}(x) = \mathbf{C^{s}_{n}[i]\cdot x^{p}e^{-x^{2}/2} \quad \mathbf{(13)}}$$
 
 
-In this equation, $\mathbf{C^{s}_{n}[i]}$ is the row vector of normalized coefficients that multiply each power of $x$ up to $x^n$. The entire matrix $\mathbf{C^s_n}$ of such rows is precomputed up to degree $n=60$[Scott: is that true?].  $\mathbf{x^{p}}$ is a column vector of powers up to n, with zeros in places where the coefficient is zero; for example, for $i=3$, $\mathbf{x^{p}} = [x^{3}, 0.0, x^{1}, 0.0]^T$. This hybrid algorithm is also used in Single Fock and Single Position (`psi_n_single_fock_single_position`) problems, though it offers no computational advantage in these cases. Additionally, there is an argument named **CS_matrix** for these Single Fock functions, set to **True** to enable the use of this matrix. In other words, you can use only the recurrence relation for the wave function at any value. The use of this coefficient matrix is limited to values up to **60** (determined empirically), as beyond this point, the function may encounter precision errors, resulting in incoherent outputs [[13](#-references)].
+where $\mathbf{C^{s}_{n}[i]}$ is the row vector of normalized coefficients that multiply each power of $x$ up to $x^n$. The entire matrix $\mathbf{C^s_n}$ of such rows is precomputed up to degree $n=60$[Scott: is that true?].  $\mathbf{x^{p}}$ is a column vector of powers up to n, with zeros in places where the coefficient is zero; for example, for $i=3$, $\mathbf{x^{p}} = [x^{3}, 0.0, x^{1}, 0.0]^T$. This hybrid algorithm is also used in Single Fock and Single Position (`psi_n_single_fock_single_position`) problems, though it offers no computational advantage in these cases. Additionally, there is an argument named **CS_matrix** for these Single Fock functions, set to **True** to enable the use of this matrix. In other words, you can use only the recurrence relation for the wave function at any value. The use of this coefficient matrix is limited to values up to **60** (determined empirically), as beyond this point, the function may encounter precision errors, resulting in incoherent outputs [[13](#-references)].
 
 ## ⚡️ The Numba Module - Arguments
 
