@@ -48,19 +48,43 @@ pip install fast-wave
 
 ## 🎨 Examples
 
+The functions `psi_n_multiple_fock_multiple_position` calculate the values of the wavefunction $\psi_{0\rightarrow n}\big(X_{m}\big)$ for multiple Fock states ($n$) and multiple positions ($X_{m}$).
+
+**Inputs:**
+
+* `n`: An integer specifying the maximum Fock state ($n$).
+* `X_m`: A 1D `numpy` array with `m` positions, representing the input values where $\psi_{,0\rightarrow n}$ will be evaluated. For example, `np.array([1.0, 2.0])` has dimension $(m,)$, where $m=2$ in this case.
+
+**Outputs:**
+
+* `numpy` **Matrix**: The output has dimensions $(n+1) \times m$, where:
+  
+  - $n+1$: Corresponds to the Fock states $[0, 1, ..., n]$.
+  - $m$: Represents the positions given in `X_m`.
+
+**Demonstration:**
+
+Using the provided inputs:
+
 ```python
 >>> import fast_wave.wavefunction_numba as wn
 Functionality Test Passed: True
 >>> import fast_wave.wavefunction_cython as wc
 >>> import numpy as np
->>> wn.psi_n_multiple_fock_multiple_position(1,np.array([1.0 ,2.0]))
+>>> wn.psi_n_multiple_fock_multiple_position(1,np.array([1.0 ,2.0])) 
 array([[0.45558067, 0.10165379],
        [0.64428837, 0.28752033]])
-       [Scott: why did that make a 2x2 array?]
 >>> wc.psi_n_multiple_fock_multiple_position(1,np.array([1.0 ,2.0]))
 array([[0.45558067, 0.10165379],
        [0.64428837, 0.28752033]])
 ```
+
+**Explanation of the Output:**
+
+* For `n=1` and `X_m = np.array([1.0, 2.0])`:
+  - The output matrix has dimensions $(n+1) \times m = 2 \times 2$.
+  - The first row contains $\psi_{0}(x_1)$ and $\psi_{0}(x_2)$.
+  - The second row contains $\psi_{1}(x_1)$ and $\psi_{1}(x_2)$.
 
 There are other examples in the examples folder: [Speed Tests: Numba & Cython](https://colab.research.google.com/github/fobos123deimos/fast-wave/blob/main/examples/speed_tests_numba_and_cython.ipynb); [Precision Tests: mpmath](https://colab.research.google.com/github/fobos123deimos/fast-wave/blob/main/examples/precision_tests_mpmath.ipynb). In the first one there is a comparison with the [Mr Mustard](https://mrmustard.readthedocs.io/en/stable/) package.
 
@@ -198,7 +222,7 @@ $$\psi_{i}(x) = \displaystyle\frac{1}{\sqrt{2^{i}i!\pi^{1/2}}}H_{i}(x)e^{-x^{2}/
 $$\psi_{i}(x) = \mathbf{C^{s}_{n}[i]\cdot x^{p}e^{-x^{2}/2} \quad \mathbf{(13)}}$$
 
 
-where $\mathbf{C^{s}_{n}[i]}$ is the row vector of normalized coefficients that multiply each power of $x$ up to $x^n$. The entire matrix $\mathbf{C^s_n}$ of such rows is precomputed up to degree $n=60$[Scott: is that true?].  $\mathbf{x^{p}}$ is a column vector of powers up to n, with zeros in places where the coefficient is zero; for example, for $i=3$, $\mathbf{x^{p}} = [x^{3}, 0.0, x^{1}, 0.0]^T$. This hybrid algorithm is also used in Single Fock and Single Position (`psi_n_single_fock_single_position`) problems, though it offers no computational advantage in these cases. Additionally, there is an argument named **CS_matrix** for these Single Fock functions, set to **True** to enable the use of this matrix. In other words, you can use only the recurrence relation for the wave function at any value. The use of this coefficient matrix is limited to values up to **60** (determined empirically), as beyond this point, the function may encounter precision errors, resulting in incoherent outputs [[13](#-references)].
+where $\mathbf{C^{s}_{n}[i]}$ is the row vector of normalized coefficients that multiply each power of $x$ up to $x^n$. The entire matrix $\mathbf{C^s_n}$ of such rows is precomputed up to degree $n=60$.  $\mathbf{x^{p}}$ is a column vector of powers up to n, with zeros in places where the coefficient is zero; for example, for $i=3$, $\mathbf{x^{p}} = [x^{3}, 0.0, x^{1}, 0.0]^T$. This hybrid algorithm is also used in Single Fock and Single Position (`psi_n_single_fock_single_position`) problems, though it offers no computational advantage in these cases. Additionally, there is an argument named **CS_matrix** for these Single Fock functions, set to **True** to enable the use of this matrix. In other words, you can use only the recurrence relation for the wave function at any value. The use of this coefficient matrix is limited to values up to **60** (determined empirically), as beyond this point, the function may encounter precision errors, resulting in incoherent outputs [[13](#-references)].
 
 ## ⚡️ The Numba Module - Arguments
 
