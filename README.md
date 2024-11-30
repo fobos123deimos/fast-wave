@@ -97,21 +97,21 @@ The wavefunction, $\Psi(y,t)$, is a fundamental concept in quantum mechanics tha
 The wavefunction is the solution to the Schrödinger equation, a fundamental equation in quantum mechanics:
 
 $$
--\Bigg(\frac{\hbar^{2}}{2m}\Bigg) \, \frac{\partial^2 \Psi(y,t)}{\partial y^{2}} + \Bigg(\frac{m\omega^2 y^2}{2}\Bigg) \, \Psi(y,t) = \mathbf{i}\hbar \, \frac{\partial\Psi(y,t)}{\partial t} \quad \mathbf{(1)}
+-\Bigg(\frac{\hbar^{2}}{2m}\Bigg) \frac{\partial^2 \Psi(y,t)}{\partial y^{2}} + \Bigg(\frac{m\omega^2 y^2}{2}\Bigg) \Psi(y,t) = \mathbf{i}\hbar \frac{\partial\Psi(y,t)}{\partial t} \quad \mathbf{(1)}
 $$
 
 where $\mathbf{\hbar}$ is the reduced Planck constant, $\mathbf{m}$ is the mass of the particle, and $\mathbf{\omega}$ is the angular frequency of the harmonic potential. The symbol $\mathbf{i}$ represents the imaginary unit. When seeking the solution to this equation, we separated the variables as follows: $\Psi(y,t) = \psi(y)f(t)$, and we find as a result for $f(t)$ [[5](#-references)]:
 
-$$ f(t) = C \, e^{-iEt/\hbar} \quad \mathbf{(2)}$$
+$$ f(t) = C  e^{-iEt/\hbar} \quad \mathbf{(2)}$$
 
 where $\mathbf{C}$ may be considered an arbitrary complex constant and $\mathbf{E}$, the system separation constant can be interpreted as the system's energy. Substituting into the wavefunction we have [[5](#-references)]:
 
-$$ \Psi(y,t) = C \, e^{-iEt/\hbar} \, \psi(y) \quad \mathbf{(3)}$$
+$$ \Psi(y,t) = C  e^{-iEt/\hbar}  \psi(y) \quad \mathbf{(3)}$$
 
 The term $e^{-iEt/\hbar}$ is called the **phase factor** of $\Psi(y,t)$. In order to find $\psi(y)$ we then solve the **time-independent Schröndiger equation** [[5](#-references)]:
 
 $$
--\Bigg(\frac{\hbar^{2}}{2m}\Bigg) \, \psi''(y) + \Bigg(\frac{m\omega^2 y^2}{2}\Bigg) \, \psi(y) = E \, \psi(y) \quad \mathbf{(4)}
+-\Bigg(\frac{\hbar^{2}}{2m}\Bigg)  \psi''(y) + \Bigg(\frac{m\omega^2 y^2}{2}\Bigg) \psi(y) = E  \psi(y) \quad \mathbf{(4)}
 $$
 
 
@@ -138,7 +138,7 @@ where $\mathbf{n}$ represents a non-negative integer corresponding to the differ
 The energy eigenfunction for an energy state $\mathbf{n}$ is the wavefunction for an energy state $\mathbf{n}$ of a Quantum Harmonic Oscillator. From this definition, we can then represent the wave function $\Psi(x,t)$ as a series expansion of its family of energy eigenfunctions $\{\psi_{n}(x)\}$ [[5](#-references)]:
 
 $$
-\Psi(y,t) = \sum_{n=0}^{\infty} c_{n} \, \psi_{n}(y) \, e^{-\mathbf{i}E_{n}t/\hbar} \quad \mathbf{(6)}
+\Psi(y,t) = \sum_{n=0}^{\infty} c_{n}  \psi_{n}(y)  e^{-\mathbf{i}E_{n}t/\hbar} \quad \mathbf{(6)}
 $$
 
 where $\mathbf{c_{n}}$ are complex constants that determine the contribution of each eigenfunction $\psi_{n}(y)$ to the total wavefunction $\Psi(y,t)$. These coefficients are chosen to ensure that the wavefunction satisfies the initial condition of the problem ($t=0$) [[5](#-references)].
@@ -151,14 +151,14 @@ When defining the dimensionless variable $x = \Big(m\omega/\hbar\Big)^{1/2}y$, r
 $\displaystyle\int_{-\infty}^{+\infty} |\psi(y)|^{2} dy = 1 \implies \int_{-\infty}^{+\infty}\Bigg[\left(\frac{m\omega}{\pi\hbar}\right)^{1/2} \left(\frac{1}{2^n n!}\right) H_n^{2}\left(\sqrt{\frac{m\omega}{\hbar}}y\right) e^{-m\omega y^2/\hbar} \Bigg] dy \implies$ 
 
 
-$\displaystyle\int_{-\infty}^{+\infty} \Bigg[ \left(\frac{m\omega}{\pi\hbar}\right)^{1/2} \left(\frac{1}{2^n n!}\right) H_{n}^{2}(x) \, e^{-x^{2}}\Bigg]\Bigg[\frac{\hbar}{\omega m}\Bigg]^{1/2}dx = 1 \implies \int_{-\infty}^{+\infty} \Bigg[ \left(\frac{1}{2^n n!\sqrt{\pi}}\right) H_{n}^{2}(x) \, e^{-x^{2}}\Bigg]dx = 1 \implies$
+$\displaystyle\int_{-\infty}^{+\infty} \Bigg[ \left(\frac{m\omega}{\pi\hbar}\right)^{1/2} \left(\frac{1}{2^n n!}\right) H_{n}^{2}(x)  e^{-x^{2}}\Bigg]\Bigg[\frac{\hbar}{\omega m}\Bigg]^{1/2}dx = 1 \implies \int_{-\infty}^{+\infty} \Bigg[ \left(\frac{1}{2^n n!\sqrt{\pi}}\right) H_{n}^{2}(x)  e^{-x^{2}}\Bigg]dx = 1 \implies$
 
 
-$\displaystyle\int_{-\infty}^{+\infty} \, \left| \left(\frac{1}{2^n n!\sqrt{\pi}}\right)^{1/2} H_{n}(x) \, e^{-x^{2}/2} \right|^{2}dx = 1 \implies \int_{-\infty}^{+\infty} |\psi(x)|^{2} dx = 1\implies$
+$\displaystyle\int_{-\infty}^{+\infty}  \left| \left(\frac{1}{2^n n!\sqrt{\pi}}\right)^{1/2} H_{n}(x)  e^{-x^{2}/2} \right|^{2}dx = 1 \implies \int_{-\infty}^{+\infty} |\psi(x)|^{2} dx = 1\implies$
 
 $$\psi_{n}(x) = \left(\frac{1}{2^n n!\sqrt{\pi}}\right)^{1/2} H_{n}(x) \quad e^{-x^{2}/2} \quad \mathbf{(7)}$$
 
-This demonstrates that the wavefunction of a Quantum Harmonic Oscillator can be represented in a more dimensionless form, known as the **Hermite function**, it is also sometimes referred to as the **Gauss-Hermite function**. (equation $\mathbf{7}$) [[8](#-references)]. A more simplified form for this type of function is this: $\psi_{n}(x) = \mathcal{N_{n}} \, H_{n}(x) \, e^{-x^{2}/2}$, where $\mathcal{N_{n}} = \left[1 /(2^n n!\sqrt{\pi})\right]^{1/2}$ is referred to as the **normalization constant** [[9](#-references)].
+This demonstrates that the wavefunction of a Quantum Harmonic Oscillator can be represented in a more dimensionless form, known as the **Hermite function**, it is also sometimes referred to as the **Gauss-Hermite function**. (equation $\mathbf{7}$) [[8](#-references)]. A more simplified form for this type of function is this: $\psi_{n}(x) = \mathcal{N_{n}}  H_{n}(x)  e^{-x^{2}/2}$, where $\mathcal{N_{n}} = \left[1 /(2^n n!\sqrt{\pi})\right]^{1/2}$ is referred to as the **normalization constant** [[9](#-references)].
 
 This type of representation for the wavefunction enables the modeling of wave functions for **Fock states**, which are energy eigenstates with a well-defined number of particles. When the particles are considered photons, $\mathbf{n}$, the degree of the Hermite polynomial, also represents the number of photons. Consequently, the Fock states ($\ket{n}$) become eigenstates of the photon number operator $\hat{n}$, such that $\hat{n}\ket{n}=n\ket{n}$. Moreover, the energy states now correspond to the energy levels of an optical system containing $n$-photons [[10](#-references)].
 
