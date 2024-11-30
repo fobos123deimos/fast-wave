@@ -40,7 +40,6 @@ from cmath import exp as cexp, sqrt as csqrt, pi as cpi
 @cython.cfunc
 @cython.locals(index=int, r0=double, r1=double, r2=double)
 @cython.boundscheck(False)
-@cython.cdivision(True)
 cpdef double psi_n_single_fock_single_position(int n, double x):
     """
     Compute the wavefunction for a real scalar `x` using the adapted recurrence relation.
@@ -84,7 +83,6 @@ cpdef double psi_n_single_fock_single_position(int n, double x):
 @cython.cfunc
 @cython.locals(index=int, r0=complex, r1=complex, r2=complex)
 @cython.boundscheck(False)
-@cython.cdivision(True)
 cpdef double complex psi_n_single_fock_single_position_complex(int n, double complex x):
     """
     Compute the wavefunction for a complex scalar `x` using the adapted recurrence relation.
@@ -128,7 +126,6 @@ cpdef double complex psi_n_single_fock_single_position_complex(int n, double com
 @cython.cfunc
 @cython.locals(x_size=np.npy_intp, j=int, i=int, k=int, temp1=double, temp2=double)
 @cython.boundscheck(False)
-@cython.cdivision(True)
 cpdef np.ndarray[np.float64_t, ndim=1] psi_n_single_fock_multiple_position(int n, np.ndarray[np.float64_t, ndim=1] x):
     """
     Compute the wavefunction for a real vector `x` using the adapted recurrence relation.
@@ -174,7 +171,6 @@ cpdef np.ndarray[np.float64_t, ndim=1] psi_n_single_fock_multiple_position(int n
 @cython.cfunc
 @cython.locals(x_size=np.npy_intp, j=int, i=int, k=int, temp1=complex, temp2=complex)
 @cython.boundscheck(False)
-@cython.cdivision(True)
 cpdef np.ndarray[np.complex128_t, ndim=1] psi_n_single_fock_multiple_position_complex(int n, np.ndarray[np.complex128_t, ndim=1] x):
     """
     Compute the wavefunction for a complex vector `x` using the adapted recurrence relation.
@@ -223,7 +219,6 @@ cpdef np.ndarray[np.complex128_t, ndim=1] psi_n_single_fock_multiple_position_co
 @cython.cfunc
 @cython.locals(index=int)
 @cython.boundscheck(False)
-@cython.cdivision(True)
 cpdef np.ndarray[np.float64_t, ndim=1] psi_n_multiple_fock_single_position(int n, double x):
     """
     Compute the wavefunction for a real scalar `x` to all Fock states up to `n` using the adapted recurrence relation.
@@ -259,7 +254,6 @@ cpdef np.ndarray[np.float64_t, ndim=1] psi_n_multiple_fock_single_position(int n
 @cython.cfunc
 @cython.locals(index=int)
 @cython.boundscheck(False)
-@cython.cdivision(True)
 cpdef np.ndarray[np.complex128_t, ndim=1] psi_n_multiple_fock_single_position_complex(int n, double complex x):
     """
     Compute the wavefunction for a complex scalar `x` to all Fock states up to `n` using the adapted recurrence relation.
@@ -295,7 +289,6 @@ cpdef np.ndarray[np.complex128_t, ndim=1] psi_n_multiple_fock_single_position_co
 @cython.cfunc
 @cython.locals(x_size=np.npy_intp, j=int, i=int, k=int, temp1=double, temp2=double)
 @cython.boundscheck(False)
-@cython.cdivision(True)
 cpdef np.ndarray[np.float64_t, ndim=2] psi_n_multiple_fock_multiple_position(int n, np.ndarray[np.float64_t, ndim=1] x):
     """
     Compute the wavefunction for a real vector `x` to all Fock states up to `n` using the adapted recurrence relation.
@@ -340,7 +333,6 @@ cpdef np.ndarray[np.float64_t, ndim=2] psi_n_multiple_fock_multiple_position(int
 @cython.cfunc
 @cython.locals(x_size=np.npy_intp, j=int, i=int, k=int, temp1=complex, temp2=complex)
 @cython.boundscheck(False)
-@cython.cdivision(True)
 cpdef np.ndarray[np.complex128_t, ndim=2] psi_n_multiple_fock_multiple_position_complex(int n, np.ndarray[np.complex128_t, ndim=1] x):
     """
     Compute the wavefunction for a complex vector `x` to all Fock states up to `n` using the adapted recurrence relation.
