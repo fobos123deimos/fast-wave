@@ -42,36 +42,25 @@ from cmath import exp as cexp, sqrt as csqrt, pi as cpi
 @cython.boundscheck(False)
 @cython.cdivision(True)
 cpdef double psi_n_single_fock_single_position(int n, double x):
-
     """
-    Compute the wavefunction to a real scalar x using adapted recurrence relation.
+    Compute the wavefunction for a real scalar `x` using the adapted recurrence relation.
 
-    Parameters
-    ----------
-    n : int
-        Quantum state number.
-    x : double
-        Position(s) at which to evaluate the wavefunction.
+    Args:
+        n (int): Quantum state number.
+        x (double): Position at which to evaluate the wavefunction.
 
+    Returns:
+        `double` : The evaluated wavefunction.
 
-    Returns
-    -------
-        double
-        The evaluated wavefunction.
+    Examples:
+        >>> psi_n_single_fock_single_position(0, 1.0)
+        0.45558067201133257
+        >>> psi_n_single_fock_single_position(61, 1.0)
+        -0.2393049199171131
 
-    Examples
-    --------
-    ```python
-    >>> psi_n_single_fock_single_position(0, 1.0)
-    0.45558067201133257
-    >>> psi_n_single_fock_single_position(61, 1.0)
-    -0.2393049199171131
-    ```
-
-    References
-    ----------
-    - Pérez-Jordá, J. M. (2017). On the recursive solution of the quantum harmonic oscillator. *European Journal of Physics*, 39(1), 
-      015402. doi:10.1088/1361-6404/aa9584
+    References:
+        1. Pérez-Jordá, J. M. (2017). On the recursive solution of the quantum harmonic oscillator. *European Journal of Physics*, 
+           39(1), 015402. doi: https://iopscience.iop.org/article/10.1088/1361-6404/aa9584
     """
     
     cdef np.ndarray[np.float64_t, ndim=1] n_coeffs
@@ -97,36 +86,25 @@ cpdef double psi_n_single_fock_single_position(int n, double x):
 @cython.boundscheck(False)
 @cython.cdivision(True)
 cpdef double complex psi_n_single_fock_single_position_complex(int n, double complex x):
-
     """
-    Compute the wavefunction to a complex scalar x using adapted recurrence relation.
+    Compute the wavefunction for a complex scalar `x` using the adapted recurrence relation.
 
-    Parameters
-    ----------
-    n : int
-        Quantum state number.
-    x : double
-        Position(s) at which to evaluate the wavefunction.
+    Args:
+        n (int): Quantum state number.
+        x (double complex): Position at which to evaluate the wavefunction.
 
+    Returns:
+        `double complex` : The evaluated wavefunction.
 
-    Returns
-    -------
-        double
-        The evaluated wavefunction.
+    Examples:
+        >>> psi_n_single_fock_single_position_complex(0, 1.0 + 2.0j)
+        (-1.4008797330262455-3.0609780602975003j)
+        >>> psi_n_single_fock_single_position_complex(61, 1.0 + 2.0j)
+        (-511062135.47555304+131445997.75753704j)
 
-    Examples
-    --------
-    ```python
-    >>> psi_n_single_fock_single_position_complex(0,1.0+2.0j)
-    (-1.4008797330262455-3.0609780602975003j)
-    >>> psi_n_single_fock_single_position_complex(61,1.0+2.0j)
-    (-511062135.47555304+131445997.75753704j)
-    ```
-
-    References
-    ----------
-    - Pérez-Jordá, J. M. (2017). On the recursive solution of the quantum harmonic oscillator. *European Journal of Physics*, 39(1), 
-      015402. doi:10.1088/1361-6404/aa9584
+    References:
+        1. Pérez-Jordá, J. M. (2017). On the recursive solution of the quantum harmonic oscillator. *European Journal of Physics*, 
+           39(1), 015402. doi: https://iopscience.iop.org/article/10.1088/1361-6404/aa9584
     """
     
     cdef np.ndarray[np.float64_t, ndim=1] n_coeffs
@@ -152,36 +130,25 @@ cpdef double complex psi_n_single_fock_single_position_complex(int n, double com
 @cython.boundscheck(False)
 @cython.cdivision(True)
 cpdef np.ndarray[np.float64_t, ndim=1] psi_n_single_fock_multiple_position(int n, np.ndarray[np.float64_t, ndim=1] x):
-
     """
-    Compute the wavefunction to a real vector x using adapted recurrence relation.
+    Compute the wavefunction for a real vector `x` using the adapted recurrence relation.
 
-    Parameters
-    ----------
-    n : int
-        Quantum state number.
-    x : np.ndarray[np.float64_t]
-        Position(s) at which to evaluate the wavefunction.
+    Args:
+        n (int): Quantum state number.
+        x (np.ndarray[np.float64_t]): Position at which to evaluate the wavefunction.
 
+    Returns:
+        `np.ndarray[np.float64_t]` : The evaluated wavefunction.
 
-    Returns
-    -------
-        np.ndarray[np.float64_t]
-        The evaluated wavefunction.
+    Examples:
+        >>> psi_n_single_fock_multiple_position(0, np.array([1.0, 2.0]))
+        array([0.45558067, 0.10165379])
+        >>> psi_n_single_fock_multiple_position(61, np.array([1.0, 2.0]))
+        array([-0.23930492, -0.01677378])
 
-    Examples
-    --------
-    ```python
-    >>> psi_n_single_fock_multiple_position(0, np.array([1.0, 2.0]))
-    array([0.45558067, 0.10165379])
-    >>> psi_n_single_fock_multiple_position(61, np.array([1.0, 2.0]))
-    array([-0.23930492, -0.01677378])
-    ```
-
-    References
-    ----------
-    - Pérez-Jordá, J. M. (2017). On the recursive solution of the quantum harmonic oscillator. *European Journal of Physics*, 39(1), 
-      015402. doi:10.1088/1361-6404/aa9584
+    References:
+        1. Pérez-Jordá, J. M. (2017). On the recursive solution of the quantum harmonic oscillator. *European Journal of Physics*, 
+           39(1), 015402. doi: https://iopscience.iop.org/article/10.1088/1361-6404/aa9584
     """
     
     x_size = x.shape[0]
@@ -209,36 +176,27 @@ cpdef np.ndarray[np.float64_t, ndim=1] psi_n_single_fock_multiple_position(int n
 @cython.boundscheck(False)
 @cython.cdivision(True)
 cpdef np.ndarray[np.complex128_t, ndim=1] psi_n_single_fock_multiple_position_complex(int n, np.ndarray[np.complex128_t, ndim=1] x):
-
     """
-    Compute the wavefunction to a complex vector x using adapted recurrence relation.
+    Compute the wavefunction for a complex vector `x` using the adapted recurrence relation.
 
-    Parameters
-    ----------
-    n : int
-        Quantum state number.
-    x : np.ndarray[np.complex128_t]
-        Position(s) at which to evaluate the wavefunction.
+    There is another version of this code, implemented by the same authors who developed this function, in a Cython module of QuTip: [_distributions.pyx](https://github.com/qutip/qutip/blob/master/qutip/_distributions.pyx), to be used in the `HarmonicOscillatorWaveFunction` class from the [distributions.py](https://github.com/qutip/qutip/blob/master/qutip/distributions.py) module.
 
+    Args:
+        n (int): Quantum state number.
+        x (np.ndarray[np.complex128_t]): Position at which to evaluate the wavefunction.
 
-    Returns
-    -------
-        np.ndarray[np.complex128_t]
-        The evaluated wavefunction.
+    Returns:
+        `np.ndarray[np.complex128_t]`: The evaluated wavefunction.
 
-    Examples
-    --------
-    ```python
-    >>> psi_n_single_fock_multiple_position_complex(0, np.array([1.0 + 1.0j, 2.0 + 2.0j]))
-    array([ 0.40583486-0.63205035j, -0.49096842+0.56845369j])
-    >>> psi_n_single_fock_multiple_position_complex(61, np.array([1.0 + 1.0j, 2.0 + 2.0j]))
-    array([-7.56548941e+03+9.21498621e+02j, -1.64189542e+08-3.70892077e+08j])
-    ```
+    Examples:
+        >>> psi_n_single_fock_multiple_position_complex(0, np.array([1.0 + 1.0j, 2.0 + 2.0j]))
+        array([ 0.40583486-0.63205035j, -0.49096842+0.56845369j])
+        >>> psi_n_single_fock_multiple_position_complex(61, np.array([1.0 + 1.0j, 2.0 + 2.0j]))
+        array([-7.56548941e+03+9.21498621e+02j, -1.64189542e+08-3.70892077e+08j])
 
-    References
-    ----------
-    - Pérez-Jordá, J. M. (2017). On the recursive solution of the quantum harmonic oscillator. *European Journal of Physics*, 39(1), 
-      015402. doi:10.1088/1361-6404/aa9584
+    References:
+        1. Pérez-Jordá, J. M. (2017). On the recursive solution of the quantum harmonic oscillator. *European Journal of Physics*, 
+           39(1), 015402. doi: https://iopscience.iop.org/article/10.1088/1361-6404/aa9584
     """
     
     x_size = x.shape[0]
@@ -267,34 +225,23 @@ cpdef np.ndarray[np.complex128_t, ndim=1] psi_n_single_fock_multiple_position_co
 @cython.boundscheck(False)
 @cython.cdivision(True)
 cpdef np.ndarray[np.float64_t, ndim=1] psi_n_multiple_fock_single_position(int n, double x):
-
     """
-    Compute the wavefunction to a real scalar x to all fock states until n using adapted recurrence relation.
+    Compute the wavefunction for a real scalar `x` to all Fock states up to `n` using the adapted recurrence relation.
 
-    Parameters
-    ----------
-    n : int
-        Quantum state number.
-    x : double
-        Position(s) at which to evaluate the wavefunction.
+    Args:
+        n (int): Quantum state number.
+        x (double): Position at which to evaluate the wavefunction.
 
+    Returns:
+        `np.ndarray[np.float64_t]` : The evaluated wavefunction.
 
-    Returns
-    -------
-        np.ndarray[np.float64_t]
-        The evaluated wavefunction.
+    Examples:
+        >>> psi_n_multiple_fock_single_position(0, 1.0)
+        array([0.45558067, 0.64428837])
 
-    Examples
-    --------
-    ```python
-    >>> psi_n_multiple_fock_single_position(0, 1.0)
-    array([0.45558067, 0.64428837])
-    ```
-
-    References
-    ----------
-    - Pérez-Jordá, J. M. (2017). On the recursive solution of the quantum harmonic oscillator. *European Journal of Physics*, 39(1), 
-      015402. doi:10.1088/1361-6404/aa9584
+    References:
+        1. Pérez-Jordá, J. M. (2017). On the recursive solution of the quantum harmonic oscillator. *European Journal of Physics*, 
+           39(1), 015402. doi: https://iopscience.iop.org/article/10.1088/1361-6404/aa9584
     """
     
     cdef np.ndarray[np.float64_t, ndim=1] result = np.zeros((n + 1), dtype=np.float64)
@@ -314,34 +261,23 @@ cpdef np.ndarray[np.float64_t, ndim=1] psi_n_multiple_fock_single_position(int n
 @cython.boundscheck(False)
 @cython.cdivision(True)
 cpdef np.ndarray[np.complex128_t, ndim=1] psi_n_multiple_fock_single_position_complex(int n, double complex x):
-
     """
-    Compute the wavefunction to a complex scalar x to all fock states until n using adapted recurrence relation.
+    Compute the wavefunction for a complex scalar `x` to all Fock states up to `n` using the adapted recurrence relation.
 
-    Parameters
-    ----------
-    n : int
-        Quantum state number.
-    x : double complex
-        Position(s) at which to evaluate the wavefunction.
+    Args:
+        n (int): Quantum state number.
+        x (double complex): Position at which to evaluate the wavefunction.
 
+    Returns:
+        `np.ndarray[np.complex128_t]` : The evaluated wavefunction.
 
-    Returns
-    -------
-        np.ndarray[np.complex128_t]
-        The evaluated wavefunction.
+    Examples:
+        >>> psi_n_multiple_fock_single_position_complex(0, 1.0 + 2.0j)
+        array([-1.40087973-3.06097806j,  6.67661026-8.29116292j])
 
-    Examples
-    --------
-    ```python
-    >>> psi_n_multiple_fock_single_position_complex(0, 1.0 +2.0j)
-    array([-1.40087973-3.06097806j,  6.67661026-8.29116292j])
-    ```
-
-    References
-    ----------
-    - Pérez-Jordá, J. M. (2017). On the recursive solution of the quantum harmonic oscillator. *European Journal of Physics*, 39(1), 
-      015402. doi:10.1088/1361-6404/aa9584
+    References:
+        1. Pérez-Jordá, J. M. (2017). On the recursive solution of the quantum harmonic oscillator. *European Journal of Physics*, 
+           39(1), 015402. doi: https://iopscience.iop.org/article/10.1088/1361-6404/aa9584
     """
     
     cdef np.ndarray[np.complex128_t, ndim=1] result = np.zeros((n + 1), dtype=np.complex128)
@@ -361,35 +297,24 @@ cpdef np.ndarray[np.complex128_t, ndim=1] psi_n_multiple_fock_single_position_co
 @cython.boundscheck(False)
 @cython.cdivision(True)
 cpdef np.ndarray[np.float64_t, ndim=2] psi_n_multiple_fock_multiple_position(int n, np.ndarray[np.float64_t, ndim=1] x):
-
     """
-    Compute the wavefunction to a real vector x to all fock states until n using adapted recurrence relation.
+    Compute the wavefunction for a real vector `x` to all Fock states up to `n` using the adapted recurrence relation.
 
-    Parameters
-    ----------
-    n : int
-        Quantum state number.
-    x : np.ndarray[np.float64_t]
-        Position(s) at which to evaluate the wavefunction.
+    Args:
+        n (int): Quantum state number.
+        x (np.ndarray[np.float64_t]): Positions at which to evaluate the wavefunction.
 
+    Returns:
+        `np.ndarray[np.ndarray[np.float64_t]]`: The evaluated wavefunction.
 
-    Returns
-    -------
-        np.ndarray[np.ndarray[np.float64_t]]
-        The evaluated wavefunction.
+    Examples:
+        >>> psi_n_multiple_fock_multiple_position(1, np.array([1.0, 2.0]))
+        array([[0.45558067, 0.10165379],
+               [0.64428837, 0.28752033]])
 
-    Examples
-    --------
-    ```python
-    >>> psi_n_multiple_fock_multiple_position(1, np.array([1.0, 2.0]))
-    array([[0.45558067, 0.10165379],
-           [0.64428837, 0.28752033]])
-    ```
-
-    References
-    ----------
-    - Pérez-Jordá, J. M. (2017). On the recursive solution of the quantum harmonic oscillator. *European Journal of Physics*, 39(1), 
-      015402. doi:10.1088/1361-6404/aa9584
+    References:
+        1. Pérez-Jordá, J. M. (2017). On the recursive solution of the quantum harmonic oscillator. *European Journal of Physics*, 
+           39(1), 015402. doi: https://iopscience.iop.org/article/10.1088/1361-6404/aa9584
     """
     
     x_size = x.shape[0]
@@ -417,35 +342,24 @@ cpdef np.ndarray[np.float64_t, ndim=2] psi_n_multiple_fock_multiple_position(int
 @cython.boundscheck(False)
 @cython.cdivision(True)
 cpdef np.ndarray[np.complex128_t, ndim=2] psi_n_multiple_fock_multiple_position_complex(int n, np.ndarray[np.complex128_t, ndim=1] x):
-
     """
-    Compute the wavefunction to a complex vector x to all fock states until n using adapted recurrence relation.
+    Compute the wavefunction for a complex vector `x` to all Fock states up to `n` using the adapted recurrence relation.
 
-    Parameters
-    ----------
-    n : int
-        Quantum state number.
-    x : np.ndarray[np.complex128_t]
-        Position(s) at which to evaluate the wavefunction.
+    Args:
+        n (int): Quantum state number.
+        x (np.ndarray[np.complex128_t]): Positions at which to evaluate the wavefunction.
 
+    Returns:
+        `np.ndarray[np.ndarray[np.complex128_t]]`: The evaluated wavefunction.
 
-    Returns
-    -------
-        np.ndarray[np.ndarray[np.complex128_t]]
-        The evaluated wavefunction.
+    Examples:
+        >>> psi_n_multiple_fock_multiple_position_complex(1, np.array([1.0 + 1.0j, 2.0 + 2.0j]))
+        array([[ 0.40583486-0.63205035j, -0.49096842+0.56845369j],
+               [ 1.46779135-0.31991701j, -2.99649822+0.21916143j]])
 
-    Examples
-    --------
-    ```python
-    >>> psi_n_multiple_fock_multiple_position_complex(1,np.array([1.0 + 1.0j, 2.0 + 2.0j]))
-    array([[ 0.40583486-0.63205035j, -0.49096842+0.56845369j],
-           [ 1.46779135-0.31991701j, -2.99649822+0.21916143j]])
-    ```
-
-    References
-    ----------
-    - Pérez-Jordá, J. M. (2017). On the recursive solution of the quantum harmonic oscillator. *European Journal of Physics*, 39(1), 
-      015402. doi:10.1088/1361-6404/aa9584
+    References:
+        1. Pérez-Jordá, J. M. (2017). On the recursive solution of the quantum harmonic oscillator. *European Journal of Physics*, 
+           39(1), 015402. doi: https://iopscience.iop.org/article/10.1088/1361-6404/aa9584
     """
     
     x_size = x.shape[0]

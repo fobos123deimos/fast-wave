@@ -208,8 +208,7 @@ $\displaystyle\Bigg(\frac{1}{\sqrt{2(n+1)}}\Bigg)\Bigg(\displaystyle\frac{e^{-x^
 
 $$\psi_{n+1}(x) = \displaystyle\Bigg(\sqrt{\frac{2}{n+1}}\Bigg)x\psi_{n}(x) -\Bigg(\sqrt{\frac{n}{n+1}}\Bigg)\psi_{n-1}(x) \quad \mathbf{(12)}$$
 
-
-
+Besides the use of this recurrence in this package, the same authors implemented a version of it in a Cython module of QuTip: [_distributions.pyx](https://github.com/qutip/qutip/blob/master/qutip/_distributions.pyx), to be used in the HarmonicOscillatorWaveFunction class from the [distributions.py](https://github.com/qutip/qutip/blob/master/qutip/distributions.py) module.
 
 ## ⚡️The Numba Module - Hybrid Solution
 
