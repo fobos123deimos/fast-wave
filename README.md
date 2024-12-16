@@ -135,7 +135,7 @@ where $\mathbf{n}$ represents a non-negative integer corresponding to the differ
 
 <br>
 
-The energy eigenfunction for an energy state $\mathbf{n}$ is the wavefunction for an energy state $\mathbf{n}$ of a Quantum Harmonic Oscillator. From this definition, we can then represent the wave function $\Psi(x,t)$ as a series expansion of its family of energy eigenfunctions $\{\psi_{n}(x)\}$ [[5](#-references)]:
+The energy eigenfunction for an energy state $\mathbf{n}$ is the wavefunction for an energy state $\mathbf{n}$ of a Quantum Harmonic Oscillator. From this definition, we can then represent the wave function $\Psi(x,t)$ as a series expansion of its family of energy eigenfunctions $\\{\psi_{n}(x)\\}$ [[5](#-references)]:
 
 $$
 \Psi(y,t) = \sum_{n=0}^{\infty} c_{n}  \psi_{n}(y)  e^{-\mathbf{i}E_{n}t/\hbar} \quad \mathbf{(6)}
