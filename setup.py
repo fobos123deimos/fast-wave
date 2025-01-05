@@ -1,12 +1,13 @@
 import setuptools
-from setuptools import find_packages
-
+from setuptools import find_packages, Extension
+from Cython.Build import cythonize
+import numpy
 
 with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
 
 name = "fast_wave"
-version = "1.6.6"
+version = "1.6.8"
 description = "Package for the calculation of the time-independent wavefunction." 
 author_email = "matheusgomescord@gmail.com"
 url = "https://github.com/pikachu123deimos/fast-wave" 
@@ -26,13 +27,16 @@ test_requires = [
 
 packages = find_packages(where='src')
 
-package_data = {'fast_wave': ['*.pyd', '*.so']}
+package_data = {'fast_wave': ['*.pyd', '*.so', '*.pyx']}
+extensions = [
+    Extension("fast_wave.wavefunction_cython", ["src/fast_wave/wavefunction_cython.pyx"],include_dirs=[numpy.get_include()])
+]
 
 classifiers = [
-    'Programming Language :: Python :: 3.11',  
-    'Topic :: Scientific/Engineering :: Mathematics',  
-    'License :: OSI Approved :: BSD License',  
-    'Development Status :: 5 - Production/Stable', 
+    'Programming Language :: Python :: 3.11',
+    'Topic :: Scientific/Engineering :: Mathematics',
+    'License :: OSI Approved :: BSD License',
+    'Development Status :: 5 - Production/Stable',
 ]
 
 setuptools.setup(
@@ -40,6 +44,7 @@ setuptools.setup(
     version=version,
     long_description=long_description,
     long_description_content_type="text/markdown",
+    ext_modules=cythonize(extensions, compiler_directives={"language_level": "3"}),
     description=description,
     author=name,
     author_email=author_email,
@@ -49,5 +54,5 @@ setuptools.setup(
     packages=packages,
     package_dir={'': 'src'},
     package_data=package_data,
-    classifiers=classifiers
+    classifiers=classifiers,
 )
