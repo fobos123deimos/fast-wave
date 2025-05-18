@@ -36,7 +36,7 @@ This project presents an optimized approach for calculating the position wave fu
 
 
 - **Highly Efficient**: This package includes two fixed-point modules focused on speed. One is implemented using *Numba*, an open-source Just-in-Time (JIT) compiler, and the other module is implemented in *Cython*, a programming language that combines the ease of use of Python with the speed of C.
-- **Highly Accurate**: The functions in this package have precision next to the precision of Wolfram Mathematica and MATLAB. In addition, there is a module for calculating wave functions with arbitrary precision using the *mpmath* package.
+- **Highly Accurate**: The functions in this package have precision next to the precision of [Wolfram Mathematica and MATLAB](https://drive.google.com/drive/folders/1rdE1l3nBYh1JUuuZNYMFtHd9cVaP-x7g?usp=sharing). In addition, there is a module for calculating wave functions with arbitrary precision using the *mpmath* package.
 - **Past response cache**: This package provides a caching module designed to enhance the performance of functions that take multiple positions of a *NumPy* array as input. This module stores previously computed results by leveraging Python's functools.lru_cache, eliminating the need for redundant calculations. This caching module is inspired by the [caching module](https://github.com/XanaduAI/MrMustard/blob/develop/mrmustard/math/caching.py#L26) from Mr. Mustard, a package from the photonic quantum computing company Xanadu.
 
 
