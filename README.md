@@ -13,6 +13,24 @@
 
 This project presents an optimized approach for calculating the position wave functions of a Fock state of a quantum harmonic oscillator, with applications in Photonic Quantum Computing simulations. Leveraging [Numba](https://numba.pydata.org/)  [[1](#-references)] and [Cython](https://cython.org/) [[2](#-references)], this approach outperforms the [Mr Mustard](https://mrmustard.readthedocs.io/en/stable/) package [[3, 4](#-references)] in computing a single wave function value at a single position and at multiple positions.
 
+---
+## 🧠 Dependencies & Libraries
+
+The following Python libraries were used across the scripts in this repository:
+
+[![NumPy](https://img.shields.io/badge/NumPy-1.26.4-013243?style=flat-square&logo=numpy&logoColor=white)](https://numpy.org/) [![SymPy](https://img.shields.io/badge/SymPy-1.12-3B5526?style=flat-square&logo=sympy&logoColor=white)](https://www.sympy.org/) ![mpmath](https://img.shields.io/badge/mpmath-1.3.0-11557C?style=flat-square&logo=python&logoColor=white) ![Numba](https://img.shields.io/badge/Numba-0.59.1-00A3E0?style=flat-square&logo=python&logoColor=white) ![Cython](https://img.shields.io/badge/Cython-3.0.10-FBE072?style=flat-square&logo=python&logoColor=white) ![llvmlite](https://img.shields.io/badge/llvmlite-0.42.0-404040?style=flat-square&logo=llvm&logoColor=white) [![Math](https://img.shields.io/badge/Math-built--in-11557C?style=flat-square&logo=python&logoColor=white)](https://docs.python.org/3/library/math.html) ![Functools](https://img.shields.io/badge/Functools-built--in-11557C?style=flat-square&logo=python&logoColor=white)
+
+### ✅ Main Usage per Script:
+
+| Script                                   | Libraries                                                          |
+| ----------------------------------------- | ------------------------------------------------------------------- |
+| `scr/fast-wave/wavefunction_mpmath.py`                  | mpmath 1.3.0, NumPy 1.26.4                                         |
+| `scr/fast-wave/wavefunction_numba.py`                   | NumPy 1.26.4, Numba 0.59.1, SymPy 1.12, Math, llvmlite 0.42.0      |
+| `scr/fast-wave/wavefunction_cython.pyx`                 | NumPy 1.26.4, Math, Cython 3.0.10                                  |
+| `scr/fast-wave/caching.py`                              | NumPy 1.26.4, Functools                                            |
+
+---
+
 ## 📑 Table of Contents
 
 - [📑 Table of Contents](#-table-of-contents)
